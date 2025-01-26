@@ -3,7 +3,7 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 const { OAuth2Client } = require("google-auth-library");
 const { Users, Refresh_tokens } = require("../models/init");
-
+const Welcome_Email = require("../jobs/Emails/Welcome");
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 // Helper function to generate tokens
@@ -70,7 +70,7 @@ router.post("/google-auth", async (req, res) => {
 
         // Check if the user exists in the database
         let user = await userModel.findOne({ where: { email } });
-
+        const is_user_created = false;
         if (!user) {
             // Create a new user if they don't exist
             user = await userModel.create({
@@ -81,7 +81,8 @@ router.post("/google-auth", async (req, res) => {
                 googleId,
                 password: "google_auth", // Default password for Google-authenticated users
             });
-        } 
+            is_user_created = true;
+        }
 
         // Generate tokens
         const { accessToken, refreshToken } = generateTokens(
@@ -96,7 +97,9 @@ router.post("/google-auth", async (req, res) => {
 
         // Set cookies
         setCookies(res, accessToken, refreshToken);
-
+        if (is_user_created) {
+            await Welcome_Email(email, firstName);
+        }
         // Return success response
         return res.status(200).json({
             message: "Logged in successfully with Google",

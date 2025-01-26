@@ -1,5 +1,5 @@
 const { Users, Admins, Workers } = require("../../models/init");
-
+const Welcome_Email = require("../../jobs/Emails/Welcome");
 const handleRegister = async (req, res) => {
     try {
         const { firstName, lastName, email, password } = req.body;
@@ -78,6 +78,9 @@ const handleRegister = async (req, res) => {
         if (!newUser) {
             return res.status(500).json({ message: "Error Creating User" });
         }
+        // Send Welcome Email
+        Welcome_Email(email, firstName);
+
         return res.status(200).json({
             message: "Account Created Successfully",
             id: newUser.id,

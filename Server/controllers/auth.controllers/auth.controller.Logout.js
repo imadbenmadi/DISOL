@@ -34,8 +34,4 @@ const handleLogout = async (req, res) => {
     return res.status(204).json({ message: "Logged out successfully" });
 };
 
-module.exports = { handleLogout };
-
-router.post("/", handleLogout);
-
-module.exports = router;
+module.exports = handleLogout;
