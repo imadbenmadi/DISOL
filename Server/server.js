@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
 const path = require("path");
-const initializeMiddleware = require("./middleware/init");
+const initialize_Middleware = require("./middleware/init");
 const appRoutes = require("./routes/App.routes");
 const { initializeDirectories } = require("./helpers/Directory.helper");
 const initializeDatabase = require("./database/init"); // Import the sequelize instance for DISOL database
@@ -15,7 +15,7 @@ initializeDatabase();
 
 // Initialize directories and middleware
 initializeDirectories();
-initializeMiddleware(app);
+initialize_Middleware(app);
 
 // Serve static files
 app.use("/", express.static(path.join(__dirname, "/public")));
