@@ -1,8 +1,7 @@
 const express = require("express");
-const router = express.Router();
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-const { Refresh_tokens } = require("../../../Models/RefreshTokens");
+const { Refresh_tokens } = require("../../models/init");
 
 // Helper function to verify a JWT token
 const verifyToken = (token, secret) => {
@@ -110,7 +109,8 @@ const getUserSecrets = (userType) => {
 };
 
 // Main route to check authentication
-router.get("/", async (req, res) => {
+// router.get("/", async (req, res) => {
+const checkAuth = async (req, res) => {
     const { accessToken, refreshToken } = req.cookies;
 
     if (!accessToken || !refreshToken) {
@@ -187,6 +187,5 @@ router.get("/", async (req, res) => {
                 .json({ message: "Unauthorized: Invalid access token" });
         }
     }
-});
-
-module.exports = router;
+};
+module.exports = checkAuth;

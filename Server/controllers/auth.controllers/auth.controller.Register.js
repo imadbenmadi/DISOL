@@ -1,8 +1,6 @@
 const express = require("express");
-const { Malad } = require("../../Models/Malad");
-const { Director } = require("../../Models/Director");
-const { Doctor } = require("../../Models/Doctor");
-const { Worker } = require("../../Models/Worker");
+const { Users, Admins, Workers } = require("../../models/init");
+
 const handleRegister = async (req, res) => {
     try {
         const { firstName, lastName, email, password } = req.body;
@@ -34,19 +32,17 @@ const handleRegister = async (req, res) => {
         // if (!(await isemailValid(email))) {
         //     return res.status(409).json({ message: "Invalid email domain" });
         // }
-        const exist_doctor = await Doctor.findOne({
+        const exist_user = await Users.findOne({
             where: { email: email },
         });
-        const exist_worker = await Worker.findOne({
+        const exist_worker = await Workers.findOne({
             where: { email: email },
         });
-        const exist_malad = await Malad.findOne({
+        const exist_Admin = await Admins.findOne({
             where: { email: email },
         });
-        const exist_director = await Director.findOne({
-            where: { email: email },
-        });
-        if (exist_malad || exist_doctor || exist_director || exist_worker) {
+        
+        if (exist_Admin || exist_user || exist_worker) {
             return res.status(400).json({
                 message: "email already exists , please use another email.",
             });

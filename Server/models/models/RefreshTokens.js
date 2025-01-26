@@ -1,5 +1,5 @@
 const { Sequelize, DataTypes } = require("sequelize");
-const sequelize = require("../config/db_connection");
+const sequelize = require("../../database/Mysql.database");
 const Refresh_tokens = sequelize.define("Refresh_tokens", {
     userId: {
         type: DataTypes.INTEGER,

@@ -1,5 +1,5 @@
 const { DataTypes } = require("sequelize");
-const sequelize = require("../../config/db_connection");
+const sequelize = require("../../../database/Mysql.database");
 
 const Main_page = sequelize.define("Main_page", {
     Title: {
