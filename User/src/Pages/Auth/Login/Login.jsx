@@ -5,8 +5,12 @@ import { GoogleLogin } from "@react-oauth/google";
 import Swal from "sweetalert2";
 import handleLogin from "./Post_Login";
 import { handle_google_auth } from "../handle_google_auth";
+import ReCAPTCHA from "react-google-recaptcha"; // Import reCAPTCHA
+
 function Login() {
     const Navigate = useNavigate();
+    const recaptchaRef = React.createRef(); // Create a ref for reCAPTCHA
+
     // Handle Google OAuth2 failure
     const handleFailure = (error) => {
         console.error("Google Login Error:", error);
@@ -15,6 +19,27 @@ function Login() {
             title: "Oops...",
             text: "Something went wrong while logging in with Google. Please try again.",
         });
+    };
+
+    // Handle form submission with reCAPTCHA
+    const handleSubmit = async (values, { setSubmitting }) => {
+        const recaptchaValue = recaptchaRef.current.getValue(); // Get reCAPTCHA value
+
+        if (!recaptchaValue) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Please complete the reCAPTCHA.",
+            });
+            setSubmitting(false);
+            return;
+        }
+
+        // Add reCAPTCHA value to your login payload
+        values.recaptcha = recaptchaValue;
+
+        // Call your login function
+        await handleLogin(values, { setSubmitting });
     };
 
     return (
@@ -33,8 +58,8 @@ function Login() {
                                 handle_google_auth(response, Navigate)
                             }
                             onError={handleFailure}
-                            size="medium" // Optional: Customize the button size
-                            text="continue_with" // Optional: Customize the button text
+                            size="medium"
+                            text="continue_with"
                         />
                     </div>
 
@@ -69,9 +94,7 @@ function Login() {
 
                             return errors;
                         }}
-                        onSubmit={(values, { setSubmitting }) => {
-                            handleLogin(values, { setSubmitting });
-                        }}
+                        onSubmit={handleSubmit} // Use the new handleSubmit function
                     >
                         {({ isSubmitting }) => (
                             <Form className="flex flex-col text-sm md:text-lg gap-4 text-black_text">
@@ -110,6 +133,12 @@ function Login() {
                                         className="text-red-500 text-xs mt-1"
                                     />
                                 </div>
+
+                                {/* Add reCAPTCHA */}
+                                <ReCAPTCHA
+                                    ref={recaptchaRef}
+                                    sitekey="YOUR_SITE_KEY" // Replace with your reCAPTCHA site key
+                                />
 
                                 {isSubmitting ? (
                                     <span className="small-loader my-5 m-auto"></span>
