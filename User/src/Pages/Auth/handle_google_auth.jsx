@@ -1,18 +1,18 @@
 // Code to handle Google authentication
 import Swal from "sweetalert2";
-import axios from "axios";
 
-export const handle_google_login = async (response) => {
+export const handle_google_auth = async (response, Navigate) => {
     const token = response.credential; // Use response.credential for the ID token
+    const userType = "user"; // Default user type for Google login
 
-    // Send token to backend for verification
+    // Send token and userType to backend for verification
     try {
         const res = await fetch("http://localhost:3000/google-auth", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ token }),
+            body: JSON.stringify({ token, userType }), // Include userType in the request
         });
 
         const data = await res.json();
@@ -25,6 +25,8 @@ export const handle_google_login = async (response) => {
                 title: "Login Successful",
                 text: "You have successfully logged in with Google!",
             });
+            // window.location.href = `/`;
+            Navigate("/");
         } else if (res.status === 401) {
             throw new Error("Invalid Google Token");
         } else {
