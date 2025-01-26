@@ -22,6 +22,7 @@ function Login() {
                     <div>
                         <Formik
                             initialValues={{
+                                userType: "user",
                                 email: "",
                                 password: "",
                             }}

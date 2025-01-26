@@ -25,6 +25,7 @@ function Register() {
                     <div>
                         <Formik
                             initialValues={{
+                                userType: "user",
                                 firstName: "",
                                 lastName: "",
                                 email: "",

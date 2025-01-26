@@ -6,6 +6,7 @@ async function handleLogin(values, { setSubmitting }) {
             withCredentials: true,
             validateStatus: () => true,
         });
+        console.log(response);
 
         if (response.status == 200) {
             if (response.data.userType == "teacher") {
