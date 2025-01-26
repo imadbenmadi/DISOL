@@ -12,7 +12,7 @@ const initializeDatabase = async () => {
             dialect: "mysql",
             logging: false,
         });
-        if (dbConfig.NODE_ENV === "development") {
+        if (process.env.NODE_ENV === "development") {
             // Create the database if it doesn't exist
             await tempSequelize.query("CREATE DATABASE IF NOT EXISTS DISOL", {
                 raw: true,
