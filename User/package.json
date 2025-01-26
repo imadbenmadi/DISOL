@@ -1,5 +1,5 @@
 {
-    "name": "vide-maison-belgique-dashboard",
+    "name": "Disol",
     "private": true,
     "version": "0.0.0",
     "type": "module",
@@ -10,6 +10,7 @@
         "preview": "vite preview"
     },
     "dependencies": {
+        "@react-oauth/google": "^0.12.1",
         "axios": "^1.6.8",
         "chart.js": "^4.4.3",
         "date-fns": "^3.6.0",
