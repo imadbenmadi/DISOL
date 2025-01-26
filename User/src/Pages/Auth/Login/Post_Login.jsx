@@ -9,27 +9,24 @@ async function handleLogin(values, { setSubmitting }) {
         console.log(response);
 
         if (response.status == 200) {
-            if (response.data.userType == "teacher") {
-                window.location.href = `/Teacher`;
-            } else if (response.data.userType == "student") {
-                window.location.href = `/Student`;
-            } else window.location.href = `/Home`;
+            console.log(response.data);
+
+            Swal.fire("Success!", "Logged in successfully", "success");
+            // window.location.href = `/`;
+            Navigate("/");
         } else if (response.status == 401) {
-            setSubmitting(false);
             Swal.fire("Error!", "Username or Password isn't correct", "error");
         } else if (response.status == 409) {
-            setSubmitting(false);
             Swal.fire("Error!", `${response.data.message} `, "error");
         } else if (response.status == 500) {
-            setSubmitting(false);
             Swal.fire("Error!", `Internal Server Error   `, "error");
         } else {
-            setSubmitting(false);
             Swal.fire("Error!", `Something Went Wrong ,`, "error");
         }
     } catch (error) {
-        setSubmitting(false);
         Swal.fire("Error!", `Something Went Wrong `, "error");
+    } finally {
+        setSubmitting(false);
     }
     // setSubmitting(false);
 }

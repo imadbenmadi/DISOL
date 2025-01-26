@@ -1,6 +1,6 @@
 import Swal from "sweetalert2";
 import Axios from "axios";
-async function handleRegister(values, { setSubmitting }) {
+async function handleRegister(values, Navigate, { setSubmitting }) {
     try {
         let response = await Axios.post(
             "http://localhost:3000/Register",
@@ -23,18 +23,16 @@ async function handleRegister(values, { setSubmitting }) {
                     }
                 );
                 if (Login_response.status == 200) {
-                    if (Login_response.data.userType == "teacher") {
-                        window.location.href = `/Teacher`;
-                    } else if (Login_response.data.userType == "student") {
-                        window.location.href = `/Student`;
-                    } else {
-                        window.location.href = "/Login";
-                    }
+                    Swal.fire("Success!", "Logged in successfully", "success");
+                    // window.location.href = "/";
+                    Navigate("/");
                 } else {
-                    window.location.href = "/Login";
+                    // window.location.href = "/Login";
+                    Navigate("/Login");
                 }
             } catch (error) {
-                window.location.href = "/Login";
+                // window.location.href = "/Login";
+                Navigate("/Login");
             }
         } else if (response.status == 400) {
             setSubmitting(false);

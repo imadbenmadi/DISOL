@@ -1,9 +1,10 @@
 import Register_image from "../../../../public/Register.png";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import handleRegister from "./Post_Register";
 function Register() {
+    const Navigate = useNavigate();
     return (
         <div className="flex justify-center items-center h-screen">
             {/* <div className=" w-1/2   hidden md:block   h-[calc(100vh)]">
@@ -68,7 +69,9 @@ function Register() {
                             }}
                             onSubmit={(values, { setSubmitting }) => {
                                 // setSubmitting(false);
-                                handleRegister(values, { setSubmitting });
+                                handleRegister(values, Navigate, {
+                                    setSubmitting,
+                                });
                             }}
                         >
                             {({ isSubmitting, setFieldValue }) => (
