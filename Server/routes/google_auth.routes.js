@@ -83,6 +83,7 @@ router.post("/google-auth", async (req, res) => {
                 email,
                 google_picture: picture,
                 googleId,
+                password: "google_auth",
             });
         }
 
