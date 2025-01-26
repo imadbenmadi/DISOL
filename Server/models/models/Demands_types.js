@@ -13,4 +13,4 @@ const Demands_types = sequelize.define("Demands_types", {
     },
 });
 
-module.exports = { Demands_types };
+module.exports =  Demands_types ;

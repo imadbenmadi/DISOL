@@ -1,5 +1,5 @@
 const { Sequelize, DataTypes } = require("sequelize");
-const sequelize = require("../../database/Mysql.database");
+const sequelize = require("../../../database/Mysql.database");
 
 const Contact_informations = sequelize.define("Contact_informations", {
     phone: {
@@ -19,4 +19,4 @@ const Contact_informations = sequelize.define("Contact_informations", {
         allowNull: true,
     },
 });
-module.exports = { Contact_informations };
+module.exports =  Contact_informations ;

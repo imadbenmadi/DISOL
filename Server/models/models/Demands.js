@@ -30,4 +30,4 @@ const Demands = sequelize.define("Demands", {
         allowNull: false,
     },
 });
-module.exports = { Demands };
+module.exports =  Demands ;

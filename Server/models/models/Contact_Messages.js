@@ -22,4 +22,4 @@ const Contact_Messages = sequelize.define("Contact_Messages", {
         allowNull: false,
     },
 });
-module.exports = { Contact_Messages };
+module.exports = Contact_Messages ;

@@ -24,4 +24,4 @@ const Workers = sequelize.define("Workers", {
     },
 });
 
-module.exports = { Workers };
+module.exports = Workers;

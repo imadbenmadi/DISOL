@@ -1,4 +1,3 @@
-const express = require("express");
 const { Users, Admins, Workers } = require("../../models/init");
 
 const handleRegister = async (req, res) => {
@@ -41,19 +40,40 @@ const handleRegister = async (req, res) => {
         const exist_Admin = await Admins.findOne({
             where: { email: email },
         });
-        
+
         if (exist_Admin || exist_user || exist_worker) {
             return res.status(400).json({
                 message: "email already exists , please use another email.",
             });
         }
         let newUser = null;
-        newUser = await Malad.create({
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
-            password: password,
-        });
+        const userType = req.body.userType;
+        if (!userType) {
+            return res.status(409).json({ message: "User Type is required" });
+        } else if (userType === "admin") {
+            newUser = await Admins.create({
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                password: password,
+            });
+        } else if (userType === "worker") {
+            newUser = await Workers.create({
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                password: password,
+            });
+        } else if (userType === "user") {
+            newUser = await Users.create({
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                password: password,
+            });
+        } else {
+            return res.status(409).json({ message: "Invalid User Type" });
+        }
 
         if (!newUser) {
             return res.status(500).json({ message: "Error Creating User" });

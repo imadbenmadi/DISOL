@@ -5,11 +5,9 @@ const userRoutes = require("./User.routes");
 
 const router = express.Router();
 
-// router.use("/auth", authRoutes);
+router.use(authRoutes);
 // router.use("/dashboard", dashboardRoutes);
 // router.use("/user", userRoutes);
-
-
 
 // router.use("/check_Auth", require("./Auth/check_Auth"));
 // router.use("/Login", require("./Auth/Login"));
@@ -29,6 +27,5 @@ const router = express.Router();
 // router.use("/Add_Admin", require("./Auth/Admin/Admin_Add"));
 // router.use("/Admin_Logout", require("./Auth/Admin/Admin_Logout"));
 // router.use("/Admin_CheckAuth", require("./Auth/Admin/Admin_CheckAuth"));
-
 
 module.exports = router;

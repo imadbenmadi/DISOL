@@ -14,4 +14,4 @@ const Refresh_tokens = sequelize.define("Refresh_tokens", {
         allowNull: false,
     },
 });
-module.exports = { Refresh_tokens };
+module.exports = Refresh_tokens;

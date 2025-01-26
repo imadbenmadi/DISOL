@@ -10,6 +10,8 @@ async function handleRegister(values, { setSubmitting }) {
                 validateStatus: () => true,
             }
         );
+        console.log(response);
+
         if (response.status == 200) {
             try {
                 let Login_response = await Axios.post(
