@@ -9,20 +9,21 @@ function Login() {
     // Handle Google OAuth2 success
     const handleSuccess = async (response) => {
         const token = response.credential; // Use response.credential for the ID token
+        const userType = "user"; // Default user type for Google login
 
-        // Send token to backend for verification
+        // Send token and userType to backend for verification
         try {
             const res = await fetch("http://localhost:3000/google-auth", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ token }),
+                body: JSON.stringify({ token, userType }), // Include userType in the request
             });
 
             const data = await res.json();
 
-            if (res.ok) {
+            if (res.status === 200) {
                 console.log("JWT Token:", data.token);
                 console.log("User Info:", data.user);
                 Swal.fire({
@@ -30,6 +31,8 @@ function Login() {
                     title: "Login Successful",
                     text: "You have successfully logged in with Google!",
                 });
+            } else if (res.status === 401) {
+                throw new Error("Invalid Google Token");
             } else {
                 throw new Error(
                     data.message || "Failed to authenticate with Google"

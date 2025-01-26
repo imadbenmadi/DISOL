@@ -21,6 +21,14 @@ const Users = sequelize.define("Users", {
         type: DataTypes.STRING,
         allowNull: true,
     },
+    google_picture: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    googleId: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
 });
 
-module.exports =  Users ;
+module.exports = Users;

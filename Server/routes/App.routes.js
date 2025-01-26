@@ -2,10 +2,11 @@ const express = require("express");
 const authRoutes = require("./Auth.routes");
 const dashboardRoutes = require("./Dashboard.routes");
 const userRoutes = require("./User.routes");
-
+const google_auth_rout = require("./google_auth.routes");
 const router = express.Router();
 
 router.use(authRoutes);
+router.use(google_auth_rout);
 // router.use("/dashboard", dashboardRoutes);
 // router.use("/user", userRoutes);
 
