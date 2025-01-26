@@ -4,14 +4,14 @@ import { Link } from "react-router-dom";
 import handleLogin from "./Post_Login";
 function Login() {
     return (
-        <div className="flex">
-            <div className=" max-w-1/2 lg:max-w-1/2 hidden md:block   h-[calc(100vh)]">
+        <div className="flex justify-center items-center h-screen">
+            {/* <div className=" max-w-1/2 lg:max-w-1/2 hidden md:block   h-[calc(100vh)]">
                 <img
                     src={Login_image}
                     alt="Login"
                     className=" w-full h-full object-cover "
                 />
-            </div>
+            </div> */}
             <div className="md:w-1/2 w-full h-screen bg-white flex flex-col items-center justify-center ">
                 <div className=" w-[80%] text-black_text">
                     <div className=" pb-4 ">
