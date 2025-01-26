@@ -50,7 +50,6 @@ function App() {
                 set_Auth(false);
             }
         };
-        
 
         const fetch_fonts = () => {
             return new Promise((resolve) => {
@@ -90,7 +89,7 @@ function App() {
         );
     } else
         return (
-            <div className=" text-right">
+            <div className="">
                 <Outlet />
             </div>
         );
