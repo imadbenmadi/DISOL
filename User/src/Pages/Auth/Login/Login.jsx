@@ -72,7 +72,6 @@ function Login() {
                         <GoogleLogin
                             onSuccess={handleSuccess}
                             onError={handleFailure}
-                            theme="filled_blue" // Optional: Customize the button theme
                             size="medium" // Optional: Customize the button size
                             text="continue_with" // Optional: Customize the button text
                         />
