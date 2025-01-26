@@ -59,7 +59,9 @@ router.post("/google-auth", async (req, res) => {
             idToken: token,
             audience: process.env.GOOGLE_CLIENT_ID,
         });
-
+        if (!ticket || !ticket.getPayload) {
+            return res.status(401).json({ message: "Invalid Google token" });
+        }
         const { name, email, picture, sub: googleId } = ticket.getPayload();
 
         // Split the name into first and last names
@@ -79,12 +81,7 @@ router.post("/google-auth", async (req, res) => {
                 googleId,
                 password: "google_auth", // Default password for Google-authenticated users
             });
-        } else {
-            // Update the user's first and last names if they already exist
-            user.firstName = firstName;
-            user.lastName = lastName;
-            await user.save();
-        }
+        } 
 
         // Generate tokens
         const { accessToken, refreshToken } = generateTokens(
