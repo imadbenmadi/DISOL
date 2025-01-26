@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const { OAuth2Client } = require("google-auth-library");
-const { Admins, Workers, Users, Refresh_tokens } = require("../models/init");
+const { Users, Refresh_tokens } = require("../models/init");
 
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
@@ -36,33 +36,22 @@ const setCookies = (res, accessToken, refreshToken) => {
 router.post("/google-auth", async (req, res) => {
     const { token, userType } = req.body;
 
+    // Validate input
     if (!token || !userType) {
         return res.status(400).json({ message: "Missing data" });
     }
 
-    let userModel;
-    let accessSecret;
-    let refreshSecret;
-
-    switch (userType.toLowerCase()) {
-        case "admin":
-            userModel = Admins;
-            accessSecret = process.env.ADMIN_ACCESS_TOKEN_SECRET;
-            refreshSecret = process.env.ADMIN_REFRESH_TOKEN_SECRET;
-            break;
-        case "worker":
-            userModel = Workers;
-            accessSecret = process.env.WORKER_ACCESS_TOKEN_SECRET;
-            refreshSecret = process.env.WORKER_REFRESH_TOKEN_SECRET;
-            break;
-        case "user":
-            userModel = Users;
-            accessSecret = process.env.USER_ACCESS_TOKEN_SECRET;
-            refreshSecret = process.env.USER_REFRESH_TOKEN_SECRET;
-            break;
-        default:
-            return res.status(400).json({ message: "Invalid user type" });
+    // Only allow "user" type for Google authentication
+    if (userType.toLowerCase() !== "user") {
+        return res.status(400).json({
+            message: "Google authentication is only available for users",
+        });
     }
+
+    // Set user model and secrets for "user" type
+    const userModel = Users;
+    const accessSecret = process.env.USER_ACCESS_TOKEN_SECRET;
+    const refreshSecret = process.env.USER_REFRESH_TOKEN_SECRET;
 
     try {
         // Verify Google token
@@ -83,7 +72,7 @@ router.post("/google-auth", async (req, res) => {
                 email,
                 google_picture: picture,
                 googleId,
-                password: "google_auth",
+                password: "google_auth", // Default password for Google-authenticated users
             });
         }
 
