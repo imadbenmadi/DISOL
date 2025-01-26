@@ -62,18 +62,28 @@ router.post("/google-auth", async (req, res) => {
 
         const { name, email, picture, sub: googleId } = ticket.getPayload();
 
+        // Split the name into first and last names
+        const [firstName, ...lastNameParts] = name.split(" ");
+        const lastName = lastNameParts.join(" "); // Handle cases where last name has multiple parts
+
         // Check if the user exists in the database
         let user = await userModel.findOne({ where: { email } });
 
         if (!user) {
             // Create a new user if they don't exist
             user = await userModel.create({
-                name,
+                firstName,
+                lastName,
                 email,
                 google_picture: picture,
                 googleId,
                 password: "google_auth", // Default password for Google-authenticated users
             });
+        } else {
+            // Update the user's first and last names if they already exist
+            user.firstName = firstName;
+            user.lastName = lastName;
+            await user.save();
         }
 
         // Generate tokens
@@ -95,6 +105,13 @@ router.post("/google-auth", async (req, res) => {
             message: "Logged in successfully with Google",
             userId: user.id,
             userType,
+            user: {
+                id: user.id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                google_picture: user.google_picture,
+            },
         });
     } catch (error) {
         console.error("Google login error:", error);
