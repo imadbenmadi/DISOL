@@ -1,12 +1,13 @@
 const express = require("express");
-const router = express.Router();
 const jwt = require("jsonwebtoken");
 const { OAuth2Client } = require("google-auth-library");
 const { Users, Refresh_tokens } = require("../models/init");
 const Welcome_Email = require("../jobs/Emails/Welcome");
+
+const router = express.Router();
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
-// Helper function to generate tokens
+// Helper functions
 const generateTokens = (userId, userType, accessSecret, refreshSecret) => {
     const accessToken = jwt.sign({ userId, userType }, accessSecret, {
         expiresIn: "1h",
@@ -17,7 +18,6 @@ const generateTokens = (userId, userType, accessSecret, refreshSecret) => {
     return { accessToken, refreshToken };
 };
 
-// Helper function to set cookies
 const setCookies = (res, accessToken, refreshToken) => {
     res.cookie("accessToken", accessToken, {
         httpOnly: true,
@@ -33,164 +33,77 @@ const setCookies = (res, accessToken, refreshToken) => {
     });
 };
 
-router.post("/google-auth-Login", async (req, res) => {
-    const { token, userType } = req.body;
+const verifyGoogleToken = async (token) => {
+    const ticket = await googleClient.verifyIdToken({
+        idToken: token,
+        audience: process.env.GOOGLE_CLIENT_ID,
+    });
+    return ticket?.getPayload();
+};
 
-    // Validate input
-    if (!token || !userType) {
-        return res.status(400).json({ message: "Missing data" });
-    }
+const handleGoogleUser = async (payload) => {
+    const { name, email, picture, sub: googleId } = payload;
+    const [firstName, ...lastNameParts] = name.split(" ");
+    const lastName = lastNameParts.join(" ");
 
-    // Only allow "user" type for Google authentication
-    if (userType.toLowerCase() !== "user") {
-        return res.status(400).json({
-            message: "Google authentication is only available for users",
-        });
-    }
+    let user = await Users.findOne({ where: { email } });
+    let isUserCreated = false;
 
-    // Set user model and secrets for "user" type
-    const userModel = Users;
-    const accessSecret = process.env.USER_ACCESS_TOKEN_SECRET;
-    const refreshSecret = process.env.USER_REFRESH_TOKEN_SECRET;
-
-    try {
-        // Verify Google token
-        const ticket = await googleClient.verifyIdToken({
-            idToken: token,
-            audience: process.env.GOOGLE_CLIENT_ID,
-        });
-        if (!ticket || !ticket.getPayload) {
-            return res.status(401).json({ message: "Invalid Google token" });
-        }
-        const { name, email, picture, sub: googleId } = ticket.getPayload();
-
-        // Split the name into first and last names
-        const [firstName, ...lastNameParts] = name.split(" ");
-        const lastName = lastNameParts.join(" "); // Handle cases where last name has multiple parts
-
-        // Check if the user exists in the database
-        let user = await userModel.findOne({ where: { email } });
-        const is_user_created = false;
-        if (!user) {
-            // Create a new user if they don't exist
-            user = await userModel.create({
-                firstName,
-                lastName,
-                email,
-                google_picture: picture,
-                googleId,
-                password: "google_auth", // Default password for Google-authenticated users
-            });
-            is_user_created = true;
-        }
-
-        // Generate tokens
-        const { accessToken, refreshToken } = generateTokens(
-            user.id,
-            userType,
-            accessSecret,
-            refreshSecret
-        );
-
-        // Save the refresh token in the database
-        await Refresh_tokens.create({ userId: user.id, token: refreshToken });
-
-        // Set cookies
-        setCookies(res, accessToken, refreshToken);
-        if (is_user_created) {
-            Welcome_Email(email, firstName);
-        }
-        // Return success response
-        return res.status(200).json({
-            message: "Logged in successfully with Google",
-            userId: user.id,
-            userType,
-            user: {
-                id: user.id,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                email: user.email,
-                google_picture: user.google_picture,
-            },
-        });
-    } catch (error) {
-        console.error("Google login error:", error);
-        return res.status(500).json({ message: "Internal server error" });
-    }
-});
-router.post("/google-auth-Register", async (req, res) => {
-    const { token, userType } = req.body;
-
-    // Validate input
-    if (!token || !userType) {
-        return res.status(400).json({ message: "Missing data" });
-    }
-
-    // Only allow "user" type for Google authentication
-    if (userType.toLowerCase() !== "user") {
-        return res.status(400).json({
-            message: "Google authentication is only available for users",
-        });
-    }
-
-    // Set user model and secrets for "user" type
-    const userModel = Users;
-    const accessSecret = process.env.USER_ACCESS_TOKEN_SECRET;
-    const refreshSecret = process.env.USER_REFRESH_TOKEN_SECRET;
-
-    try {
-        // Verify Google token
-        const ticket = await googleClient.verifyIdToken({
-            idToken: token,
-            audience: process.env.GOOGLE_CLIENT_ID,
-        });
-        if (!ticket || !ticket.getPayload) {
-            return res.status(401).json({ message: "Invalid Google token" });
-        }
-        const { name, email, picture, sub: googleId } = ticket.getPayload();
-        const user_exist = await userModel.findOne({ where: { email } });
-        if (user_exist) {
-            return res.status(402).json({
-                message:
-                    "User already exists. Please Register using your email and password.",
-            });
-        }
-        // Split the name into first and last names
-        const [firstName, ...lastNameParts] = name.split(" ");
-        const lastName = lastNameParts.join(" "); // Handle cases where last name has multiple parts
-
-        // Check if the user exists in the database
-        let user = await userModel.findOne({ where: { email } });
-
-        // Create a new user if they don't exist
-        user = await userModel.create({
+    if (!user) {
+        user = await Users.create({
             firstName,
             lastName,
             email,
             google_picture: picture,
             googleId,
-            password: "google_auth", // Default password for Google-authenticated users
+            password: "google_auth",
         });
+        isUserCreated = true;
+    }
 
-        // Generate tokens
+    return { user, isUserCreated };
+};
+
+// Routes
+const handleAuth = async (req, res, isRegister) => {
+    const { token, userType } = req.body;
+
+    if (!token || userType?.toLowerCase() !== "user") {
+        return res.status(400).json({ message: "Invalid data or user type" });
+    }
+
+    try {
+        const payload = await verifyGoogleToken(token);
+        if (!payload)
+            return res.status(401).json({ message: "Invalid Google token" });
+
+        if (isRegister) {
+            const existingUser = await Users.findOne({
+                where: { email: payload.email },
+            });
+            if (existingUser) {
+                return res.status(409).json({
+                    message: "User already exists. Please log in instead.",
+                });
+            }
+        }
+
+        const { user, isUserCreated } = await handleGoogleUser(payload);
+
         const { accessToken, refreshToken } = generateTokens(
             user.id,
             userType,
-            accessSecret,
-            refreshSecret
+            process.env.USER_ACCESS_TOKEN_SECRET,
+            process.env.USER_REFRESH_TOKEN_SECRET
         );
 
-        // Save the refresh token in the database
         await Refresh_tokens.create({ userId: user.id, token: refreshToken });
-
-        // Set cookies
         setCookies(res, accessToken, refreshToken);
 
-        Welcome_Email(email, firstName);
+        if (isUserCreated) Welcome_Email(user.email, user.firstName);
 
-        // Return success response
         return res.status(200).json({
-            message: "Logged in successfully with Google",
+            message: "Authentication successful",
             userId: user.id,
             userType,
             user: {
@@ -202,9 +115,12 @@ router.post("/google-auth-Register", async (req, res) => {
             },
         });
     } catch (error) {
-        console.error("Google login error:", error);
+        console.error("Google authentication error:", error);
         return res.status(500).json({ message: "Internal server error" });
     }
-});
+};
+
+router.post("/google-auth-login", (req, res) => handleAuth(req, res, false));
+router.post("/google-auth-register", (req, res) => handleAuth(req, res, true));
 
 module.exports = router;
