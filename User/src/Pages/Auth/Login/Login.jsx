@@ -1,15 +1,16 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
 import Swal from "sweetalert2";
 import handleLogin from "./Post_Login";
 import { handle_google_auth } from "../handle_google_auth";
-import ReCAPTCHA from "react-google-recaptcha"; // Import reCAPTCHA
+import ReCAPTCHA from "react-google-recaptcha";
+import Google_auth_data from "../../../google-auth.json";
 
 function Login() {
     const Navigate = useNavigate();
-    const recaptchaRef = React.createRef(); // Create a ref for reCAPTCHA
+    const recaptchaRef = useRef(); // Use ref for reCAPTCHA
 
     // Handle Google OAuth2 failure
     const handleFailure = (error) => {
@@ -23,8 +24,10 @@ function Login() {
 
     // Handle form submission with reCAPTCHA
     const handleSubmit = async (values, { setSubmitting }) => {
-        const recaptchaValue = recaptchaRef.current.getValue(); // Get reCAPTCHA value
+        // Get reCAPTCHA value
+        const recaptchaValue = recaptchaRef.current?.getValue();
 
+        // If reCAPTCHA is not completed, show an error
         if (!recaptchaValue) {
             Swal.fire({
                 icon: "error",
@@ -94,7 +97,7 @@ function Login() {
 
                             return errors;
                         }}
-                        onSubmit={handleSubmit} // Use the new handleSubmit function
+                        onSubmit={handleSubmit}
                     >
                         {({ isSubmitting }) => (
                             <Form className="flex flex-col text-sm md:text-lg gap-4 text-black_text">
@@ -134,10 +137,10 @@ function Login() {
                                     />
                                 </div>
 
-                                {/* Add reCAPTCHA */}
+                                {/* reCAPTCHA */}
                                 <ReCAPTCHA
                                     ref={recaptchaRef}
-                                    sitekey="YOUR_SITE_KEY" // Replace with your reCAPTCHA site key
+                                    sitekey={Google_auth_data.CAPATCHA_SITE_KEY} // Replace with your reCAPTCHA site key
                                 />
 
                                 {isSubmitting ? (

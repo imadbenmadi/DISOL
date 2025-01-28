@@ -10,11 +10,11 @@ import Google_auth_data from "./google-auth.json";
 const { client_id } = Google_auth_data.web;
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-    <React.StrictMode>
-        <GoogleOAuthProvider clientId={client_id}>
+    <GoogleOAuthProvider clientId={client_id}>
+        <React.StrictMode>
             <AppProvider>
                 <RouterProvider router={Router} />
             </AppProvider>
-        </GoogleOAuthProvider>
-    </React.StrictMode>
+        </React.StrictMode>
+    </GoogleOAuthProvider>
 );

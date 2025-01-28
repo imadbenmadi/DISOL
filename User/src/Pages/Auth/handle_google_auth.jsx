@@ -16,10 +16,9 @@ export const handle_google_auth = async (response, Navigate) => {
         });
 
         const data = await res.json();
+        console.log("response form google auth", data);
 
         if (res.status === 200) {
-            console.log("JWT Token:", data.token);
-            console.log("User Info:", data.user);
             Swal.fire({
                 icon: "success",
                 title: "Login Successful",
