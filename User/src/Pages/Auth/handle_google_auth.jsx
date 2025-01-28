@@ -27,11 +27,20 @@ export const handle_google_auth = async (response, Navigate) => {
             // window.location.href = `/`;
             Navigate("/");
         } else if (res.status === 401) {
-            throw new Error("Invalid Google Token");
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Invalid Google token. Please try again.",
+            });
         } else {
-            throw new Error(
-                data.message || "Failed to authenticate with Google"
-            );
+            // throw new Error(
+            //     data.message || "Failed to authenticate with Google"
+            // );
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Failed to authenticate with Google. Please try again.",
+            });
         }
     } catch (error) {
         console.error("Error:", error);

@@ -3,8 +3,47 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import handleRegister from "./Post_Register";
+import { handle_google_auth } from "../handle_google_auth";
+import { GoogleLogin } from "@react-oauth/google";
+import ReCAPTCHA from "react-google-recaptcha";
+import Google_auth_data from "../../../google-auth.json";
+import Swal from "sweetalert2";
+import { useRef } from "react";
 function Register() {
     const Navigate = useNavigate();
+    const recaptchaRef = useRef(); // Use ref for reCAPTCHA
+
+    // Handle Google OAuth2 failure
+    const handleFailure = (error) => {
+        console.error("Google Login Error:", error);
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong while logging in with Google. Please try again.",
+        });
+    };
+    // Handle form submission with reCAPTCHA
+    const handleSubmit = async (values, { setSubmitting }) => {
+        // Get reCAPTCHA value
+        const recaptchaValue = recaptchaRef.current?.getValue();
+
+        // If reCAPTCHA is not completed, show an error
+        if (!recaptchaValue) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Please complete the reCAPTCHA.",
+            });
+            setSubmitting(false);
+            return;
+        }
+
+        // Add reCAPTCHA value to your login payload
+        values.recaptcha = recaptchaValue;
+
+        // Call your login function
+        await handleLogin(values, { setSubmitting });
+    };
     return (
         <div className="flex justify-center items-center h-screen">
             {/* <div className=" w-1/2   hidden md:block   h-[calc(100vh)]">
@@ -22,7 +61,17 @@ function Register() {
                         </div>
                         <div>Let’s get started your freelance journey.</div>
                     </div>
-
+                    {/* Google Login Button */}
+                    <div className="w-fit mx-auto mb-4">
+                        <GoogleLogin
+                            onSuccess={(response) =>
+                                handle_google_auth(response, Navigate)
+                            }
+                            onError={handleFailure}
+                            size="medium"
+                            text="continue_with"
+                        />
+                    </div>
                     <div>
                         <Formik
                             initialValues={{
@@ -151,6 +200,13 @@ function Register() {
                                         />
                                     </div>
 
+                                    {/* reCAPTCHA */}
+                                    <ReCAPTCHA
+                                        ref={recaptchaRef}
+                                        sitekey={
+                                            Google_auth_data.CAPATCHA_SITE_KEY
+                                        } // Replace with your reCAPTCHA site key
+                                    />
                                     {isSubmitting ? (
                                         <span className="small-loader my-5  m-auto"></span>
                                     ) : (
