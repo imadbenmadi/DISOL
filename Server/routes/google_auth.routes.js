@@ -82,7 +82,7 @@ const handleAuth = async (req, res, isRegister) => {
                 where: { email: payload.email },
             });
             if (existingUser) {
-                return res.status(409).json({
+                return res.status(422).json({
                     message: "User already exists. Please log in instead.",
                 });
             }

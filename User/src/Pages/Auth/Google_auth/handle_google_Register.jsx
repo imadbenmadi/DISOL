@@ -26,7 +26,7 @@ export const handle_google_Register = async (response, Navigate) => {
             });
             // window.location.href = `/`;
             Navigate("/");
-        } else if (res.status === 402) {
+        } else if (res.status === 422) {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
