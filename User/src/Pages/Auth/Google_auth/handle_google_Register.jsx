@@ -1,13 +1,13 @@
 // Code to handle Google authentication
 import Swal from "sweetalert2";
 
-export const handle_google_Login = async (response, Navigate) => {
+export const handle_google_Register = async (response, Navigate) => {
     const token = response.credential; // Use response.credential for the ID token
-    const userType = "user"; // Default user type for Google login
+    const userType = "user"; // Default user type for Google Register
 
     // Send token and userType to backend for verification
     try {
-        const res = await fetch("http://localhost:3000/google-auth", {
+        const res = await fetch("http://localhost:3000/google-auth-Register", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -21,11 +21,17 @@ export const handle_google_Login = async (response, Navigate) => {
         if (res.status === 200) {
             Swal.fire({
                 icon: "success",
-                title: "Login Successful",
+                title: "Register Successful",
                 text: "You have successfully logged in with Google!",
             });
             // window.location.href = `/`;
             Navigate("/");
+        } else if (res.status === 402) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "User already exists. Please Register using your email and password.",
+            });
         } else if (res.status === 401) {
             Swal.fire({
                 icon: "error",

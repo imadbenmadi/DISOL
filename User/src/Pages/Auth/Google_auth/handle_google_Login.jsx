@@ -7,7 +7,7 @@ export const handle_google_Login = async (response, Navigate) => {
 
     // Send token and userType to backend for verification
     try {
-        const res = await fetch("http://localhost:3000/google-auth", {
+        const res = await fetch("http://localhost:3000/google-auth-Login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

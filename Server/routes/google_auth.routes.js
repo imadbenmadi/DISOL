@@ -33,7 +33,7 @@ const setCookies = (res, accessToken, refreshToken) => {
     });
 };
 
-router.post("/google-auth", async (req, res) => {
+router.post("/google-auth-Login", async (req, res) => {
     const { token, userType } = req.body;
 
     // Validate input
@@ -98,8 +98,96 @@ router.post("/google-auth", async (req, res) => {
         // Set cookies
         setCookies(res, accessToken, refreshToken);
         if (is_user_created) {
-            await Welcome_Email(email, firstName);
+            Welcome_Email(email, firstName);
         }
+        // Return success response
+        return res.status(200).json({
+            message: "Logged in successfully with Google",
+            userId: user.id,
+            userType,
+            user: {
+                id: user.id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                google_picture: user.google_picture,
+            },
+        });
+    } catch (error) {
+        console.error("Google login error:", error);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+});
+router.post("/google-auth-Register", async (req, res) => {
+    const { token, userType } = req.body;
+
+    // Validate input
+    if (!token || !userType) {
+        return res.status(400).json({ message: "Missing data" });
+    }
+
+    // Only allow "user" type for Google authentication
+    if (userType.toLowerCase() !== "user") {
+        return res.status(400).json({
+            message: "Google authentication is only available for users",
+        });
+    }
+
+    // Set user model and secrets for "user" type
+    const userModel = Users;
+    const accessSecret = process.env.USER_ACCESS_TOKEN_SECRET;
+    const refreshSecret = process.env.USER_REFRESH_TOKEN_SECRET;
+
+    try {
+        // Verify Google token
+        const ticket = await googleClient.verifyIdToken({
+            idToken: token,
+            audience: process.env.GOOGLE_CLIENT_ID,
+        });
+        if (!ticket || !ticket.getPayload) {
+            return res.status(401).json({ message: "Invalid Google token" });
+        }
+        const { name, email, picture, sub: googleId } = ticket.getPayload();
+        const user_exist = await userModel.findOne({ where: { email } });
+        if (user_exist) {
+            return res.status(402).json({
+                message:
+                    "User already exists. Please Register using your email and password.",
+            });
+        }
+        // Split the name into first and last names
+        const [firstName, ...lastNameParts] = name.split(" ");
+        const lastName = lastNameParts.join(" "); // Handle cases where last name has multiple parts
+
+        // Check if the user exists in the database
+        let user = await userModel.findOne({ where: { email } });
+
+        // Create a new user if they don't exist
+        user = await userModel.create({
+            firstName,
+            lastName,
+            email,
+            google_picture: picture,
+            googleId,
+            password: "google_auth", // Default password for Google-authenticated users
+        });
+
+        // Generate tokens
+        const { accessToken, refreshToken } = generateTokens(
+            user.id,
+            userType,
+            accessSecret,
+            refreshSecret
+        );
+
+        // Save the refresh token in the database
+        await Refresh_tokens.create({ userId: user.id, token: refreshToken });
+
+        // Set cookies
+        setCookies(res, accessToken, refreshToken);
+
+        Welcome_Email(email, firstName);
+
         // Return success response
         return res.status(200).json({
             message: "Logged in successfully with Google",
