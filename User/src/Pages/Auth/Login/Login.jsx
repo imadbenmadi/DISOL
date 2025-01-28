@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
 import Swal from "sweetalert2";
 import handleLogin from "./Post_Login";
-import { handle_google_auth } from "../handle_google_auth";
+import { handle_google_Login } from "../Google_auth/handle_google_Login";
 import ReCAPTCHA from "react-google-recaptcha";
 import Google_auth_data from "../../../google-auth.json";
 
@@ -58,7 +58,7 @@ function Login() {
                     <div className="w-fit mx-auto mb-4">
                         <GoogleLogin
                             onSuccess={(response) =>
-                                handle_google_auth(response, Navigate)
+                                handle_google_Login(response, Navigate)
                             }
                             onError={handleFailure}
                             size="medium"

@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import handleRegister from "./Post_Register";
-import { handle_google_auth } from "../handle_google_auth";
+import { handle_google_Register } from "../Google_auth/handle_google_Register";
 import { GoogleLogin } from "@react-oauth/google";
 import ReCAPTCHA from "react-google-recaptcha";
 import Google_auth_data from "../../../google-auth.json";
@@ -42,7 +42,7 @@ function Register() {
         values.recaptcha = recaptchaValue;
 
         // Call your login function
-        await handleLogin(values, { setSubmitting });
+        await handleRegister(values, { setSubmitting });
     };
     return (
         <div className="flex justify-center items-center h-screen">
@@ -65,7 +65,7 @@ function Register() {
                     <div className="w-fit mx-auto mb-4">
                         <GoogleLogin
                             onSuccess={(response) =>
-                                handle_google_auth(response, Navigate)
+                                handle_google_Register(response, Navigate)
                             }
                             onError={handleFailure}
                             size="medium"
@@ -118,7 +118,7 @@ function Register() {
                             }}
                             onSubmit={(values, { setSubmitting }) => {
                                 // setSubmitting(false);
-                                handleRegister(values, Navigate, {
+                                handleSubmit(values, Navigate, {
                                     setSubmitting,
                                 });
                             }}

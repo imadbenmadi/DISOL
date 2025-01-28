@@ -1,7 +1,7 @@
 // Code to handle Google authentication
 import Swal from "sweetalert2";
 
-export const handle_google_auth = async (response, Navigate) => {
+export const handle_google_Login = async (response, Navigate) => {
     const token = response.credential; // Use response.credential for the ID token
     const userType = "user"; // Default user type for Google login
 
