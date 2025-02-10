@@ -1,7 +1,7 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const sequelize = require("../../../database/Mysql.database");
 
-const Admins = sequelize.define("Admins", {
+const Admin = sequelize.define("Admin", {
     email: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -24,4 +24,4 @@ const Admins = sequelize.define("Admins", {
     },
 });
 
-module.exports =  Admins ;
+module.exports = Admin;

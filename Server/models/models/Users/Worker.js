@@ -1,7 +1,7 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const sequelize = require("../../../database/Mysql.database");
 
-const Workers = sequelize.define("Workers", {
+const Worker = sequelize.define("Worker", {
     email: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -24,4 +24,4 @@ const Workers = sequelize.define("Workers", {
     },
 });
 
-module.exports = Workers;
+module.exports = Worker;
