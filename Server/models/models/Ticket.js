@@ -1,6 +1,7 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const sequelize = require("../../database/Mysql.database");
 const { Meetings_schedule } = require("./Meetings_schedule");
+
 const Ticket = sequelize.define(
     "Ticket",
     {
@@ -39,7 +40,6 @@ const Ticket = sequelize.define(
             type: DataTypes.STRING,
             allowNull: false,
         },
-
         projectId: {
             type: DataTypes.INTEGER,
             allowNull: true,
@@ -76,14 +76,13 @@ const Ticket = sequelize.define(
     {
         indexes: [
             {
-                unique: true,
                 fields: ["userId"],
             },
         ],
     }
 );
 
-Ticket.HasMany(Meetings_schedule);
+Ticket.hasMany(Meetings_schedule);
 Meetings_schedule.belongsTo(Ticket);
 
-module.exports = { Ticket, Meetings_schedule };
+module.exports = { Ticket };
