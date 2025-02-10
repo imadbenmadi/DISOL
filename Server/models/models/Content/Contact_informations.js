@@ -18,5 +18,10 @@ const Contact_informations = sequelize.define("Contact_informations", {
         type: DataTypes.STRING,
         allowNull: true,
     },
+    linkedin: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    
 });
 module.exports =  Contact_informations ;

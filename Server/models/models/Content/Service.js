@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../../../database/Mysql.database");
 
-const Description_page = sequelize.define("Description_page", {
+const Services = sequelize.define("Services", {
     Title: {
         type: DataTypes.TEXT,
         allowNull: false,
@@ -10,15 +10,14 @@ const Description_page = sequelize.define("Description_page", {
         type: DataTypes.TEXT,
         allowNull: true,
     },
-
-    image_link1: {
+    image_link: {
         type: DataTypes.TEXT,
         allowNull: true,
     },
-    image_link2: {
-        type: DataTypes.TEXT,
-        allowNull: true,
+    type: {
+        type: DataTypes.STRING,
+        allowNull: false,
     },
 });
 
-module.exports = { Description_page };
+module.exports = { Services };

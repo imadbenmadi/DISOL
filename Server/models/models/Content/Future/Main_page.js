@@ -1,5 +1,5 @@
 const { DataTypes } = require("sequelize");
-const sequelize = require("../../../database/Mysql.database");
+const sequelize = require("../../../../database/Mysql.database");
 
 const Main_page = sequelize.define("Main_page", {
     Title: {
@@ -7,10 +7,6 @@ const Main_page = sequelize.define("Main_page", {
         allowNull: false,
     },
     Description: {
-        type: DataTypes.TEXT,
-        allowNull: true,
-    },
-    image_link: {
         type: DataTypes.TEXT,
         allowNull: true,
     },
