@@ -93,9 +93,21 @@ const init_payment = sequelize.define("init_payment", {
         allowNull: true,
     },
 });
+const init_payment_images = sequelize.define("init_payment_images", {
+    init_payment_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
+    image: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+});
 
 Ticket.HasMany(Meetings_schedule);
 Meetings_schedule.belongsTo(Ticket);
 Ticket.HasMany(init_payment);
 init_payment.belongsTo(Ticket);
+init_payment.HasMany(init_payment_images);
+init_payment_images.belongsTo(init_payment);
 module.exports = { Ticket, Meetings_schedule };
