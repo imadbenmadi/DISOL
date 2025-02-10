@@ -18,15 +18,10 @@ const Service = sequelize.define("Service", {
         type: DataTypes.STRING,
         allowNull: false,
     },
-});
-const Services_type = sequelize.define("Services_type", {
-    type: {
-        type: DataTypes.STRING,
-        allowNull: false,
+    link: {
+        type: DataTypes.TEXT,
+        allowNull: true,
     },
 });
-Service.belongsTo(Services_type, {
-    foreignKey: "serviceId",
-    onDelete: "CASCADE",
-});
+
 module.exports = { Service };
