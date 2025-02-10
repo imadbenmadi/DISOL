@@ -5,6 +5,7 @@ const Admin = sequelize.define("Admin", {
     email: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true, // Ensures uniquenesss
     },
     password: {
         type: DataTypes.STRING,
