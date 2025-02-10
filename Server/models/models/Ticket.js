@@ -1,7 +1,11 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const sequelize = require("../../database/Mysql.database");
-
+const { Meetings_schedule } = require("./Meetings_schedule");
 const Ticket = sequelize.define("Ticket", {
+    userId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+    },
     firstName: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -25,7 +29,7 @@ const Ticket = sequelize.define("Ticket", {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    type: {
+    service_type: {
         type: DataTypes.STRING,
         allowNull: false,
     },
@@ -33,23 +37,16 @@ const Ticket = sequelize.define("Ticket", {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    workerId: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-    },
-    userId: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-    },
+
     projectId: {
         type: DataTypes.INTEGER,
         allowNull: true,
     },
-    init_payment_amount: {
-        type: DataTypes.DECIMAL(10, 2),
+    Deadline: {
+        type: DataTypes.DATE,
         allowNull: true,
     },
-    final_payment_amount: {
+    init_payment_amount: {
         type: DataTypes.DECIMAL(10, 2),
         allowNull: true,
     },
@@ -73,39 +70,32 @@ const Ticket = sequelize.define("Ticket", {
         type: DataTypes.TEXT,
         allowNull: true,
     },
-    meeting_link: {
-        type: DataTypes.STRING,
-        allowNull: true,
-    },
-    meeting_date: {
-        type: DataTypes.DATE,
-        allowNull: true,
-    },
-    meeting_time: {
-        type: DataTypes.TIME,
-        allowNull: true,
-    },
 });
-const Ticket_Meeting = sequelize.define("Ticket_Meeting", {
-    meeting_link: {
-        type: DataTypes.STRING,
+const init_payment = sequelize.define("init_payment", {
+    payment_amount: {
+        type: DataTypes.DECIMAL(10, 2),
         allowNull: true,
     },
-    meeting_date: {
+    payment_date: {
         type: DataTypes.DATE,
         allowNull: true,
     },
-    meeting_time: {
-        type: DataTypes.TIME,
+    payment_status: {
+        type: DataTypes.STRING,
         allowNull: true,
     },
-    admin_message: {
-        type: DataTypes.TEXT,
+    payment_method: {
+        type: DataTypes.STRING,
         allowNull: true,
     },
-    overview: {
+    payment_Image: {
         type: DataTypes.TEXT,
         allowNull: true,
     },
 });
-module.exports = Ticket;
+
+Ticket.HasMany(Meetings_schedule);
+Meetings_schedule.belongsTo(Ticket);
+Ticket.HasMany(init_payment);
+init_payment.belongsTo(Ticket);
+module.exports = { Ticket, Meetings_schedule };
