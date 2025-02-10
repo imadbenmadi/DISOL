@@ -12,6 +12,7 @@ const initialState = {
     Notifications: null,
     userId: null,
     userType: null,
+    Home_Content: null,
 };
 const reducer = (state, action) => {
     switch (action.type) {
@@ -45,6 +46,11 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 Notifications: action.payload,
+            };
+        case "SET_HOME_CONTENT":
+            return {
+                ...state,
+                Home_Content: action.payload,
             };
         default:
             return state;
@@ -84,6 +90,12 @@ export const AppProvider = ({ children }) => {
             payload: Notifications,
         });
     };
+    const set_Home_Content = (Home_Content) => {
+        dispatch({
+            type: "SET_HOME_CONTENT",
+            payload: Home_Content,
+        });
+    };
     const AppContextValue = {
         ...state,
         store_logout,
@@ -92,6 +104,7 @@ export const AppProvider = ({ children }) => {
         set_user,
         set_Messages,
         set_Notifications,
+        set_Home_Content,
     };
     return (
         <AppContext.Provider value={AppContextValue}>
