@@ -23,7 +23,7 @@ function Register() {
         });
     };
     // Handle form submission with reCAPTCHA
-    const handleSubmit = async (values, { setSubmitting }) => {
+    const handleSubmit = async (values, Navigate, { setSubmitting }) => {
         // Get reCAPTCHA value
         const recaptchaValue = recaptchaRef.current?.getValue();
 
@@ -42,7 +42,7 @@ function Register() {
         values.recaptcha = recaptchaValue;
 
         // Call your login function
-        await handleRegister(values, { setSubmitting });
+        await handleRegister(values, Navigate, { setSubmitting });
     };
     return (
         <div className="flex justify-center items-center h-screen">

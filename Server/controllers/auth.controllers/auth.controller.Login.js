@@ -81,6 +81,12 @@ const handleLogin = async (req, res) => {
         await Refresh_tokens.create({ userId: user.id, token: refreshToken });
 
         setCookies(res, accessToken, refreshToken);
+        console.log(
+            "Cookies from login:",
+            res.cookies?.refreshToken,
+            res.cookies?.accessToken
+        );
+        console.log("_________________________");
 
         return res.status(200).json({
             message: "Logged in successfully",

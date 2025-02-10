@@ -61,7 +61,7 @@ function Login() {
                                 handle_google_Login(response, Navigate)
                             }
                             onError={handleFailure}
-                            size="medium"
+                            // size="medium"
                             text="continue_with"
                         />
                     </div>

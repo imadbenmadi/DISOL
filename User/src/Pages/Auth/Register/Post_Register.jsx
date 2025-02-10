@@ -2,6 +2,18 @@ import Swal from "sweetalert2";
 import Axios from "axios";
 async function handleRegister(values, Navigate, { setSubmitting }) {
     try {
+        if (
+            !values.email ||
+            !values.password ||
+            !values.firstName ||
+            !values.lastName
+        ) {
+            Swal.fire("Error!", "Please fill all the fields", "error");
+            return;
+        } else if (!values.recaptcha) {
+            Swal.fire("Error!", "Please complete the reCAPTCHA test", "error");
+            return;
+        }
         let response = await Axios.post(
             "http://localhost:3000/Register",
             values,
