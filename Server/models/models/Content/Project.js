@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../../../database/Mysql.database");
 
-const Service = sequelize.define("Service", {
+const Project = sequelize.define("Project", {
     Title: {
         type: DataTypes.TEXT,
         allowNull: false,
@@ -24,4 +24,4 @@ const Service = sequelize.define("Service", {
     },
 });
 
-module.exports = { Service };
+module.exports = { Project };
