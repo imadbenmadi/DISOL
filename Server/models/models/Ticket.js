@@ -71,43 +71,8 @@ const Ticket = sequelize.define("Ticket", {
         allowNull: true,
     },
 });
-const init_payment = sequelize.define("init_payment", {
-    payment_amount: {
-        type: DataTypes.DECIMAL(10, 2),
-        allowNull: true,
-    },
-    payment_date: {
-        type: DataTypes.DATE,
-        allowNull: true,
-    },
-    payment_status: {
-        type: DataTypes.STRING,
-        allowNull: true,
-    },
-    payment_method: {
-        type: DataTypes.STRING,
-        allowNull: true,
-    },
-    payment_Image: {
-        type: DataTypes.TEXT,
-        allowNull: true,
-    },
-});
-const init_payment_images = sequelize.define("init_payment_images", {
-    init_payment_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-    },
-    image: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-});
 
 Ticket.HasMany(Meetings_schedule);
 Meetings_schedule.belongsTo(Ticket);
-Ticket.HasMany(init_payment);
-init_payment.belongsTo(Ticket);
-init_payment.HasMany(init_payment_images);
-init_payment_images.belongsTo(init_payment);
+
 module.exports = { Ticket, Meetings_schedule };

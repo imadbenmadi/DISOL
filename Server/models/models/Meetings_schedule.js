@@ -22,4 +22,4 @@ const Meetings_schedule = sequelize.define("Meetings_schedule", {
         allowNull: true,
     },
 });
-module.exports = { Meetings_schedule };
+module.exports = Meetings_schedule;
