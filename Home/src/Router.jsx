@@ -1,9 +1,11 @@
 import { createBrowserRouter } from "react-router-dom";
 
 import App from "./App";
-import Login from "./Components/Auth/Login/Login";
-import Register from "./Components/Auth/Register/Register";
+import Login from "./Pages/Auth/Login/Login";
+import Register from "./Pages/Auth/Register/Register";
 import Default from "./Default";
+
+import Home from "./Pages/Home/Home";
 
 import Not_Found from "./Components/Not_Found";
 import Not_Finished from "./Components/Not_Finished";
@@ -20,8 +22,13 @@ const routes = createBrowserRouter([
                 element: <Default />,
                 errorElement: <ErrorElement />,
             },
+            {
+                path: "/Home",
+                element: <Home />,
+            },
         ],
     },
+
     {
         path: "/Login",
         element: <Login />,

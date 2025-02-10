@@ -1,7 +1,19 @@
 import Swal from "sweetalert2";
 import Axios from "axios";
-async function handleRegister(values, { setSubmitting }) {
+async function handleRegister(values, Navigate, { setSubmitting }) {
     try {
+        if (
+            !values.email ||
+            !values.password ||
+            !values.firstName ||
+            !values.lastName
+        ) {
+            Swal.fire("Error!", "Please fill all the fields", "error");
+            return;
+        } else if (!values.recaptcha) {
+            Swal.fire("Error!", "Please complete the reCAPTCHA test", "error");
+            return;
+        }
         let response = await Axios.post(
             "http://localhost:3000/Register",
             values,
@@ -10,6 +22,8 @@ async function handleRegister(values, { setSubmitting }) {
                 validateStatus: () => true,
             }
         );
+        console.log(response);
+
         if (response.status == 200) {
             try {
                 let Login_response = await Axios.post(
@@ -21,18 +35,16 @@ async function handleRegister(values, { setSubmitting }) {
                     }
                 );
                 if (Login_response.status == 200) {
-                    if (Login_response.data.userType == "teacher") {
-                        window.location.href = `/Teacher`;
-                    } else if (Login_response.data.userType == "student") {
-                        window.location.href = `/Student`;
-                    } else {
-                        window.location.href = "/Login";
-                    }
+                    Swal.fire("Success!", "Logged in successfully", "success");
+                    // window.location.href = "/";
+                    Navigate("/");
                 } else {
-                    window.location.href = "/Login";
+                    // window.location.href = "/Login";
+                    Navigate("/Login");
                 }
             } catch (error) {
-                window.location.href = "/Login";
+                // window.location.href = "/Login";
+                Navigate("/Login");
             }
         } else if (response.status == 400) {
             setSubmitting(false);

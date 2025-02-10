@@ -7,8 +7,11 @@ function Default() {
     const { isAuth, userType, userId } = useAppContext();
     const Navigate = useNavigate();
     useEffect(() => {
-        if (!isAuth || !userType) Navigate("/Home");
-        else Navigate(`/Home`);
+        if (isAuth && userType && userId) {
+            Navigate("/Home");
+            return;
+        }
+        Navigate("/Login");
     }, []);
 }
 export default Default;
