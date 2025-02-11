@@ -1,12 +1,9 @@
 import React, { useRef } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Link, useNavigate } from "react-router-dom";
-import { GoogleLogin } from "@react-oauth/google";
 import Swal from "sweetalert2";
 import handleLogin from "./Post_Login";
-import { handle_google_Login } from "../Google_auth/handle_google_Login";
 import ReCAPTCHA from "react-google-recaptcha";
-import Google_auth_data from "../../../google-auth.json";
 
 function Login() {
     const Navigate = useNavigate();
@@ -52,18 +49,6 @@ function Login() {
                     <div className="pb-4">
                         <div className="text-3xl font-semibold">Log in</div>
                         <div>Sign in to get started.</div>
-                    </div>
-
-                    {/* Google Login Button */}
-                    <div className="w-fit mx-auto mb-4">
-                        <GoogleLogin
-                            onSuccess={(response) =>
-                                handle_google_Login(response, Navigate)
-                            }
-                            onError={handleFailure}
-                            // size="medium"
-                            text="continue_with"
-                        />
                     </div>
 
                     {/* Email and Password Login Form */}

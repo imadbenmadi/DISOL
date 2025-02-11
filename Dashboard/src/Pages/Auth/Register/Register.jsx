@@ -3,10 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import handleRegister from "./Post_Register";
-import { handle_google_Register } from "../Google_auth/handle_google_Register";
-import { GoogleLogin } from "@react-oauth/google";
 import ReCAPTCHA from "react-google-recaptcha";
-import Google_auth_data from "../../../google-auth.json";
 import Swal from "sweetalert2";
 import { useRef } from "react";
 function Register() {
@@ -61,17 +58,7 @@ function Register() {
                         </div>
                         <div>Let’s get started your freelance journey.</div>
                     </div>
-                    {/* Google Login Button */}
-                    <div className="w-fit mx-auto mb-4">
-                        <GoogleLogin
-                            onSuccess={(response) =>
-                                handle_google_Register(response, Navigate)
-                            }
-                            onError={handleFailure}
-                            size="medium"
-                            text="continue_with"
-                        />
-                    </div>
+                    
                     <div>
                         <Formik
                             initialValues={{
