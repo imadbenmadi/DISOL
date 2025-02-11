@@ -1,22 +1,58 @@
 import Register_image from "../../../../public/Register.png";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import handleRegister from "./Post_Register";
+import { handle_google_Register } from "../Google_auth/handle_google_Register";
+import { GoogleLogin } from "@react-oauth/google";
+import ReCAPTCHA from "react-google-recaptcha";
+import Google_auth_data from "../../../google-auth.json";
+import Swal from "sweetalert2";
+import { useRef } from "react";
 function Register() {
-    const [userType_value, setuserType_value] = useState("teacher");
-    function handle_change_UserType(value) {
-        setuserType_value(value);
-    }
+    const Navigate = useNavigate();
+    const recaptchaRef = useRef(); // Use ref for reCAPTCHA
+
+    // Handle Google OAuth2 failure
+    const handleFailure = (error) => {
+        console.error("Google Login Error:", error);
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong while logging in with Google. Please try again.",
+        });
+    };
+    // Handle form submission with reCAPTCHA
+    const handleSubmit = async (values, Navigate, { setSubmitting }) => {
+        // Get reCAPTCHA value
+        const recaptchaValue = recaptchaRef.current?.getValue();
+
+        // If reCAPTCHA is not completed, show an error
+        if (!recaptchaValue) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Please complete the reCAPTCHA.",
+            });
+            setSubmitting(false);
+            return;
+        }
+
+        // Add reCAPTCHA value to your login payload
+        values.recaptcha = recaptchaValue;
+
+        // Call your login function
+        await handleRegister(values, Navigate, { setSubmitting });
+    };
     return (
-        <div className="flex">
-            <div className=" w-1/2   hidden md:block   h-[calc(100vh)]">
+        <div className="flex justify-center items-center h-screen">
+            {/* <div className=" w-1/2   hidden md:block   h-[calc(100vh)]">
                 <img
                     src={Register_image}
                     alt="Login"
                     className=" w-full h-full object-contain "
                 />
-            </div>
+            </div> */}
             <div className="md:w-1/2 w-full h-screen  py-12 bg-white flex flex-col items-center justify-center ">
                 <div className=" w-[80%] text-black_text">
                     <div className=" pb-4 pt-24 md:pt-0 ">
@@ -25,11 +61,21 @@ function Register() {
                         </div>
                         <div>Let’s get started your freelance journey.</div>
                     </div>
-
+                    {/* Google Login Button */}
+                    <div className="w-fit mx-auto mb-4">
+                        <GoogleLogin
+                            onSuccess={(response) =>
+                                handle_google_Register(response, Navigate)
+                            }
+                            onError={handleFailure}
+                            size="medium"
+                            text="continue_with"
+                        />
+                    </div>
                     <div>
                         <Formik
                             initialValues={{
-                                userType: userType_value,
+                                userType: "user",
                                 firstName: "",
                                 lastName: "",
                                 email: "",
@@ -72,73 +118,13 @@ function Register() {
                             }}
                             onSubmit={(values, { setSubmitting }) => {
                                 // setSubmitting(false);
-                                handleRegister(values, { setSubmitting });
+                                handleSubmit(values, Navigate, {
+                                    setSubmitting,
+                                });
                             }}
                         >
                             {({ isSubmitting, setFieldValue }) => (
                                 <Form className="  flex flex-col text-sm md:text-lg  gap-4 text-black_text">
-                                    <div className="  flex items-center justify-center gap-4 md:gap-8 w-full text-gray_v">
-                                        <div
-                                            className={` cursor-pointer flex items-center justify-between gap-2  ${
-                                                userType_value == "teacher"
-                                                    ? "border-2 border-perpol_v text-perpol_v"
-                                                    : "border border-gray_white text-gray-400"
-                                            } rounded-lg  text-base py-1 font-semibold px-4`}
-                                            onClick={() => {
-                                                setFieldValue(
-                                                    "userType",
-                                                    "teacher"
-                                                ),
-                                                    handle_change_UserType(
-                                                        "teacher"
-                                                    );
-                                            }}
-                                        >
-                                            <div
-                                                className={` w-4 h-4 rounded-full border-2 ${
-                                                    userType_value == "teacher"
-                                                        ? "border-perpol_v"
-                                                        : "border-gray_white"
-                                                } flex items-center justify-center`}
-                                            >
-                                                {userType_value ==
-                                                    "teacher" && (
-                                                    <div className=" w-2 h-2 rounded-full bg-perpol_v"></div>
-                                                )}
-                                            </div>
-                                            <div>Teacher</div>
-                                        </div>
-                                        <div
-                                            className={` cursor-pointer flex items-center justify-between gap-2  ${
-                                                userType_value == "student"
-                                                    ? "border-2 border-perpol_v text-perpol_v"
-                                                    : "border border-gray_white text-gray-400"
-                                            } rounded-lg  text-base py-1 font-semibold px-4`}
-                                            onClick={() => {
-                                                setFieldValue(
-                                                    "userType",
-                                                    "student"
-                                                ),
-                                                    handle_change_UserType(
-                                                        "student"
-                                                    );
-                                            }}
-                                        >
-                                            <div
-                                                className={` w-4 h-4 rounded-full border-2 ${
-                                                    userType_value == "student"
-                                                        ? "border-perpol_v"
-                                                        : "border-gray_white"
-                                                } flex items-center justify-center`}
-                                            >
-                                                {userType_value ==
-                                                    "student" && (
-                                                    <div className=" w-2 h-2 rounded-full bg-perpol_v"></div>
-                                                )}
-                                            </div>
-                                            <div>Student</div>
-                                        </div>
-                                    </div>
                                     <div className=" flex flex-col md:flex-row items-center justify-center gap-6 md:gap-4 w-full pb-6 ">
                                         <div className="w-full  md:w-[50%]  relative">
                                             <div className="  font-semibold text-sm pb-1">
@@ -214,6 +200,13 @@ function Register() {
                                         />
                                     </div>
 
+                                    {/* reCAPTCHA */}
+                                    <ReCAPTCHA
+                                        ref={recaptchaRef}
+                                        sitekey={
+                                            Google_auth_data.CAPATCHA_SITE_KEY
+                                        } // Replace with your reCAPTCHA site key
+                                    />
                                     {isSubmitting ? (
                                         <span className="small-loader my-5  m-auto"></span>
                                     ) : (

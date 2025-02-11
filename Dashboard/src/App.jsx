@@ -20,6 +20,7 @@ function App() {
                         validateStatus: () => true,
                     }
                 );
+                console.log("response from check auth", response);
 
                 if (response.status == 200) {
                     // store_login(response.data.userId, response.data.userType);
@@ -30,8 +31,6 @@ function App() {
                     }
                     set_Auth(true);
                     store_login(response.data.userId, response.data.userType);
-
-                    
                 } else {
                     set_Auth(false);
                 }
@@ -39,7 +38,6 @@ function App() {
                 set_Auth(false);
             }
         };
-        
 
         const fetch_fonts = () => {
             return new Promise((resolve) => {
@@ -79,7 +77,7 @@ function App() {
         );
     } else
         return (
-            <div className=" text-right">
+            <div className="">
                 <Outlet />
             </div>
         );
