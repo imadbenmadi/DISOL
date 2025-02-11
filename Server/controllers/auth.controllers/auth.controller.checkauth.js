@@ -112,7 +112,7 @@ const getUserSecrets = (userType) => {
 // router.get("/", async (req, res) => {
 const checkAuth = async (req, res) => {
     const { accessToken, refreshToken } = req.cookies;
-    console.log("Cookies:", req.cookies.refreshToken, req.cookies.accessToken);
+    console.log("Incoming cookies:", req.cookies); // Log the received cookies
 
     if (!accessToken || !refreshToken) {
         clearCookies(res);

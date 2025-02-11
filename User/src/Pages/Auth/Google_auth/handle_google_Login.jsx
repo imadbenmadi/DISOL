@@ -25,7 +25,7 @@ export const handle_google_Login = async (response, Navigate) => {
                 text: "You have successfully logged in with Google!",
             });
             // window.location.href = `/`;
-            // Navigate("/");
+            Navigate("/");
         } else if (res.status === 401) {
             Swal.fire({
                 icon: "error",

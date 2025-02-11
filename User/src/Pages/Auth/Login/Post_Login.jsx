@@ -20,7 +20,7 @@ async function handleLogin(values, { setSubmitting }) {
 
             Swal.fire("Success!", "Logged in successfully", "success");
             // window.location.href = `/`;
-            // Navigate("/");
+            Navigate("/");
         } else if (response.status == 401) {
             Swal.fire("Error!", "Username or Password isn't correct", "error");
         } else if (response.status == 409) {

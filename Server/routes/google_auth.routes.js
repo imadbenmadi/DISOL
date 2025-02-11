@@ -5,17 +5,8 @@ const { OAuth2Client } = require("google-auth-library");
 const { Users, Refresh_tokens } = require("../models/init");
 const Welcome_Email = require("../jobs/Emails/Welcome");
 
-const app = express();
 const router = express.Router();
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
-
-// CORS Configuration
-const corsOptions = {
-    origin: "http://your-frontend-domain.com", // Replace with your frontend domain
-    credentials: true,
-};
-
-app.use(cors(corsOptions));
 
 // Helper function to generate tokens
 const generateTokens = (userId, userType, accessSecret, refreshSecret) => {
@@ -33,20 +24,23 @@ const generateTokens = (userId, userType, accessSecret, refreshSecret) => {
 
 // Helper function to set cookies
 const setCookies = (res, accessToken, refreshToken) => {
+    console.log("Setting cookies:", { accessToken, refreshToken }); // Debug log
+
     res.cookie("accessToken", accessToken, {
         httpOnly: true,
         sameSite: "None",
-        secure: true,
+        secure: true, // If testing locally, set this to false
         maxAge: 60 * 60 * 1000, // 1 hour
     });
+
     res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
         sameSite: "None",
-        secure: true,
+        secure: true, // If testing locally, set this to false
         maxAge: 24 * 60 * 60 * 1000, // 1 day
     });
-    console.log("setCookies:", res.cookies);
-    console.log("__________________________");
+
+    console.log("Cookies set successfully"); // Debug log
 };
 
 // Helper function to verify Google token
@@ -135,8 +129,6 @@ const handleAuth = async (req, res, isRegister) => {
 
         // Send welcome email for new users
         // if (isUserCreated) Welcome_Email(user.email, user.firstName);
-        console.log("Cookies from google auth:", res.cookies);
-        console.log("__________________________");
 
         // Send response
         return res.status(200).json({
