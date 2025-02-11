@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import handleLogin from "./Post_Login";
 import ReCAPTCHA from "react-google-recaptcha";
+import Google_auth_data from "../../../google-auth.json";
 
 function Login() {
     const Navigate = useNavigate();
@@ -29,7 +30,7 @@ function Login() {
         values.recaptcha = recaptchaValue;
 
         // Call your login function
-        await handleLogin(values, { setSubmitting });
+        await handleLogin(values, Navigate, { setSubmitting });
     };
 
     return (

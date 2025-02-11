@@ -1,6 +1,6 @@
 import Swal from "sweetalert2";
 import Axios from "axios";
-async function handleLogin(values, { setSubmitting }) {
+async function handleLogin(values, Navigate, { setSubmitting }) {
     try {
         if (!values.email || !values.password) {
             Swal.fire("Error!", "Please fill all the fields", "error");
@@ -32,6 +32,7 @@ async function handleLogin(values, { setSubmitting }) {
         }
     } catch (error) {
         Swal.fire("Error!", `Something Went Wrong `, "error");
+        console.log(error);
     } finally {
         setSubmitting(false);
     }

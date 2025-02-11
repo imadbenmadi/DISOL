@@ -42,7 +42,7 @@ function Login() {
         values.recaptcha = recaptchaValue;
 
         // Call your login function
-        await handleLogin(values, { setSubmitting });
+        await handleLogin(values, Navigate, { setSubmitting });
     };
 
     return (

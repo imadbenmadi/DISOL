@@ -6,6 +6,8 @@ import handleRegister from "./Post_Register";
 import ReCAPTCHA from "react-google-recaptcha";
 import Swal from "sweetalert2";
 import { useRef } from "react";
+import Google_auth_data from "../../../google-auth.json";
+
 function Register() {
     const Navigate = useNavigate();
     const recaptchaRef = useRef(); // Use ref for reCAPTCHA
