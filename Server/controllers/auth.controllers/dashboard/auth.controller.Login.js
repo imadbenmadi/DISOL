@@ -1,6 +1,6 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
-const { Admins, Workers, Users, Refresh_tokens } = require("../../models/init");
+const { Admins, Workers, Users, Refresh_tokens } = require("../../../models/init");
 
 const generateTokens = (userId, userType, accessSecret, refreshSecret) => {
     const accessToken = jwt.sign({ userId, userType }, accessSecret, {

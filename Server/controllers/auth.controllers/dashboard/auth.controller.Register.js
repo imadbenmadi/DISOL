@@ -1,5 +1,5 @@
-const { Users, Admins, Workers } = require("../../models/init");
-const Welcome_Email = require("../../jobs/Emails/Welcome");
+const { Users, Admins, Workers } = require("../../../models/init");
+const Welcome_Email = require("../../../jobs/Emails/Welcome");
 const handleRegister = async (req, res) => {
     try {
         const { firstName, lastName, email, password } = req.body;
