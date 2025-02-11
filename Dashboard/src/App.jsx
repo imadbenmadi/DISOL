@@ -3,8 +3,9 @@ import { useState, useEffect } from "react";
 import { Outlet } from "react-router";
 import axios from "axios";
 import { useNavigate } from "react-router";
-import Logo from "../public/Logo.png";
+import Logo from "../public/Logo/Logo.jpg";
 import { useAppContext } from "./AppContext";
+import NavBar from "./Components/Main_NavBar/NavBar";
 function App() {
     const Navigate = useNavigate();
     const [loading, setLoading] = useState(true);
@@ -77,8 +78,13 @@ function App() {
         );
     } else
         return (
-            <div className="">
-                <Outlet />
+            <div className="relative h-screen overflow-y-auto custom-overflow overflow-x-hidden flex items-start justify-start  ">
+                <div className="  h-screen overflow-y-auto custom-overflow shrink-0 ">
+                    <NavBar />
+                </div>
+                <div className=" pt-[60px] md:pt-0 w-screen md:w-[calc(100vw-210px)] h-screen overflow-y-auto custom-overflow">
+                    <Outlet />
+                </div>
             </div>
         );
 }

@@ -7,7 +7,7 @@ import { TbLogout2 } from "react-icons/tb";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
-import Logo from "../../../public/Logo.png";
+import Logo from "../../../public/Logo/Logo.jpg";
 import { GoHome } from "react-icons/go";
 import { PiListFill } from "react-icons/pi";
 import { RiContactsLine } from "react-icons/ri";

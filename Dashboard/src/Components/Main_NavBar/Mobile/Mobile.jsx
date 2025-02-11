@@ -3,7 +3,7 @@ import { useState } from "react";
 import Menu_Toogler from "./Menu_Toogler";
 import Mobile_Nav_Items from "./Mobile_Nav_Items";
 import { Link } from "react-router-dom";
-import Logo from "../../../../public/Logo.png";
+import Logo from "../../../../public/Logo/Logo.jpg";
 
 function Mobile_Nav() {
     const [MobileNav_Open, set_MobileNav_Open] = useState(false);

@@ -1,4 +1,4 @@
-import Login_image from "../../../../public/Login.jpg";
+import Login_image from "../../../../public/Login.png";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Link } from "react-router-dom";
 import handleLogin from "./Post_Login";
