@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.use(authRoutes);
 router.use(google_auth_rout);
-// router.use("/dashboard", dashboardRoutes);
+router.use("/dashboard", dashboardRoutes);
 // router.use("/user", userRoutes);
 
 // router.use("/check_Auth", require("./Auth/check_Auth"));
