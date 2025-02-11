@@ -63,7 +63,7 @@ function Card({ Demand, Demands, setDemands }) {
         <div
             key={Demand?.id}
             className="flex flex-col md;flex-row justify-between py-4 px-7  border-2 
-                         border-yallow_v rounded-lg  mt-6 text-gray_v"
+                         border-blue_v rounded-lg  mt-6 text-gray_v"
         >
             <div className="w-full md:w-full shrink-0">
                 <div className="flex flex-col gap-4  text-gray_v font-semibold text-sm ">
@@ -76,7 +76,7 @@ function Card({ Demand, Demands, setDemands }) {
 
                         <a
                             href={`mailto:${Demand?.email}`}
-                            className="text-yallow_v"
+                            className="text-blue_v"
                         >
                             {Demand?.email}
                         </a>
@@ -86,14 +86,14 @@ function Card({ Demand, Demands, setDemands }) {
 
                         <a
                             href={`mailto:${Demand?.telephone}`}
-                            className="text-yallow_v"
+                            className="text-blue_v"
                         >
                             {Demand?.telephone}
                         </a>
                     </div>
                     <div className=" flex items-center gap-2 ">
                         <MdCategory className=" text-xl" />
-                        <div className="text-yallow_v">{Demand?.type}</div>
+                        <div className="text-blue_v">{Demand?.type}</div>
                     </div>
                 </div>
                 <div className=" font-semibold text-gray_v py-6 md:px-4 break-all">
@@ -102,7 +102,7 @@ function Card({ Demand, Demands, setDemands }) {
                             {Demand?.description}
                             <span
                                 onClick={Toogle_Show_More}
-                                className=" text-yallow_v cursor-pointer flex items-center gap-1  "
+                                className=" text-blue_v cursor-pointer flex items-center gap-1  "
                             >
                                 {" "}
                                 Afficher moins <FaAngleUp />
@@ -120,7 +120,7 @@ function Card({ Demand, Demands, setDemands }) {
                                 Demand?.description.length > 500 && (
                                     <div
                                         onClick={Toogle_Show_More}
-                                        className=" text-yallow_v cursor-pointer flex items-center gap-1  "
+                                        className=" text-blue_v cursor-pointer flex items-center gap-1  "
                                     >
                                         {" "}
                                         Afficher plus <FaAngleDown />

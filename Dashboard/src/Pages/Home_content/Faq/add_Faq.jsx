@@ -37,7 +37,7 @@ const Add_Faq = () => {
 
     return (
         <div className="max-w-3xl overflow-auto mx-auto p-6 bg-white shadow-lg rounded-lg">
-            <h2 className="text-2xl font-semibold mb-6 text-center  text-yallow_v">
+            <h2 className="text-2xl font-semibold mb-6 text-center  text-blue_v">
                 Ajouter un FaQ
             </h2>
             <Formik

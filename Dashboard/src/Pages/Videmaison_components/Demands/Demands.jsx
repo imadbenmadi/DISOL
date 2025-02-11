@@ -151,7 +151,7 @@ function Demands() {
     else
         return (
             <div className="py-6 px-4">
-                <div className="text-xl font-semibold text-yallow_v">
+                <div className="text-xl font-semibold text-blue_v">
                     Gestion des demandes
                 </div>
                 <div className="w-[90%] md:w-[60%] mx-auto ">
@@ -225,7 +225,7 @@ function Demands() {
                                     <div className="font-semibold text-2xl">
                                         {Demands?.length}
                                     </div>
-                                    <div className="shrink-0 text-yallow_v border border-gray_white px-2 py-1 flex items-center justify-center rounded-lg shadow-lg">
+                                    <div className="shrink-0 text-blue_v border border-gray_white px-2 py-1 flex items-center justify-center rounded-lg shadow-lg">
                                         <BiMessage className="shrink-0 text-2xl" />
                                     </div>
                                 </div>

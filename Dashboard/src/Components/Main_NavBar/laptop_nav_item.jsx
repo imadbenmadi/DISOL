@@ -7,8 +7,8 @@ function LaptopNavItem({ Link, name, Active_nav, Icon }) {
             to={Link}
             className={`${
                 Active_nav == Link
-                    ? "bg-yallow_v text-white px-4"
-                    : "bg-white hover:text-yallow_v text-gray_v"
+                    ? "bg-blue_v text-white px-4"
+                    : "bg-white hover:text-blue_v text-gray_v"
             } transition-all duration-150 flex gap-2 cursor-pointer py-1 select-none w-[150px] rounded-full`}
         >
             {Icon && <Icon className="text-lg" />} {name}

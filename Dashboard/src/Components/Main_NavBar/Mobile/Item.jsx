@@ -9,8 +9,8 @@ function Item({ Link, name, Active_nav, Icon, onClick }) {
                 onClick={onClick}
                 className={`${
                     Active_nav === Link
-                        ? "bg-yallow_v text-white px-4"
-                        : "bg-white hover:text-yallow_v text-gray_v"
+                        ? "bg-blue_v text-white px-4"
+                        : "bg-white hover:text-blue_v text-gray_v"
                 } transition-all duration-150 flex gap-2 items-center cursor-pointer py-1 select-none w-fit rounded-full`}
             >
                 {Icon && <Icon className="text-lg" />} <span>{name}</span>

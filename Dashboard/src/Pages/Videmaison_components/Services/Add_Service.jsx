@@ -67,7 +67,7 @@ function Add_Service() {
     return (
         <div className="flex justify-center items-center min-h-screen bg-gray-100">
             <div className="w-full max-w-lg py-12 px-8 bg-white shadow-lg rounded-lg text-center">
-                <h2 className="text-3xl font-semibold mb-6 text-yallow_v">
+                <h2 className="text-3xl font-semibold mb-6 text-blue_v">
                     Ajouter un nouveau Service{" "}
                 </h2>
 

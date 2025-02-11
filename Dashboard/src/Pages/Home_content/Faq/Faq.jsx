@@ -67,7 +67,7 @@ function Faqs() {
     else
         return (
             <div className=" py-6 px-4">
-                <div className=" text-xl font-semibold text-yallow_v"> FAQ</div>
+                <div className=" text-xl font-semibold text-blue_v"> FAQ</div>
 
                 {!Faqs || Faqs?.length == 0 ? (
                     <div className=" flex flex-col gap-2 items-center justify-center">

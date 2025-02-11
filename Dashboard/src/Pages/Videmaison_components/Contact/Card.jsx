@@ -61,7 +61,7 @@ function Card({ Message, Messages, setMessages }) {
         <div
             key={Message?.id}
             className="flex flex-col md;flex-row justify-between py-4 px-7  border-2 
-                         border-yallow_v rounded-lg  mt-6 text-gray_v"
+                         border-blue_v rounded-lg  mt-6 text-gray_v"
         >
             <div className="w-full md:w-full shrink-0">
                 <div className="flex flex-col gap-4  text-gray_v font-semibold text-sm ">
@@ -74,7 +74,7 @@ function Card({ Message, Messages, setMessages }) {
 
                         <a
                             href={`mailto:${Message?.email}`}
-                            className="text-yallow_v"
+                            className="text-blue_v"
                         >
                             {Message?.email}
                         </a>
@@ -86,7 +86,7 @@ function Card({ Message, Messages, setMessages }) {
                             {Message?.message}
                             <span
                                 onClick={Toogle_Show_More}
-                                className=" text-yallow_v cursor-pointer flex items-center gap-1  "
+                                className=" text-blue_v cursor-pointer flex items-center gap-1  "
                             >
                                 {" "}
                                 Afficher moins <FaAngleUp />
@@ -98,7 +98,7 @@ function Card({ Message, Messages, setMessages }) {
                             {Message?.message.length > 500 && (
                                 <div
                                     onClick={Toogle_Show_More}
-                                    className=" text-yallow_v cursor-pointer flex items-center gap-1  "
+                                    className=" text-blue_v cursor-pointer flex items-center gap-1  "
                                 >
                                     {" "}
                                     Afficher plus <FaAngleDown />
