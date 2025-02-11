@@ -6,7 +6,6 @@ const initialize_Middleware = require("./middleware/init");
 const appRoutes = require("./routes/App.routes");
 const { initializeDirectories } = require("./helpers/Directory.helper");
 const initializeDatabase = require("./database/init"); // Import the sequelize instance for DISOL database
-
 dotenv.config();
 
 // Initialize the database

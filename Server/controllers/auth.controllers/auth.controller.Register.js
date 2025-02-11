@@ -79,7 +79,7 @@ const handleRegister = async (req, res) => {
             return res.status(500).json({ message: "Error Creating User" });
         }
         // Send Welcome Email
-        Welcome_Email(email, firstName);
+        // Welcome_Email(email, firstName);
 
         return res.status(200).json({
             message: "Account Created Successfully",

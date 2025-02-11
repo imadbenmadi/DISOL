@@ -134,7 +134,7 @@ const handleAuth = async (req, res, isRegister) => {
         setCookies(res, accessToken, refreshToken);
 
         // Send welcome email for new users
-        if (isUserCreated) Welcome_Email(user.email, user.firstName);
+        // if (isUserCreated) Welcome_Email(user.email, user.firstName);
         console.log("Cookies from google auth:", res.cookies);
         console.log("__________________________");
 
