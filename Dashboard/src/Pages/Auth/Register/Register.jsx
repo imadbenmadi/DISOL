@@ -54,16 +54,17 @@ function Register() {
                 <div className=" w-[80%] text-black_text">
                     <div className=" pb-4 pt-24 md:pt-0 ">
                         <div className=" text-3xl font-semibold ">
-                            Create an account
+                            Create an admin account
                         </div>
-                        <div>Let’s get started your freelance journey.</div>
+                        <div>make sure to select the admin role.</div>
                     </div>
-                    
+
                     <div>
                         <Formik
                             initialValues={{
                                 userType: "user",
                                 firstName: "",
+                                role: "admin",
                                 lastName: "",
                                 email: "",
                                 password: "",

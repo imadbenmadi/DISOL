@@ -9,16 +9,6 @@ function Login() {
     const Navigate = useNavigate();
     const recaptchaRef = useRef(); // Use ref for reCAPTCHA
 
-    // Handle Google OAuth2 failure
-    const handleFailure = (error) => {
-        console.error("Google Login Error:", error);
-        Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Something went wrong while logging in with Google. Please try again.",
-        });
-    };
-
     // Handle form submission with reCAPTCHA
     const handleSubmit = async (values, { setSubmitting }) => {
         // Get reCAPTCHA value
@@ -48,13 +38,13 @@ function Login() {
                 <div className="w-[80%] text-black_text">
                     <div className="pb-4">
                         <div className="text-3xl font-semibold">Log in</div>
-                        <div>Sign in to get started.</div>
+                        <div>Welcome back admin.</div>
                     </div>
 
                     {/* Email and Password Login Form */}
                     <Formik
                         initialValues={{
-                            userType: "user",
+                            userType: "admin",
                             email: "",
                             password: "",
                         }}
