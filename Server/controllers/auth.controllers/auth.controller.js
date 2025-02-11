@@ -12,7 +12,4 @@ module.exports = {
     auth_controller_Login,
     auth_controller_Logout,
     auth_controller_Register,
-    admin_auth_controller_Login,
-    admin_auth_controller_Register,
-    admin_auth_controller_Logout,
 };

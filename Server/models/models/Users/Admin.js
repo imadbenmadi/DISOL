@@ -11,17 +11,13 @@ const Admin = sequelize.define("Admin", {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    firstName: {
+    name: {
         type: DataTypes.STRING,
         allowNull: true,
     },
-    lastName: {
-        type: DataTypes.STRING,
-        allowNull: true,
-    },
-    telephone: {
-        type: DataTypes.STRING,
-        allowNull: true,
+    role: {
+        type: DataTypes.ENUM("admin", "superadmin"),
+        allowNull: false,
     },
 });
 

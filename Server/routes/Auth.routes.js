@@ -7,7 +7,5 @@ router.post("/Register", authController.auth_controller_Register);
 router.post("/Logout", authController.auth_controller_Logout);
 router.get("/Check_Auth", authController.auth_controller_checkauth);
 
-router.post("/dashboard/Login", authController.admin_auth_controller_Login);
-router.post("/dashboard/Register", authController.admin_auth_controller_Register);
 
 module.exports = router;
