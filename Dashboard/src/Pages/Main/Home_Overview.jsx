@@ -17,8 +17,8 @@ function Home_Overview() {
         <div className="w-full h-full flex flex-col items-center justify-center p-4">
             {/* Loading State */}
             {isLoading && (
-                <div className="flex items-center justify-center">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+                <div className="flex items-center justify-center text-blue_v">
+                    <span className="loader"></span>
                     <span className="ml-2">Loading website...</span>
                 </div>
             )}

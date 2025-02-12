@@ -86,14 +86,17 @@ function Laptop() {
                 </div>
                 {open && (
                     <div className="flex flex-col gap-4 pl-8 pb-4">
-                        <div className="flex flex-col gap-2 mt-6">
-                            <LaptopNavItem
-                                Link="Home"
-                                name="Overview"
-                                Active_nav={Active_nav}
-                                Icon={GoHome}
-                            />
-
+                        <div className="flex flex-col gap-5 mt-6">
+                            <Section title="Main" Icon={GoHome}>
+                                <div className="flex flex-col gap-1 pl-2">
+                                    <LaptopNavItem
+                                        Link="/Main/Home_Overview"
+                                        name="Home Page Overview"
+                                        Active_nav={Active_nav}
+                                        Icon={null}
+                                    />
+                                </div>
+                            </Section>
                             <Section title="Edit Content" Icon={FaRegEdit}>
                                 <div className="flex flex-col gap-1 pl-2">
                                     <LaptopNavItem
