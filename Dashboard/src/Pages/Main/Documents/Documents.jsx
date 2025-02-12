@@ -61,7 +61,9 @@ export default function FileManager() {
                     withCredentials: true,
                 }
             );
-            setFiles(files.filter((file) => file.id !== fileId));
+            setFiles((prevFiles) =>
+                prevFiles.filter((file) => file.id !== fileId)
+            );
         } catch (error) {
             console.error("Error deleting file:", error);
         }

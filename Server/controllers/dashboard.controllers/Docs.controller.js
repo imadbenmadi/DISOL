@@ -1,19 +1,26 @@
-const { File, Folder } = require("../../models/init");
-const { Op } = require("sequelize");
-const drive = require("../../middleware/googleAuth");
 const formidable = require("formidable");
+const fs = require("fs");
+const path = require("path");
+const { google } = require("googleapis");
 
+// Load Service Account JSON
+const serviceAuth = new google.auth.GoogleAuth({
+    keyFile: path.join(__dirname, "../../Google_Services/Service_google.json"), // Replace with your JSON key file
+    scopes: ["https://www.googleapis.com/auth/drive"],
+});
+
+const drive = google.drive({ version: "v3", auth: serviceAuth });
+
+// Folder ID where files will be uploaded
+const FOLDER_ID = "1euwDiYqfHIW-cbUvlorDDSmZRFFYYNUf"; // Replace with the shared folder ID
+
+// Get List of Files
 const GetDocs = async (req, res) => {
-    if (!drive) {
-        console.error("Google Drive API is not initialized properly.");
-        return res.status(500).json({ message: "Google Drive API error" });
-    }
-    
     try {
         const response = await drive.files.list({
+            q: `'${FOLDER_ID}' in parents`, // Get only files from the shared folder
             fields: "files(id, name, mimeType, webViewLink, webContentLink)",
         });
-        console.log(response.data.files);
 
         const files = response.data.files.map((file) => ({
             id: file.id,
@@ -31,33 +38,30 @@ const GetDocs = async (req, res) => {
         return res.status(500).json({ message: "Error fetching files" });
     }
 };
+
+// Upload a File
 const AddDoc = async (req, res) => {
-    if (!drive) {
-        console.error("Google Drive API is not initialized properly.");
-        return res.status(500).json({ message: "Google Drive API error" });
-    }
     try {
         const form = new formidable.IncomingForm();
         form.parse(req, async (err, fields, files) => {
             if (err)
                 return res.status(400).json({ message: "File upload error" });
 
-            const { fileType, fileSize } = fields;
             const file = files.file;
-
             if (!file)
                 return res.status(400).json({ message: "No file uploaded" });
 
+            const fileStream = fs.createReadStream(file.filepath);
+            const fileMetadata = {
+                name: file.newFilename || "uploaded_file",
+                mimeType: file.mimetype || "application/octet-stream",
+                parents: [FOLDER_ID],
+            };
+
             // Upload to Google Drive
             const response = await drive.files.create({
-                requestBody: {
-                    name: file.originalFilename,
-                    mimeType: file.mimetype,
-                },
-                media: {
-                    mimeType: file.mimetype,
-                    body: fs.createReadStream(file.filepath),
-                },
+                requestBody: fileMetadata,
+                media: { mimeType: fileMetadata.mimeType, body: fileStream },
             });
 
             const fileId = response.data.id;
@@ -70,7 +74,7 @@ const AddDoc = async (req, res) => {
 
             const fileUrl = `https://drive.google.com/uc?id=${fileId}`;
 
-            return res.status(200).json({ fileUrl, fileType, fileSize });
+            return res.status(200).json({ fileUrl });
         });
     } catch (error) {
         console.error(error);
@@ -78,12 +82,8 @@ const AddDoc = async (req, res) => {
     }
 };
 const DeleteDoc = async (req, res) => {
-    if (!drive) {
-        console.error("Google Drive API is not initialized properly.");
-        return res.status(500).json({ message: "Google Drive API error" });
-    }
     try {
-        const { fileId } = req.params;
+        const fileId = req.params.fileId; // Correctly extract fileId
 
         await drive.files.delete({ fileId });
 
@@ -93,6 +93,7 @@ const DeleteDoc = async (req, res) => {
         return res.status(500).json({ message: "Error deleting file" });
     }
 };
+
 module.exports = {
     GetDocs,
     AddDoc,
