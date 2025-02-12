@@ -8,6 +8,7 @@ const GetDocs = async (req, res) => {
         console.error("Google Drive API is not initialized properly.");
         return res.status(500).json({ message: "Google Drive API error" });
     }
+    
     try {
         const response = await drive.files.list({
             fields: "files(id, name, mimeType, webViewLink, webContentLink)",
