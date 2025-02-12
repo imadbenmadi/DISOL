@@ -9,7 +9,9 @@ export default function FileManager() {
     // Fetch files from backend
     const fetchFiles = async () => {
         try {
-            const response = await axios.get("http://localhost:3000/Documents");
+            const response = await axios.get(
+                "http://localhost:3000/dashboard/Documents"
+            );
             setFiles(response.data.files);
         } catch (error) {
             console.error("Error fetching files:", error);
@@ -30,7 +32,7 @@ export default function FileManager() {
 
         setLoading(true);
         try {
-            await axios.post("http://localhost:3000/Documents", formData, {
+            await axios.post("http://localhost:3000/dashboard/Documents", formData, {
                 headers: { "Content-Type": "multipart/form-data" },
             });
             fetchFiles();
@@ -43,7 +45,9 @@ export default function FileManager() {
     // Delete a file
     const handleDelete = async (fileId) => {
         try {
-            await axios.delete(`http://localhost:3000/Documents/${fileId}`);
+            await axios.delete(
+                `http://localhost:3000/dashboard/Documents/${fileId}`
+            );
             setFiles(files.filter((file) => file.id !== fileId));
         } catch (error) {
             console.error("Error deleting file:", error);
