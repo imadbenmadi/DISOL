@@ -10,7 +10,7 @@ import Home from "./Pages/Home/Home";
 import Not_Found from "./Components/Not_Found";
 import Not_Finished from "./Components/Not_Finished";
 import ErrorElement from "./Components/ErrorElement";
-
+import ProtectedRoute from "./ProtectedRoute";
 const routes = createBrowserRouter([
     {
         path: "/",
@@ -23,8 +23,13 @@ const routes = createBrowserRouter([
                 errorElement: <ErrorElement />,
             },
             {
-                path: "/Home",
-                element: <Home />,
+                element: <ProtectedRoute />, // This protects all child routes
+                children: [
+                    {
+                        path: "/Home",
+                        element: <Home />,
+                    },
+                ],
             },
         ],
     },

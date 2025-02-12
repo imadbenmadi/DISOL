@@ -8,7 +8,7 @@ import Default from "./Default";
 import Not_Found from "./Components/Not_Found";
 import Not_Finished from "./Components/Not_Finished";
 import ErrorElement from "./Components/ErrorElement";
-
+import ProtectedRoute from "./ProtectedRoute";
 const routes = createBrowserRouter([
     {
         path: "/",
@@ -19,6 +19,10 @@ const routes = createBrowserRouter([
                 index: true,
                 element: <Default />,
                 errorElement: <ErrorElement />,
+            },
+            {
+                element: <ProtectedRoute />, // This protects all child routes
+                children: [],
             },
         ],
     },
