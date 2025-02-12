@@ -59,13 +59,26 @@ function App() {
             });
         };
 
+        let intervalId; // Store interval ID
+
         Promise.all([fetch_fonts(), fetchData()])
             .then(() => {
                 setLoading(false);
             })
+            .then(() => {
+                intervalId = setInterval(() => {
+                    fetchData();
+                }, 60000);
+            })
             .catch(() => {
                 setLoading(false);
             });
+        // Clear interval on unmount
+        return () => {
+            if (intervalId) {
+                clearInterval(intervalId);
+            }
+        };
     }, []);
     if (loading) {
         return (

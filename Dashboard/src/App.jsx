@@ -21,11 +21,8 @@ function App() {
                         validateStatus: () => true,
                     }
                 );
-                console.log("response from check auth", response);
 
-                if (response.status == 200) {
-                    // store_login(response.data.userId, response.data.userType);
-                    // setUserType(response.data.userType);
+                if (response.status === 200) {
                     if (!response.data.userType || !response.data.userId) {
                         set_Auth(false);
                         return;
@@ -61,14 +58,28 @@ function App() {
             });
         };
 
+        let intervalId; // Store interval ID
+
         Promise.all([fetch_fonts(), fetchData()])
             .then(() => {
                 setLoading(false);
             })
+            .then(() => {
+                intervalId = setInterval(() => {
+                    fetchData();
+                }, 60000);
+            })
             .catch(() => {
                 setLoading(false);
             });
+        // Clear interval on unmount
+        return () => {
+            if (intervalId) {
+                clearInterval(intervalId);
+            }
+        };
     }, []);
+
     if (loading) {
         return (
             <div className=" w-screen h-screen flex flex-col items-center justify-center">

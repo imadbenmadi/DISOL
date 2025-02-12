@@ -20,7 +20,6 @@ function App() {
                         validateStatus: () => true,
                     }
                 );
-                console.log("response from check auth", response);
 
                 if (response.status == 200) {
                     // store_login(response.data.userId, response.data.userType);
@@ -60,13 +59,26 @@ function App() {
             });
         };
 
+        let intervalId; // Store interval ID
+
         Promise.all([fetch_fonts(), fetchData()])
             .then(() => {
                 setLoading(false);
             })
+            .then(() => {
+                intervalId = setInterval(() => {
+                    fetchData();
+                }, 60000);
+            })
             .catch(() => {
                 setLoading(false);
             });
+        // Clear interval on unmount
+        return () => {
+            if (intervalId) {
+                clearInterval(intervalId);
+            }
+        };
     }, []);
     if (loading) {
         return (
