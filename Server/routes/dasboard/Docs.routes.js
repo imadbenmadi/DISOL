@@ -4,10 +4,14 @@ const router = express.Router();
 const authMiddleware = require("../../middleware/Users/Middlware.Auth");
 const Docs_Controller = require("../../controllers/dashboard.controllers/Docs.controller");
 
-router.get("/", authMiddleware, Docs_Controller.GetDocs);
+router.get("/Documents", authMiddleware, Docs_Controller.GetDocs);
 
 const formidableMiddleware = require("express-formidable");
 router.use(formidableMiddleware());
-router.post("/Add", authMiddleware, Docs_Controller.AddDoc);
-router.delete("/Delete/:id", authMiddleware, Docs_Controller.DeleteDoc);
+router.post("/Documents/Add", authMiddleware, Docs_Controller.AddDoc);
+router.delete(
+    "/Documents/Delete/:id",
+    authMiddleware,
+    Docs_Controller.DeleteDoc
+);
 module.exports = router;

@@ -16,4 +16,4 @@ const File = sequelize.define("File", {
     },
 });
 
-module.exports = { File };
+module.exports = File;
