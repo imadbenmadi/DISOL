@@ -8,6 +8,7 @@ import Default from "./Default";
 import Main from "./Pages/Main/Main";
 import Home_Overview from "./Pages/Main/Home_Overview";
 import Default_Main from "./Pages/Main/Default";
+import Main_Files from "./Pages/Main/Files/Files";
 
 import Not_Found from "./Components/Not_Found";
 import Not_Finished from "./Components/Not_Finished";
@@ -30,6 +31,7 @@ const routes = createBrowserRouter([
                     {
                         path: "/Main",
                         element: <Main />,
+                        caseSensitive: true,
                         children: [
                             {
                                 index: true,
@@ -37,7 +39,13 @@ const routes = createBrowserRouter([
                             },
                             {
                                 path: "/Main/Home_Overview",
+                                caseSensitive: true,
                                 element: <Home_Overview />,
+                            },
+                            {
+                                path: "/Main/Files",
+                                caseSensitive: true,
+                                elaement: <Main_Files />,
                             },
                         ],
                     },
@@ -49,16 +57,19 @@ const routes = createBrowserRouter([
     {
         path: "/Login",
         element: <Login />,
+        caseSensitive: true,
         errorElement: <ErrorElement />,
     },
     {
         path: "/Register",
         element: <Register />,
+        caseSensitive: true,
         errorElement: <ErrorElement />,
     },
     {
         path: "/Register",
         element: <Login />,
+        caseSensitive: true,
         errorElement: <ErrorElement />,
     },
 

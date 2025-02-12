@@ -95,6 +95,12 @@ function Laptop() {
                                         name="Disol Home"
                                         Active_nav={Active_nav}
                                         Icon={null}
+                                    />{" "}
+                                    <LaptopNavItem
+                                        Link="/Main/Files"
+                                        name="Disol Files"
+                                        Active_nav={Active_nav}
+                                        Icon={null}
                                     />
                                 </div>
                             </Section>
