@@ -1,13 +1,20 @@
-const { File, Folder } = require("../../../models/init");
+const { File, Folder } = require("../../models/init");
 const { Op } = require("sequelize");
-const drive = require("../../../middleware/googleAuth");
+const drive = require("../../middleware/googleAuth");
 const formidable = require("formidable");
 
 const GetDocs = async (req, res) => {
+    console.log("GetDocs");
+    
+    if (!drive) {
+        console.error("Google Drive API is not initialized properly.");
+        return res.status(500).json({ message: "Google Drive API error" });
+    }
     try {
         const response = await drive.files.list({
             fields: "files(id, name, mimeType, webViewLink, webContentLink)",
         });
+        console.log(response.data.files);
 
         const files = response.data.files.map((file) => ({
             id: file.id,
@@ -26,6 +33,10 @@ const GetDocs = async (req, res) => {
     }
 };
 const AddDoc = async (req, res) => {
+    if (!drive) {
+        console.error("Google Drive API is not initialized properly.");
+        return res.status(500).json({ message: "Google Drive API error" });
+    }
     try {
         const form = new formidable.IncomingForm();
         form.parse(req, async (err, fields, files) => {
@@ -68,6 +79,10 @@ const AddDoc = async (req, res) => {
     }
 };
 const DeleteDoc = async (req, res) => {
+    if (!drive) {
+        console.error("Google Drive API is not initialized properly.");
+        return res.status(500).json({ message: "Google Drive API error" });
+    }
     try {
         const { fileId } = req.params;
 

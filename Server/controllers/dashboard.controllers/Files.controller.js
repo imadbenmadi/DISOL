@@ -1,4 +1,4 @@
-const { File, Folder } = require("../../../models/init");
+const { File, Folder } = require("../../models/init");
 const { Op } = require("sequelize");
 
 const GetFiles = async (req, res) => {

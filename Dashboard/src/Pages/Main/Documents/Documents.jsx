@@ -12,6 +12,8 @@ export default function FileManager() {
             const response = await axios.get(
                 "http://localhost:3000/dashboard/Documents"
             );
+            console.log(response.data.files);
+
             setFiles(response.data.files);
         } catch (error) {
             console.error("Error fetching files:", error);
@@ -32,9 +34,13 @@ export default function FileManager() {
 
         setLoading(true);
         try {
-            await axios.post("http://localhost:3000/dashboard/Documents", formData, {
-                headers: { "Content-Type": "multipart/form-data" },
-            });
+            await axios.post(
+                "http://localhost:3000/dashboard/Documents",
+                formData,
+                {
+                    headers: { "Content-Type": "multipart/form-data" },
+                }
+            );
             fetchFiles();
         } catch (error) {
             console.error("Error uploading file:", error);
