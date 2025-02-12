@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
-function Section({ title, Icon, children }) {
-    const [isOpen, setIsOpen] = useState(false);
+function Section({ title, Icon, default_open, children }) {
+    const [isOpen, setIsOpen] = useState(default_open);
 
     const toggleSection = () => {
         setIsOpen(!isOpen);

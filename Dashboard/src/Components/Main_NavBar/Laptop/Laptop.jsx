@@ -77,7 +77,7 @@ function Laptop() {
                     />
                     {open && (
                         <div className=" flex flex-col items-center justify-center gap-2">
-                            <img src={Logo} alt="Logo" className="w-16 " />
+                            {/* <img src={Logo} alt="Logo" className="w-16 " /> */}
 
                             <div className="text-sm  font-semibold">
                                 Admin Panel
@@ -88,7 +88,11 @@ function Laptop() {
                 {open && (
                     <div className="flex flex-col gap-4 pl-8 pb-4">
                         <div className="flex flex-col gap-5 mt-6">
-                            <Section title="Main" Icon={GoHome}>
+                            <Section
+                                title="Main"
+                                Icon={GoHome}
+                                default_open={true}
+                            >
                                 <div className="flex flex-col gap-1 pl-2">
                                     <LaptopNavItem
                                         Link="/Main/Home_Overview"
