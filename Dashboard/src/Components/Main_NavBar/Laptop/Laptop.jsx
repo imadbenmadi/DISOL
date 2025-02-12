@@ -92,7 +92,7 @@ function Laptop() {
                                 <div className="flex flex-col gap-1 pl-2">
                                     <LaptopNavItem
                                         Link="/Main/Home_Overview"
-                                        name="Home Page Overview"
+                                        name="Disol Home"
                                         Active_nav={Active_nav}
                                         Icon={null}
                                     />
