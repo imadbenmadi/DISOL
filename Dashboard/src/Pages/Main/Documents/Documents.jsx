@@ -67,7 +67,10 @@ function Documents() {
     else
         return (
             <div className=" py-6 px-4">
-                <div className=" text-xl font-semibold text-yallow_v"> FAQ</div>
+                <div className=" text-xl font-semibold text-blue_v">
+                    {" "}
+                    Disol Documents
+                </div>
 
                 {!Documents || Documents?.length == 0 ? (
                     <div className=" flex flex-col gap-2 items-center justify-center">
@@ -75,7 +78,7 @@ function Documents() {
                             No Documents yet{" "}
                         </div>
                         <Link
-                            to={"/Document/Add"}
+                            to={"/Main/Documents/Add"}
                             className="mx-auto py-2 px-4 rounded bg-blue_v text-white cursor-pointer font-semibold text-sm"
                         >
                             Add a Document{" "}
@@ -84,7 +87,7 @@ function Documents() {
                 ) : (
                     <div className=" my-6 flex flex-col gap-6">
                         <Link
-                            to={"/Document/Add"}
+                            to={"/Main/Documents/Add"}
                             className="mx-auto py-2 px-4 rounded bg-blue_v text-white cursor-pointer font-semibold text-sm"
                         >
                             Add a Document{" "}
