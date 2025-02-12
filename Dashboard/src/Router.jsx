@@ -5,7 +5,8 @@ import Login from "./Pages/Auth/Login/Login";
 import Register from "./Pages/Auth/Register/Register";
 import Default from "./Default";
 
-import Home from "./Pages/Home/Home";
+import Main from "./Pages/Main/Main";
+import Home_Overview from "./Pages/Main/Home_Overview";
 
 import Not_Found from "./Components/Not_Found";
 import Not_Finished from "./Components/Not_Finished";
@@ -26,8 +27,14 @@ const routes = createBrowserRouter([
                 element: <ProtectedRoute />, // This protects all child routes
                 children: [
                     {
-                        path: "/Home",
-                        element: <Home />,
+                        path: "/Main",
+                        element: <Main />,
+                        children: [
+                            {
+                                path: "Main/Home_Overview",
+                                element: <Home_Overview />,
+                            },
+                        ],
                     },
                 ],
             },
