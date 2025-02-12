@@ -46,12 +46,12 @@ const routes = createBrowserRouter([
                             {
                                 path: "/Main/Documents",
                                 caseSensitive: true,
-                                elaement: <Main_Documents />,
+                                element: <Main_Documents />,
                             },
                             {
                                 path: "/Main/Documents/Add",
                                 caseSensitive: true,
-                                elaement: <Main_Add_Document />,
+                                element: <Main_Add_Document />,
                             },
                         ],
                     },
