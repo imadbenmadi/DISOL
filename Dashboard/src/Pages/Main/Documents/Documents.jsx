@@ -1,116 +1,99 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router";
-import Swal from "sweetalert2";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import Card from "./Card";
-import { BiMessage } from "react-icons/bi";
-import { Link } from "react-router-dom";
-function Documents() {
-    const Navigate = useNavigate();
 
-    const [Documents, setDocuments] = useState([]);
+export default function FileManager() {
+    const [files, setFiles] = useState([]);
+    const [selectedFile, setSelectedFile] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false);
+
+    // Fetch files from backend
+    const fetchFiles = async () => {
+        try {
+            const response = await axios.get("http://localhost:3000/Documents");
+            setFiles(response.data.files);
+        } catch (error) {
+            console.error("Error fetching files:", error);
+        }
+    };
+
+    // Handle file selection
+    const handleFileChange = (event) => {
+        setSelectedFile(event.target.files[0]);
+    };
+
+    // Upload a new file
+    const handleUpload = async () => {
+        if (!selectedFile) return alert("Please select a file");
+
+        const formData = new FormData();
+        formData.append("file", selectedFile);
+
+        setLoading(true);
+        try {
+            await axios.post("http://localhost:3000/Documents", formData, {
+                headers: { "Content-Type": "multipart/form-data" },
+            });
+            fetchFiles();
+        } catch (error) {
+            console.error("Error uploading file:", error);
+        }
+        setLoading(false);
+    };
+
+    // Delete a file
+    const handleDelete = async (fileId) => {
+        try {
+            await axios.delete(`http://localhost:3000/Documents/${fileId}`);
+            setFiles(files.filter((file) => file.id !== fileId));
+        } catch (error) {
+            console.error("Error deleting file:", error);
+        }
+    };
 
     useEffect(() => {
-        setLoading(true);
-        const FetchDocuments = async ({
-            setDocuments,
-            setLoading,
-            setError,
-        }) => {
-            setLoading(true);
-            try {
-                const response = await axios.get(
-                    `http://localhost:3000/dashboard/Documents`,
-                    {
-                        withCredentials: true,
-                        validateStatus: () => true,
-                    }
-                );
-
-                if (response.status == 200) {
-                    const documents = response.data.Documents;
-                    setDocuments(documents);
-                } else if (response.status == 401) {
-                    Swal.fire("Error", "You have to Login again", "error");
-                    Navigate("/Login");
-                    setError(response.data);
-                } else {
-                    setError(response.data);
-                }
-            } catch (error) {
-                setError(error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        FetchDocuments({ setDocuments, setLoading, setError });
+        fetchFiles();
     }, []);
 
-    if (loading) {
-        return (
-            <div className=" w-full h-[80vh] flex flex-col items-center justify-center">
-                <span className="loader"></span>
-            </div>
-        );
-    } else if (error)
-        return (
-            <div className=" w-full h-screen flex items-center justify-center">
-                <div className="text-red-600 font-semibold">
-                    {error.message}
-                </div>
-            </div>
-        );
-    else
-        return (
-            <div className=" py-6 px-4">
-                <div className=" text-xl font-semibold text-blue_v">
-                    {" "}
-                    Disol Documents
-                </div>
+    return (
+        <div className="p-6 max-w-2xl mx-auto bg-white rounded-xl shadow-md space-y-4">
+            <h2 className="text-xl font-semibold">File Manager</h2>
 
-                {!Documents || Documents?.length == 0 ? (
-                    <div className=" flex flex-col gap-2 items-center justify-center">
-                        <div className="text-md font-semibold text-gray_v text-center pt-12">
-                            No Documents yet{" "}
-                        </div>
-                        <Link
-                            to={"/Main/Documents/Add"}
-                            className="mx-auto py-2 px-4 rounded bg-blue_v text-white cursor-pointer font-semibold text-sm"
-                        >
-                            Add a Document{" "}
-                        </Link>
-                    </div>
-                ) : (
-                    <div className=" my-6 flex flex-col gap-6">
-                        <Link
-                            to={"/Main/Documents/Add"}
-                            className="mx-auto py-2 px-4 rounded bg-blue_v text-white cursor-pointer font-semibold text-sm"
-                        >
-                            Add a Document{" "}
-                        </Link>
-                        <div className=" flex flex-col items-center justify-center  w-[90%] pt-6">
-                            {Documents &&
-                                Documents.length > 0 &&
-                                Documents?.map((document) => {
-                                    return (
-                                        <Card
-                                            key={document.id}
-                                            document={document}
-                                            setDocuments={setDocuments}
-                                            Documents={Documents}
-                                            // handle_Delete_Documents={handle_Delete_Documents}
-                                        />
-                                    );
-                                })}
-                        </div>
-                    </div>
-                )}
+            {/* File Upload */}
+            <div className="flex items-center space-x-2">
+                <input type="file" onChange={handleFileChange} />
+                <button
+                    onClick={handleUpload}
+                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                    disabled={loading}
+                >
+                    {loading ? "Uploading..." : "Upload"}
+                </button>
             </div>
-        );
+
+            {/* File List */}
+            <ul className="space-y-2">
+                {files.map((file) => (
+                    <li
+                        key={file.id}
+                        className="flex justify-between items-center border p-2 rounded"
+                    >
+                        <a
+                            href={file.webViewLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-500 hover:underline"
+                        >
+                            {file.name}
+                        </a>
+                        <button
+                            onClick={() => handleDelete(file.id)}
+                            className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                        >
+                            Delete
+                        </button>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
 }
-
-export default Documents;

@@ -9,7 +9,6 @@ import Main from "./Pages/Main/Main";
 import Home_Overview from "./Pages/Main/Home_Overview";
 import Default_Main from "./Pages/Main/Default";
 import Main_Documents from "./Pages/Main/Documents/Documents";
-import Main_Add_Document from "./Pages/Main/Documents/Add_Document";
 
 import Not_Found from "./Components/Not_Found";
 import Not_Finished from "./Components/Not_Finished";
@@ -48,11 +47,11 @@ const routes = createBrowserRouter([
                                 caseSensitive: true,
                                 element: <Main_Documents />,
                             },
-                            {
-                                path: "/Main/Documents/Add",
-                                caseSensitive: true,
-                                element: <Main_Add_Document />,
-                            },
+                            // {
+                            //     path: "/Main/Documents/Add",
+                            //     caseSensitive: true,
+                            //     element: <Main_Add_Document />,
+                            // },
                         ],
                     },
                 ],
