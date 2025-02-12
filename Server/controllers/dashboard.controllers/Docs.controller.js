@@ -1,18 +1,30 @@
-const { File } = require("../../models/init");
+const { File, Folder } = require("../../models/init");
 const { Op } = require("sequelize");
 
 const GetDocs = async (req, res) => {
     try {
-        const docs = await File.findAll({
+        // Fetch folders with their document-type files
+        const folders = await Folder.findAll({
+            include: [
+                {
+                    model: File,
+                    required: false,
+                    where: { fileType: "document" },
+                },
+            ],
+        });
+
+        // Fetch standalone files (files without a folder)
+        const standaloneFiles = await File.findAll({
             where: {
                 fileType: "document",
+                FolderId: null, // ✅ Ensures we get files not linked to any folder
             },
         });
 
-        return res.status(200).json({ docs });
+        return res.status(200).json({ folders, standaloneFiles });
     } catch (error) {
-        console.log(error);
-        
+        console.error(error);
         return res.status(500).json({ message: "Internal Server Error" });
     }
 };
@@ -20,7 +32,7 @@ const GetDocs = async (req, res) => {
 const AddDoc = async (req, res) => {
     try {
         const { fileType, fileSize } = req.fields;
-        
+
         const newDoc = await File.create({
             fileType,
             fileSize: fileSize || null,

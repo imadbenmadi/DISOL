@@ -14,6 +14,21 @@ const File = sequelize.define("File", {
         type: DataTypes.STRING,
         allowNull: true,
     },
+    FolderId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+    },
 });
 
-module.exports = File;
+const Folder = sequelize.define("Folder", {
+    folderName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+});
+
+// ✅ Define the relationship but allow files to be without folders
+Folder.hasMany(File, { foreignKey: "FolderId" });
+File.belongsTo(Folder, { foreignKey: "FolderId", allowNull: true });
+
+module.exports = { File, Folder };
