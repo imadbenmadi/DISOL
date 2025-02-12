@@ -35,7 +35,7 @@ function Faqs() {
                         "vous devez vous reconnecter à nouveau",
                         "error"
                     );
-                    Navigate("/Login");
+                    Navigate("/Login", { replace: true });
                     setError(response.data);
                 } else {
                     setError(response.data);

@@ -11,7 +11,7 @@ function Default() {
             Navigate("/Home");
             return;
         }
-        Navigate("/Login");
+        Navigate("/Login", { replace: true });
     }, []);
 }
 export default Default;

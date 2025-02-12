@@ -32,7 +32,7 @@ const Contact_informations = () => {
                     );
                 } else if (response.status === 401) {
                     Swal.fire("Error", "Vous devez vous reconnecter", "error");
-                    Navigate("/Login");
+                    Navigate("/Login", { replace: true });
                     setError("Unauthorized");
                 } else {
                     setError(

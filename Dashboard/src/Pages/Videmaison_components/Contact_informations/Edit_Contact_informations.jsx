@@ -30,7 +30,7 @@ const Edit_Contact_informations = () => {
                     );
                 } else if (response.status === 401) {
                     Swal.fire("Error", "Accès non autorisé", "error");
-                    Navigate("/login");
+                    Navigate("/Login", { replace: true });
                 } else {
                     // Swal.fire(
                     //     "Error",

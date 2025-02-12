@@ -58,7 +58,7 @@ function Services() {
                     setServices(response.data.service);
                 } else if (response.status === 401) {
                     Swal.fire("Error", "Vous devez vous reconnecter", "error");
-                    Navigate("/Login");
+                    Navigate("/Login", { replace: true });
                 } else {
                     setError(
                         response.data.message || "Failed to fetch services"

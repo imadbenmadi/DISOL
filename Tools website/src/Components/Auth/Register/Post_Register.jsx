@@ -26,13 +26,13 @@ async function handleRegister(values, { setSubmitting }) {
                     } else if (Login_response.data.userType == "student") {
                         window.location.href = `/Student`;
                     } else {
-                        window.location.href = "/Login";
+                        window.location.replace("/Login");
                     }
                 } else {
-                    window.location.href = "/Login";
+                    window.location.replace("/Login");
                 }
             } catch (error) {
-                window.location.href = "/Login";
+                window.location.replace("/Login");
             }
         } else if (response.status == 400) {
             setSubmitting(false);

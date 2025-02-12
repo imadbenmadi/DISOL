@@ -33,7 +33,7 @@ function Contact() {
                         "vous devez vous reconnecter à nouveau",
                         "error"
                     );
-                    Navigate("/Login");
+                    Navigate("/Login", { replace: true });
                 } else {
                     setError(response.data);
                 }

@@ -38,7 +38,7 @@ function Card({ Message, Messages, setMessages }) {
                     "vous devez vous reconnecter à nouveau",
                     "error"
                 );
-                Navigate("/Login");
+                Navigate("/Login", { replace: true });
             } else
                 Swal.fire(
                     "Error",

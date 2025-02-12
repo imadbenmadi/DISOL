@@ -36,7 +36,7 @@ function Demands() {
                         "Vous devez vous reconnecter à nouveau",
                         "error"
                     );
-                    Navigate("/Login");
+                    Navigate("/Login", { replace: true });
                 } else {
                     setError(demandsResponse.data);
                 }
@@ -57,7 +57,7 @@ function Demands() {
                         "Vous devez vous reconnecter à nouveau",
                         "error"
                     );
-                    Navigate("/Login");
+                    Navigate("/Login", { replace: true });
                 } else {
                     setDemandTypes([]);
                 }
@@ -98,7 +98,7 @@ function Demands() {
                     "Vous devez vous reconnecter à nouveau",
                     "error"
                 );
-                Navigate("/Login");
+                Navigate("/Login", { replace: true });
             } else {
                 Swal.fire("Erreur", "Une erreur s'est produite", "error");
             }
@@ -127,7 +127,7 @@ function Demands() {
                     "Vous devez vous reconnecter à nouveau",
                     "error"
                 );
-                Navigate("/Login");
+                Navigate("/Login", { replace: true });
             } else {
                 Swal.fire("Erreur", "Une erreur s'est produite", "error");
             }

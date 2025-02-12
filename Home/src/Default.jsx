@@ -11,7 +11,7 @@ import { useAppContext } from "./AppContext";
 //             Navigate("/Home");
 //             return;
 //         }
-//         Navigate("/Login");
+//         Navigate("/Login", { replace: true });
 //     }, []);
 // }
 function Default() {

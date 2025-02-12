@@ -9,7 +9,7 @@ axios.interceptors.response.use(
     (error) => {
         if (error.response.status === 401) {
             // Redirect to login page when user is unauthorized
-            window.location.href = "/Login"; // Or use your router's navigation
+            window.location.replace("/Login"); // Or use your router's navigation
         }
         return Promise.reject(error);
     }

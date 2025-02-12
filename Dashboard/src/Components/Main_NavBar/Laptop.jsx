@@ -43,7 +43,7 @@ function Laptop() {
             if (response.status == 204) {
                 set_Auth(false);
                 Swal.fire("Success!", `Logged Out Successfully`, "success");
-                Navigate("/Login");
+                Navigate("/Login", { replace: true });
             } else {
                 Swal.fire("Error!", "", "error");
             }
