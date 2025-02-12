@@ -84,7 +84,9 @@ const AddDoc = async (req, res) => {
 const DeleteDoc = async (req, res) => {
     try {
         const fileId = req.params.fileId; // Correctly extract fileId
-
+        console.log(fileId);
+        if (!fileId)
+            return res.status(400).json({ message: "File ID not provided" });
         await drive.files.delete({ fileId });
 
         return res.status(200).json({ message: "File deleted successfully" });

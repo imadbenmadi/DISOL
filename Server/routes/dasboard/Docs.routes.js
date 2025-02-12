@@ -9,7 +9,7 @@ const formidableMiddleware = require("express-formidable");
 router.use(formidableMiddleware());
 router.post("/Documents", authMiddleware, Docs_Controller.AddDoc);
 router.delete(
-    "/Documents/Delete/:id",
+    "/Documents/:fileId",
     authMiddleware,
     Docs_Controller.DeleteDoc
 );
