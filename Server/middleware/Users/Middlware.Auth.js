@@ -1,9 +1,6 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-const Refresh_tokens = require("../Models/RefreshTokens");
-const Admins = require("../Models/Admin/Admin");
-const Users = require("../Models/User/User"); // Import User model
-const Workers = require("../Models/Worker/Worker"); // Import Worker model
+const { Refresh_tokens, Admins, Users, Workers } = require("../../models/init");
 
 // Helper function to clear cookies securely
 const clearCookies = (res) => {

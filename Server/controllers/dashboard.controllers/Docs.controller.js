@@ -15,11 +15,10 @@ const GetDocs = async (req, res) => {
     }
 };
 
-
-
 const AddDoc = async (req, res) => {
     try {
-        const { fileType, fileSize } = req.body;
+        const { fileType, fileSize } = req.fields;
+        
         const newDoc = await File.create({
             fileType,
             fileSize: fileSize || null,
@@ -32,11 +31,10 @@ const AddDoc = async (req, res) => {
 };
 const DeleteDoc = async (req, res) => {
     try {
-        const { id } = req.params;
         const doc = await File.findOne({
             where: {
-                id,
-                userId: req.user.id,
+                id: req.params.id,
+                fileType: "document",
             },
         });
         if (!doc) {
