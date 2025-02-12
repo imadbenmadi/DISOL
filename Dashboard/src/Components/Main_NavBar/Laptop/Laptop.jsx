@@ -13,12 +13,17 @@ import { PiListFill } from "react-icons/pi";
 import { RiContactsLine } from "react-icons/ri";
 import { FaRegBuilding } from "react-icons/fa";
 import { MdOutlineAddCircleOutline } from "react-icons/md";
-import LaptopNavItem from "./laptop_nav_item";
+import LaptopNavItem from "./Item";
 import { FaRegEdit } from "react-icons/fa";
 import { MdOutlineWork } from "react-icons/md";
 import { MdContacts } from "react-icons/md";
-
+import Toogler from "./Toogler";
 function Laptop() {
+    const [open, set_open] = useState(true);
+    function Toogle_Menu_Bar() {
+        set_open(!open);
+    }
+
     const Navigate = useNavigate();
     const { set_Auth } = useAppContext();
     const [Active_nav, setActive_nav] = useState("Home");
@@ -53,117 +58,147 @@ function Laptop() {
         setLogoutClicked(false);
     };
     return (
-        <div className="flex flex-col gap-4 text-sm text-gray_v pl-8 py-4">
-            <div className=" flex flex-col items-center justify-center text-gray_v">
-                <img src={Logo} alt="Logo" className="w-16 " />
-                {/* <div className="text-sm text-white font-semibold">Admin Panel</div> */}
-            </div>
-            <div className=" flex flex-col gap-2  mt-6  ">
-                <LaptopNavItem
-                    Link="Home"
-                    name="Overview"
-                    Active_nav={Active_nav}
-                    Icon={GoHome}
-                />
-            </div>
-            <div>
-                <div className=" font-semibold pb-4  flex gap-2 items-center ">
-                    <FaRegEdit className=" text-lg" />
-                    Edit Content
-                </div>{" "}
-                <div className=" flex flex-col gap-1 pl-2  ">
-                    <LaptopNavItem
-                        Link="Edit_Main"
-                        name="Main Section"
-                        Active_nav={Active_nav}
-                        Icon={null}
+        <div
+            className={`${open ? "w-[230px] " : "w-fit "}   text-sm text-gray_v 
+                `}
+        >
+            <div className="flex flex-col  ">
+                <div
+                    className=" flex flex-col gap-6 items-center justify-center
+                 text-gray_v px-6 py-2"
+                >
+                    <Toogler
+                        open={open}
+                        set_open={set_open}
+                        Toogle_Menu_Bar={Toogle_Menu_Bar}
                     />
-                    <LaptopNavItem
-                        Link="Edit_About"
-                        name="About Section"
-                        Active_nav={Active_nav}
-                        Icon={null}
-                    />
-                    <hr className=" my-2" />
-                    <LaptopNavItem
-                        Link="Call_Phrase"
-                        name="Call Phrase"
-                        Active_nav={Active_nav}
-                        Icon={null}
-                    />
-                    <LaptopNavItem
-                        Link="Description"
-                        name="Description"
-                        Active_nav={Active_nav}
-                        Icon={null}
-                    />
-                    <LaptopNavItem
-                        Link="Contact_Phrase"
-                        name="Contact Phrase"
-                        Active_nav={Active_nav}
-                        Icon={null}
-                    />
-                    <hr className=" my-2" />
-                    <LaptopNavItem
-                        Link="Services"
-                        name="Services Section"
-                        Active_nav={Active_nav}
-                        Icon={null}
-                    />
-                    <LaptopNavItem
-                        Link="Faq"
-                        name="FaQ Section"
-                        Active_nav={Active_nav}
-                        Icon={null}
-                    />
-                </div>
-            </div>
-            <div>
-                <div className=" font-semibold   flex gap-2 items-center ">
-                    <LaptopNavItem
-                        Link="Demands"
-                        name="Demands"
-                        Active_nav={Active_nav}
-                        Icon={MdOutlineWork}
-                    />
-                </div>{" "}
-            </div>
+                    {open && (
+                        <div className=" flex flex-col items-center justify-center gap-2">
+                            <img src={Logo} alt="Logo" className="w-16 " />
 
-            <div>
-                <div className=" font-semibold   flex gap-2 items-center ">
-                    <LaptopNavItem
-                        Link="Contact"
-                        name="Contact Messages"
-                        Active_nav={Active_nav}
-                        Icon={RiContactsLine}
-                    />
-                </div>{" "}
-            </div>
-            <div>
-                <div className=" font-semibold pb-6   flex gap-2 items-center ">
-                    <LaptopNavItem
-                        Link="Contact_informations"
-                        name="Contact Informations"
-                        Active_nav={Active_nav}
-                        Icon={MdContacts}
-                    />
-                </div>{" "}
-            </div>
-            <div className="pb-6">
-                {LogoutClicked ? (
-                    <div className="w-full ">
-                        <span className="small-loader font-bold  w-full m-auto"></span>
-                    </div>
-                ) : (
-                    <div
-                        className="cursor-pointer w-full 
-                                    flex items-center gap-3 text-red-500"
-                        onClick={() => {
-                            handleLogout();
-                        }}
-                    >
-                        <TbLogout2 className="  text-xl" />
-                        Logout
+                            <div className="text-sm  font-semibold">
+                                Admin Panel
+                            </div>
+                        </div>
+                    )}
+                </div>
+                {/* <div
+                    className={`${
+                        open ? "translate-x-[0vw]" : "translate-x-[200vh]"
+                    }  `}
+                ></div> */}
+                {open && (
+                    <div className="flex flex-col gap-4 pl-8 pb-4">
+                        <div className="flex flex-col gap-2 mt-6">
+                            <LaptopNavItem
+                                Link="Home"
+                                name="Overview"
+                                Active_nav={Active_nav}
+                                Icon={GoHome}
+                            />
+
+                            <div>
+                                <div className="font-semibold pb-4 flex gap-2 items-center">
+                                    <FaRegEdit className="text-lg" />
+                                    Edit Content
+                                </div>
+                                <div className="flex flex-col gap-1 pl-2">
+                                    <LaptopNavItem
+                                        Link="Edit_Main"
+                                        name="Main Section"
+                                        Active_nav={Active_nav}
+                                        Icon={null}
+                                    />
+                                    <LaptopNavItem
+                                        Link="Edit_About"
+                                        name="About Section"
+                                        Active_nav={Active_nav}
+                                        Icon={null}
+                                    />
+                                    <hr className="my-2" />
+                                    <LaptopNavItem
+                                        Link="Call_Phrase"
+                                        name="Call Phrase"
+                                        Active_nav={Active_nav}
+                                        Icon={null}
+                                    />
+                                    <LaptopNavItem
+                                        Link="Description"
+                                        name="Description"
+                                        Active_nav={Active_nav}
+                                        Icon={null}
+                                    />
+                                    <LaptopNavItem
+                                        Link="Contact_Phrase"
+                                        name="Contact Phrase"
+                                        Active_nav={Active_nav}
+                                        Icon={null}
+                                    />
+                                    <hr className="my-2" />
+                                    <LaptopNavItem
+                                        Link="Services"
+                                        name="Services Section"
+                                        Active_nav={Active_nav}
+                                        Icon={null}
+                                    />
+                                    <LaptopNavItem
+                                        Link="Faq"
+                                        name="FaQ Section"
+                                        Active_nav={Active_nav}
+                                        Icon={null}
+                                    />
+                                </div>
+                            </div>
+
+                            <div>
+                                <div className="font-semibold flex gap-2 items-center">
+                                    <LaptopNavItem
+                                        Link="Demands"
+                                        name="Demands"
+                                        Active_nav={Active_nav}
+                                        Icon={MdOutlineWork}
+                                    />
+                                </div>
+                            </div>
+
+                            <div>
+                                <div className="font-semibold flex gap-2 items-center">
+                                    <LaptopNavItem
+                                        Link="Contact"
+                                        name="Contact Messages"
+                                        Active_nav={Active_nav}
+                                        Icon={RiContactsLine}
+                                    />
+                                </div>
+                            </div>
+
+                            <div>
+                                <div className="font-semibold pb-6 flex gap-2 items-center">
+                                    <LaptopNavItem
+                                        Link="Contact_informations"
+                                        name="Contact Informations"
+                                        Active_nav={Active_nav}
+                                        Icon={MdContacts}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="pb-6">
+                                {LogoutClicked ? (
+                                    <div className="w-full">
+                                        <span className="small-loader font-bold w-full m-auto"></span>
+                                    </div>
+                                ) : (
+                                    <div
+                                        className="cursor-pointer w-full flex items-center gap-3 text-red-500"
+                                        onClick={handleLogout}
+                                    >
+                                        <TbLogout2 className="text-xl" />
+                                        Logout
+                                    </div>
+                                )}
+                            </div>
+                        </div>
                     </div>
                 )}
             </div>
