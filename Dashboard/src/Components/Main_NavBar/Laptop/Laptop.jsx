@@ -18,6 +18,8 @@ import { FaRegEdit } from "react-icons/fa";
 import { MdOutlineWork } from "react-icons/md";
 import { MdContacts } from "react-icons/md";
 import Toogler from "./Toogler";
+import Section from "./Section"; // Import the Section component
+
 function Laptop() {
     const [open, set_open] = useState(true);
     function Toogle_Menu_Bar() {
@@ -82,11 +84,6 @@ function Laptop() {
                         </div>
                     )}
                 </div>
-                {/* <div
-                    className={`${
-                        open ? "translate-x-[0vw]" : "translate-x-[200vh]"
-                    }  `}
-                ></div> */}
                 {open && (
                     <div className="flex flex-col gap-4 pl-8 pb-4">
                         <div className="flex flex-col gap-2 mt-6">
@@ -97,11 +94,7 @@ function Laptop() {
                                 Icon={GoHome}
                             />
 
-                            <div>
-                                <div className="font-semibold pb-4 flex gap-2 items-center">
-                                    <FaRegEdit className="text-lg" />
-                                    Edit Content
-                                </div>
+                            <Section title="Edit Content" Icon={FaRegEdit}>
                                 <div className="flex flex-col gap-1 pl-2">
                                     <LaptopNavItem
                                         Link="Edit_Main"
@@ -148,40 +141,28 @@ function Laptop() {
                                         Icon={null}
                                     />
                                 </div>
-                            </div>
+                            </Section>
 
-                            <div>
-                                <div className="font-semibold flex gap-2 items-center">
-                                    <LaptopNavItem
-                                        Link="Demands"
-                                        name="Demands"
-                                        Active_nav={Active_nav}
-                                        Icon={MdOutlineWork}
-                                    />
-                                </div>
-                            </div>
+                            <LaptopNavItem
+                                Link="Demands"
+                                name="Demands"
+                                Active_nav={Active_nav}
+                                Icon={MdOutlineWork}
+                            />
 
-                            <div>
-                                <div className="font-semibold flex gap-2 items-center">
-                                    <LaptopNavItem
-                                        Link="Contact"
-                                        name="Contact Messages"
-                                        Active_nav={Active_nav}
-                                        Icon={RiContactsLine}
-                                    />
-                                </div>
-                            </div>
+                            <LaptopNavItem
+                                Link="Contact"
+                                name="Contact Messages"
+                                Active_nav={Active_nav}
+                                Icon={RiContactsLine}
+                            />
 
-                            <div>
-                                <div className="font-semibold pb-6 flex gap-2 items-center">
-                                    <LaptopNavItem
-                                        Link="Contact_informations"
-                                        name="Contact Informations"
-                                        Active_nav={Active_nav}
-                                        Icon={MdContacts}
-                                    />
-                                </div>
-                            </div>
+                            <LaptopNavItem
+                                Link="Contact_informations"
+                                name="Contact Informations"
+                                Active_nav={Active_nav}
+                                Icon={MdContacts}
+                            />
 
                             <div className="pb-6">
                                 {LogoutClicked ? (
