@@ -97,8 +97,8 @@ function Laptop() {
                                         Icon={null}
                                     />{" "}
                                     <LaptopNavItem
-                                        Link="/Main/Files"
-                                        name="Disol Files"
+                                        Link="/Main/Documents"
+                                        name="Disol Documents"
                                         Active_nav={Active_nav}
                                         Icon={null}
                                     />

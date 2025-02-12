@@ -8,8 +8,8 @@ import Default from "./Default";
 import Main from "./Pages/Main/Main";
 import Home_Overview from "./Pages/Main/Home_Overview";
 import Default_Main from "./Pages/Main/Default";
-import Main_Files from "./Pages/Main/Files/Files";
-import Main_Add_File from "./Pages/Main/Files/Add_File";
+import Main_Documents from "./Pages/Main/Documents/Documents";
+import Main_Add_Document from "./Pages/Main/Documents/Add_Document";
 
 import Not_Found from "./Components/Not_Found";
 import Not_Finished from "./Components/Not_Finished";
@@ -44,14 +44,14 @@ const routes = createBrowserRouter([
                                 element: <Home_Overview />,
                             },
                             {
-                                path: "/Main/Files",
+                                path: "/Main/Documents",
                                 caseSensitive: true,
-                                elaement: <Main_Files />,
+                                elaement: <Main_Documents />,
                             },
                             {
-                                path: "/Main/Files/Add",
+                                path: "/Main/Documents/Add",
                                 caseSensitive: true,
-                                elaement: <Main_Add_File />,
+                                elaement: <Main_Add_Document />,
                             },
                         ],
                     },

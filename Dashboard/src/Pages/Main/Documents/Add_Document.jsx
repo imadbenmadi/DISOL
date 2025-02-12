@@ -5,26 +5,26 @@ import Swal from "sweetalert2";
 import { Formik, Form, Field } from "formik";
 import { ErrorMessage } from "formik";
 
-const Add_File = () => {
+const Add_Document = () => {
     const Navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [editLoading, setEditLoading] = useState(false);
-    const [uploadType, setUploadType] = useState("file"); // 'file' or 'link'
+    const [uploadType, setUploadType] = useState("document"); // 'document' or 'link'
 
     const handleEditSubmit = async (values) => {
         setEditLoading(true);
         try {
             const formData = new FormData();
-            if (uploadType === "file") {
-                formData.append("file", values.file);
+            if (uploadType === "document") {
+                formData.append("document", values.document);
             } else {
                 formData.append("link", values.link);
                 formData.append("linkType", values.linkType);
             }
 
             const response = await axios.post(
-                `http://localhost:3000/Admin/Files`,
+                `http://localhost:3000/Admin/Documents`,
                 formData,
                 {
                     withCredentials: true,
@@ -33,10 +33,10 @@ const Add_File = () => {
             );
 
             if (response.status === 200) {
-                Swal.fire("Success", "File added successfully", "success");
-                Navigate("/File");
+                Swal.fire("Success", "Document added successfully", "success");
+                Navigate("/Document");
             } else {
-                Swal.fire("Error", "Failed to add file", "error");
+                Swal.fire("Error", "Failed to add document", "error");
             }
         } catch (err) {
             Swal.fire("Error", "Network error, please try again", "error");
@@ -52,14 +52,14 @@ const Add_File = () => {
             </h2>
             <Formik
                 initialValues={{
-                    file: null,
+                    document: null,
                     link: "",
                     linkType: "",
                 }}
                 validate={(values) => {
                     const errors = {};
-                    if (uploadType === "file" && !values.file) {
-                        errors.file = "File is required";
+                    if (uploadType === "document" && !values.document) {
+                        errors.document = "Document is required";
                     }
                     if (uploadType === "link" && !values.link) {
                         errors.link = "Link is required";
@@ -83,15 +83,15 @@ const Add_File = () => {
                                         <Field
                                             type="radio"
                                             name="uploadType"
-                                            value="file"
-                                            checked={uploadType === "file"}
+                                            value="document"
+                                            checked={uploadType === "document"}
                                             onChange={() =>
-                                                setUploadType("file")
+                                                setUploadType("document")
                                             }
                                             className="form-radio"
                                         />
                                         <span className="ml-2">
-                                            Upload File
+                                            Upload Document
                                         </span>
                                     </label>
                                     <label className="inline-flex items-center ml-6">
@@ -112,28 +112,28 @@ const Add_File = () => {
                                 </div>
                             </div>
 
-                            {uploadType === "file" ? (
+                            {uploadType === "document" ? (
                                 <div>
                                     <label
-                                        htmlFor="file"
+                                        htmlFor="document"
                                         className="block text-gray-700 font-medium"
                                     >
-                                        File
+                                        Document
                                     </label>
                                     <input
-                                        id="file"
-                                        name="file"
-                                        type="file"
+                                        id="document"
+                                        name="document"
+                                        type="document"
                                         onChange={(event) => {
                                             setFieldValue(
-                                                "file",
-                                                event.currentTarget.files[0]
+                                                "document",
+                                                event.currentTarget.documents[0]
                                             );
                                         }}
                                         className="mt-1 p-2 border rounded-md w-full"
                                     />
                                     <ErrorMessage
-                                        name="file"
+                                        name="document"
                                         component="div"
                                         style={{ color: "red" }}
                                     />
@@ -214,4 +214,4 @@ const Add_File = () => {
     );
 };
 
-export default Add_File;
+export default Add_Document;

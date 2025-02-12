@@ -4,10 +4,12 @@ const dashboardRoutes = require("./Dashboard.routes");
 const userRoutes = require("./User.routes");
 const google_auth_rout = require("./google_auth.routes");
 const router = express.Router();
+const authMiddleware = require("../middleware/Users/Middlware.Auth");
 
+router.use(Files_Routes);
 router.use(authRoutes);
 router.use(google_auth_rout);
-router.use("/dashboard", dashboardRoutes);
+router.use("/dashboard", authMiddleware, dashboardRoutes);
 // router.use("/user", userRoutes);
 
 // router.use("/check_Auth", require("./Auth/check_Auth"));

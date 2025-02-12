@@ -3,15 +3,15 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 
-function Card({ file, Files, setFiles }) {
+function Card({ document, Documents, setDocuments }) {
     const [deleteLoading, setDeleteLoading] = useState(false);
     const [isOpen, setIsOpen] = useState(false); // To toggle FAQ visibility (question/réponse)
 
-    const handle_Delete_File = async () => {
+    const handle_Delete_Document = async () => {
         setDeleteLoading(true);
         try {
             const response = await axios.delete(
-                `http://localhost:3000/Admin/Files/${file?.id}`,
+                `http://localhost:3000/Admin/Documents/${document?.id}`,
                 {
                     withCredentials: true,
                     validateStatus: () => true,
@@ -19,8 +19,8 @@ function Card({ file, Files, setFiles }) {
             );
             if (response.status === 200) {
                 // Remove the deleted FAQ from the list
-                const newfile = Files.filter((item) => item?.id !== file?.id);
-                setFiles(newfile);
+                const newdocument = Documents.filter((item) => item?.id !== document?.id);
+                setDocuments(newdocument);
                 Swal.fire("Success", "Suppression réussie", "success");
             } else if (response.status === 401) {
                 Swal.fire(
@@ -41,7 +41,7 @@ function Card({ file, Files, setFiles }) {
             {/* FAQ Question */}
             <div className="flex items-center justify-between">
                 <h3 className="text-xl font-semibold text-gray-800">
-                    {file?.qst}
+                    {document?.qst}
                 </h3>
                 <button
                     onClick={() => setIsOpen(!isOpen)}
@@ -54,14 +54,14 @@ function Card({ file, Files, setFiles }) {
             {/* FAQ réponse */}
             {isOpen && (
                 <div className="mt-4 text-gray-700">
-                    <p>{file?.sol}</p>
+                    <p>{document?.sol}</p>
                 </div>
             )}
 
             {/* Deletion Button */}
             <div className="flex justify-end mt-4">
                 <button
-                    onClick={handle_Delete_File}
+                    onClick={handle_Delete_Document}
                     disabled={deleteLoading}
                     className={`${
                         deleteLoading ? "bg-gray-300" : "bg-red-500"
