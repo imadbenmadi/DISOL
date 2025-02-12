@@ -28,12 +28,15 @@ function Laptop() {
 
     const Navigate = useNavigate();
     const { set_Auth } = useAppContext();
-    const [Active_nav, setActive_nav] = useState("Home");
+    // const [Active_nav, setActive_nav] = useState("Home_Overview");
+    const [Active_nav, setActive_nav] = useState();
     const location = useLocation();
     useEffect(() => {
-        setActive_nav(location.pathname.split("/")[1]);
+        const pathSegments = location.pathname.split("/");
+        const lastSegment = pathSegments[pathSegments.length - 1];
+        setActive_nav(lastSegment);
     }, [location.pathname]);
-
+    
     const [LogoutClicked, setLogoutClicked] = useState(false);
     const handleLogout = async () => {
         setLogoutClicked(true);
