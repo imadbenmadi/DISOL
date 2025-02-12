@@ -1,28 +1,29 @@
-const { Document } = require("../../models/init");
+const { File } = require("../../models/init");
 const { Op } = require("sequelize");
 
 const GetDocs = async (req, res) => {
     try {
-        const docs = await Document.findAll({
+        const docs = await File.findAll({
             where: {
-                userId: req.user.id,
+                fileType: "document",
             },
         });
-        if (!docs) {
-            return res.status(404).json({ message: "No Docs Found" });
-        }
+
         return res.status(200).json({ docs });
     } catch (error) {
         return res.status(500).json({ message: "Internal Server Error" });
     }
 };
+
+
+
 const AddDoc = async (req, res) => {
     try {
-        const { qst, sol } = req.body;
-        const newDoc = await Document.create({
-            qst,
-            sol,
-            userId: req.user.id,
+        const { fileType, fileSize } = req.body;
+        const newDoc = await File.create({
+            fileType,
+            fileSize: fileSize || null,
+            file_Link: file_Link || null,
         });
         return res.status(200).json({ newDoc });
     } catch (error) {
@@ -32,7 +33,7 @@ const AddDoc = async (req, res) => {
 const DeleteDoc = async (req, res) => {
     try {
         const { id } = req.params;
-        const doc = await Document.findOne({
+        const doc = await File.findOne({
             where: {
                 id,
                 userId: req.user.id,
