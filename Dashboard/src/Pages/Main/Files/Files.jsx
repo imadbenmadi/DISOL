@@ -68,13 +68,13 @@ function Files() {
                 {!Files || Files?.length == 0 ? (
                     <div className=" flex flex-col gap-2 items-center justify-center">
                         <div className="text-md font-semibold text-gray_v text-center pt-12">
-                            Pas encore de FAQ{" "}
+                            No Files yet{" "}
                         </div>
                         <Link
                             to={"/File/Add"}
                             className="mx-auto py-2 px-4 rounded bg-blue_v text-white cursor-pointer font-semibold text-sm"
                         >
-                            Ajouter FaQ{" "}
+                            Add a File{" "}
                         </Link>
                     </div>
                 ) : (
@@ -83,7 +83,7 @@ function Files() {
                             to={"/File/Add"}
                             className="mx-auto py-2 px-4 rounded bg-blue_v text-white cursor-pointer font-semibold text-sm"
                         >
-                            Ajouter FaQ{" "}
+                            Add a File{" "}
                         </Link>
                         <div className=" flex flex-col items-center justify-center  w-[90%] pt-6">
                             {Files &&
