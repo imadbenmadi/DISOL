@@ -31,11 +31,7 @@ function Demands() {
                 if (demandsResponse.status === 200) {
                     setDemands(demandsResponse.data.demands);
                 } else if (demandsResponse.status === 401) {
-                    Swal.fire(
-                        "Error",
-                        "Vous devez vous reconnecter à nouveau",
-                        "error"
-                    );
+                    Swal.fire("Error", "You have to Login again", "error");
                     Navigate("/Login", { replace: true });
                 } else {
                     setError(demandsResponse.data);
@@ -52,11 +48,7 @@ function Demands() {
                 if (typesResponse.status === 200) {
                     setDemandTypes(typesResponse.data.types);
                 } else if (typesResponse.status === 401) {
-                    Swal.fire(
-                        "Error",
-                        "Vous devez vous reconnecter à nouveau",
-                        "error"
-                    );
+                    Swal.fire("Error", "You have to Login again", "error");
                     Navigate("/Login", { replace: true });
                 } else {
                     setDemandTypes([]);
@@ -93,11 +85,7 @@ function Demands() {
                 setNewType("");
                 Swal.fire("Succès", "Type ajouté avec succès", "success");
             } else if (response.status === 401) {
-                Swal.fire(
-                    "Error",
-                    "Vous devez vous reconnecter à nouveau",
-                    "error"
-                );
+                Swal.fire("Error", "You have to Login again", "error");
                 Navigate("/Login", { replace: true });
             } else {
                 Swal.fire("Erreur", "Une erreur s'est produite", "error");
@@ -122,11 +110,7 @@ function Demands() {
                 setDemandTypes(DemandTypes.filter((t) => t.id !== id)); // Use `id` for filtering
                 Swal.fire("Succès", "Type supprimé avec succès", "success");
             } else if (response.status === 401) {
-                Swal.fire(
-                    "Error",
-                    "Vous devez vous reconnecter à nouveau",
-                    "error"
-                );
+                Swal.fire("Error", "You have to Login again", "error");
                 Navigate("/Login", { replace: true });
             } else {
                 Swal.fire("Erreur", "Une erreur s'est produite", "error");

@@ -28,11 +28,7 @@ function Contact() {
                     const Messages = response.data.Messages;
                     setMessages(Messages);
                 } else if (response.status == 401) {
-                    Swal.fire(
-                        "Error",
-                        "vous devez vous reconnecter à nouveau",
-                        "error"
-                    );
+                    Swal.fire("Error", "You have to Login again", "error");
                     Navigate("/Login", { replace: true });
                 } else {
                     setError(response.data);

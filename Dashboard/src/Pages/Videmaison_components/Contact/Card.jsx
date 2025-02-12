@@ -33,11 +33,7 @@ function Card({ Message, Messages, setMessages }) {
                 setMessages(newMessages);
                 Swal.fire("Success", "Suppression réussie", "success");
             } else if (response.status === 401) {
-                Swal.fire(
-                    "UnAuthorised",
-                    "vous devez vous reconnecter à nouveau",
-                    "error"
-                );
+                Swal.fire("UnAuthorised", "You have to Login again", "error");
                 Navigate("/Login", { replace: true });
             } else
                 Swal.fire(
