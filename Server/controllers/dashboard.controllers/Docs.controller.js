@@ -4,8 +4,6 @@ const drive = require("../../middleware/googleAuth");
 const formidable = require("formidable");
 
 const GetDocs = async (req, res) => {
-    console.log("GetDocs");
-    
     if (!drive) {
         console.error("Google Drive API is not initialized properly.");
         return res.status(500).json({ message: "Google Drive API error" });

@@ -10,7 +10,10 @@ export default function FileManager() {
     const fetchFiles = async () => {
         try {
             const response = await axios.get(
-                "http://localhost:3000/dashboard/Documents"
+                "http://localhost:3000/dashboard/Documents",
+                {
+                    withCredentials: true,
+                }
             );
             console.log(response.data.files);
 
@@ -38,6 +41,7 @@ export default function FileManager() {
                 "http://localhost:3000/dashboard/Documents",
                 formData,
                 {
+                    withCredentials: true,
                     headers: { "Content-Type": "multipart/form-data" },
                 }
             );
@@ -52,7 +56,10 @@ export default function FileManager() {
     const handleDelete = async (fileId) => {
         try {
             await axios.delete(
-                `http://localhost:3000/dashboard/Documents/${fileId}`
+                `http://localhost:3000/dashboard/Documents/${fileId}`,
+                {
+                    withCredentials: true,
+                }
             );
             setFiles(files.filter((file) => file.id !== fileId));
         } catch (error) {
@@ -66,8 +73,18 @@ export default function FileManager() {
 
     return (
         <div className="p-6 max-w-2xl mx-auto bg-white rounded-xl shadow-md space-y-4">
-            <h2 className="text-xl font-semibold">File Manager</h2>
-
+            <h2 className="text-xl font-semibold">Document Manager</h2>
+            <div>
+                <span>Link to google drive :</span>
+                <a
+                    href="https://drive.google.com/drive/folders/1euwDiYqfHIW-cbUvlorDDSmZRFFYYNUf?usp=sharing"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-500 hover:underline"
+                >
+                    Google Drive
+                </a>
+            </div>
             {/* File Upload */}
             <div className="flex items-center space-x-2">
                 <input type="file" onChange={handleFileChange} />
