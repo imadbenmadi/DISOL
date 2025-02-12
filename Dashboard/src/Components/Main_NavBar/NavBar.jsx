@@ -1,6 +1,6 @@
 import React from "react";
 import Mobile from "./Mobile/Mobile";
-import Laptop from "./Laptop";
+import Laptop from "./Laptop/Laptop";
 function NavBar() {
     return (
         <div>
