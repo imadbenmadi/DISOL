@@ -6,6 +6,16 @@ const File = sequelize.define("File", {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    uploaded_in: {
+        type: DataTypes.ENUM(
+            "local_document",
+            "pdf",
+            "google_drive",
+            "google_sheet",
+            "google_doc"
+        ),
+        allowNull: false,
+    },
     fileSize: {
         type: DataTypes.STRING,
         allowNull: true,
