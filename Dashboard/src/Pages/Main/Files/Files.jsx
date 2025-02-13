@@ -6,24 +6,20 @@ import axios from "axios";
 import Card from "./Card";
 import { BiMessage } from "react-icons/bi";
 import { Link } from "react-router-dom";
-function Documents() {
+function Files() {
     const Navigate = useNavigate();
 
-    const [Documents, setDocuments] = useState([]);
+    const [Files, setFiles] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
 
     useEffect(() => {
         setLoading(true);
-        const FetchDocuments = async ({
-            setDocuments,
-            setLoading,
-            setError,
-        }) => {
+        const FetchFiles = async ({ setFiles, setLoading, setError }) => {
             setLoading(true);
             try {
                 const response = await axios.get(
-                    `http://localhost:3000/dashboard/Documents`,
+                    `http://localhost:3000/dashboard/Files`,
                     {
                         withCredentials: true,
                         validateStatus: () => true,
@@ -31,8 +27,8 @@ function Documents() {
                 );
 
                 if (response.status == 200) {
-                    const documents = response.data.Documents;
-                    setDocuments(documents);
+                    const Files = response.data.Files;
+                    setFiles(Files);
                 } else if (response.status == 401) {
                     Swal.fire("Error", "You have to Login again", "error");
                     Navigate("/Login");
@@ -47,7 +43,7 @@ function Documents() {
             }
         };
 
-        FetchDocuments({ setDocuments, setLoading, setError });
+        FetchFiles({ setFiles, setLoading, setError });
     }, []);
 
     if (loading) {
@@ -69,40 +65,40 @@ function Documents() {
             <div className=" py-6 px-4">
                 <div className=" text-xl font-semibold text-blue_v">
                     {" "}
-                    Disol Documents
+                    Disol Files
                 </div>
 
-                {!Documents || Documents?.length == 0 ? (
+                {!Files || Files?.length == 0 ? (
                     <div className=" flex flex-col gap-2 items-center justify-center">
                         <div className="text-md font-semibold text-gray_v text-center pt-12">
-                            No Documents yet{" "}
+                            No Files yet{" "}
                         </div>
                         <Link
-                            to={"/Main/Documents/Add"}
+                            to={"/Main/Files/Add"}
                             className="mx-auto py-2 px-4 rounded bg-blue_v text-white cursor-pointer font-semibold text-sm"
                         >
-                            Add a Document{" "}
+                            Add a File{" "}
                         </Link>
                     </div>
                 ) : (
                     <div className=" my-6 flex flex-col gap-6">
                         <Link
-                            to={"/Main/Documents/Add"}
+                            to={"/Main/Files/Add"}
                             className="mx-auto py-2 px-4 rounded bg-blue_v text-white cursor-pointer font-semibold text-sm"
                         >
-                            Add a Document{" "}
+                            Add a File{" "}
                         </Link>
                         <div className=" flex flex-col items-center justify-center  w-[90%] pt-6">
-                            {Documents &&
-                                Documents.length > 0 &&
-                                Documents?.map((document) => {
+                            {Files &&
+                                Files.length > 0 &&
+                                Files?.map((file) => {
                                     return (
                                         <Card
-                                            key={document.id}
-                                            document={document}
-                                            setDocuments={setDocuments}
-                                            Documents={Documents}
-                                            // handle_Delete_Documents={handle_Delete_Documents}
+                                            key={file.id}
+                                            file={file}
+                                            setFiles={setFiles}
+                                            Files={Files}
+                                            // handle_Delete_Files={handle_Delete_Files}
                                         />
                                     );
                                 })}
@@ -113,4 +109,4 @@ function Documents() {
         );
 }
 
-export default Documents;
+export default Files;

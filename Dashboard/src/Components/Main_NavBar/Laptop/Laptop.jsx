@@ -100,12 +100,24 @@ function Laptop() {
                                         Active_nav={Active_nav}
                                         Icon={null}
                                     />{" "}
-                                    <LaptopNavItem
-                                        Link="/Main/Documents"
-                                        name="Disol Documents"
-                                        Active_nav={Active_nav}
-                                        Icon={null}
-                                    />
+                                    <Section
+                                        title="Main"
+                                        Icon={GoHome}
+                                        default_open={true}
+                                    >
+                                        <LaptopNavItem
+                                            Link="/Main/Documents"
+                                            name="Disol Documents"
+                                            Active_nav={Active_nav}
+                                            Icon={null}
+                                        />{" "}
+                                        <LaptopNavItem
+                                            Link="/Main/Files"
+                                            name="File Manager"
+                                            Active_nav={Active_nav}
+                                            Icon={null}
+                                        />
+                                    </Section>
                                 </div>
                             </Section>
                             <Section title="Edit Content" Icon={FaRegEdit}>
