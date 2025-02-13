@@ -11,6 +11,7 @@ import Default_Main from "./Pages/Main/Default";
 import Main_Documents from "./Pages/Main/Documents/Documents";
 
 import Main_Files from "./Pages/Main/Files/Files";
+import Main_Add_File from "./Pages/Main/Files/Add_Files";
 
 import Not_Found from "./Components/Not_Found";
 import Not_Finished from "./Components/Not_Finished";
@@ -53,6 +54,11 @@ const routes = createBrowserRouter([
                                 path: "/Main/Files",
                                 caseSensitive: true,
                                 element: <Main_Files />,
+                            },
+                            {
+                                path: "/Main/Files/Add",
+                                caseSensitive: true,
+                                element: <Main_Add_File />,
                             },
                             // {
                             //     path: "/Main/Documents/Add",

@@ -43,8 +43,13 @@ export default function FileManager() {
             fetchFiles(newPath.length ? newPath[newPath.length - 1].id : null);
         }
     };
+
     if (loading) {
-        return <div className="h-40 w-full bg-gray-200 animate-pulse" />;
+        return (
+            <div className=" w-screen h-screen flex flex-col items-center justify-center">
+                <span className="loader"></span>
+            </div>
+        );
     }
     if (
         !data.folders.length ||
@@ -52,7 +57,10 @@ export default function FileManager() {
     ) {
         return (
             <div className="h-40 w-full bg-gray-200 flex items-center justify-center">
-                <p>No files found</p>
+                <div>No files found</div>
+                <div>
+                    <Link to={"/Main/Files/Add"}>Add new file</Link>
+                </div>
             </div>
         );
     }
