@@ -1,112 +1,84 @@
-import React from "react";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router";
-import Swal from "sweetalert2";
-import axios from "axios";
-import Card from "./Card";
-import { BiMessage } from "react-icons/bi";
-import { Link } from "react-router-dom";
-function Files() {
-    const Navigate = useNavigate();
+import { FaFolder, FaFileAlt } from "react-icons/fa";
 
-    const [Files, setFiles] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false);
+export default function FileManager() {
+    const [data, setData] = useState({ folders: [], standaloneFiles: [] });
+    const [loading, setLoading] = useState(true);
+    const [currentPath, setCurrentPath] = useState([]);
 
     useEffect(() => {
-        setLoading(true);
-        const FetchFiles = async ({ setFiles, setLoading, setError }) => {
-            setLoading(true);
-            try {
-                const response = await axios.get(
-                    `http://localhost:3000/dashboard/Files`,
-                    {
-                        withCredentials: true,
-                        validateStatus: () => true,
-                    }
-                );
-
-                if (response.status == 200) {
-                    const Files = response.data.Files;
-                    setFiles(Files);
-                } else if (response.status == 401) {
-                    Swal.fire("Error", "You have to Login again", "error");
-                    Navigate("/Login");
-                    setError(response.data);
-                } else {
-                    setError(response.data);
-                }
-            } catch (error) {
-                setError(error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        FetchFiles({ setFiles, setLoading, setError });
+        fetchFiles();
     }, []);
 
-    if (loading) {
-        return (
-            <div className=" w-full h-[80vh] flex flex-col items-center justify-center">
-                <span className="loader"></span>
-            </div>
-        );
-    } else if (error)
-        return (
-            <div className=" w-full h-screen flex items-center justify-center">
-                <div className="text-red-600 font-semibold">
-                    {error.message}
-                </div>
-            </div>
-        );
-    else
-        return (
-            <div className=" py-6 px-4">
-                <div className=" text-xl font-semibold text-blue_v">
-                    {" "}
-                    Disol Files
-                </div>
+    const fetchFiles = async (folderId = null) => {
+        setLoading(true);
+        try {
+            const res = await fetch(`/api/files?folderId=${folderId || ""}`);
+            const result = await res.json();
+            setData(result);
+        } catch (error) {
+            console.error("Error fetching files", error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
-                {!Files || Files?.length == 0 ? (
-                    <div className=" flex flex-col gap-2 items-center justify-center">
-                        <div className="text-md font-semibold text-gray_v text-center pt-12">
-                            No Files yet{" "}
-                        </div>
-                        <Link
-                            to={"/Main/Files/Add"}
-                            className="mx-auto py-2 px-4 rounded bg-blue_v text-white cursor-pointer font-semibold text-sm"
-                        >
-                            Add a File{" "}
-                        </Link>
-                    </div>
-                ) : (
-                    <div className=" my-6 flex flex-col gap-6">
-                        <Link
-                            to={"/Main/Files/Add"}
-                            className="mx-auto py-2 px-4 rounded bg-blue_v text-white cursor-pointer font-semibold text-sm"
-                        >
-                            Add a File{" "}
-                        </Link>
-                        <div className=" flex flex-col items-center justify-center  w-[90%] pt-6">
-                            {Files &&
-                                Files.length > 0 &&
-                                Files?.map((file) => {
-                                    return (
-                                        <Card
-                                            key={file.id}
-                                            file={file}
-                                            setFiles={setFiles}
-                                            Files={Files}
-                                            // handle_Delete_Files={handle_Delete_Files}
-                                        />
-                                    );
-                                })}
-                        </div>
-                    </div>
+    const openFolder = (folder) => {
+        setCurrentPath([...currentPath, folder]);
+        fetchFiles(folder.id);
+    };
+
+    const goBack = () => {
+        if (currentPath.length > 0) {
+            const newPath = [...currentPath];
+            newPath.pop();
+            setCurrentPath(newPath);
+            fetchFiles(newPath.length ? newPath[newPath.length - 1].id : null);
+        }
+    };
+
+    return (
+        <div className="p-4 max-w-4xl mx-auto">
+            <div className="flex items-center mb-4">
+                {currentPath.length > 0 && (
+                    <button
+                        onClick={goBack}
+                        className="px-3 py-1 bg-gray-200 rounded-md"
+                    >
+                        ⬅ Back
+                    </button>
                 )}
+                <h2 className="text-lg font-semibold ml-4">
+                    {currentPath.length > 0
+                        ? currentPath[currentPath.length - 1].folderName
+                        : "Root"}
+                </h2>
             </div>
-        );
+            {loading ? (
+                <div className="h-40 w-full bg-gray-200 animate-pulse" />
+            ) : (
+                <div className="grid grid-cols-3 gap-4">
+                    {data.folders.map((folder) => (
+                        <div
+                            key={folder.id}
+                            onDoubleClick={() => openFolder(folder)}
+                            className="p-4 border rounded-md flex flex-col items-center cursor-pointer hover:bg-gray-100"
+                        >
+                            <FaFolder className="h-10 w-10 text-blue-500" />
+                            <p className="text-sm mt-2">{folder.folderName}</p>
+                        </div>
+                    ))}
+                    {data.standaloneFiles.map((file) => (
+                        <div
+                            key={file.id}
+                            className="p-4 border rounded-md flex flex-col items-center"
+                        >
+                            <FaFileAlt className="h-10 w-10 text-gray-500" />
+                            <p className="text-sm mt-2">{file.fileName}</p>
+                        </div>
+                    ))}
+                </div>
+            )}
+        </div>
+    );
 }
-
-export default Files;
