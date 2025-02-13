@@ -3,7 +3,6 @@ import axios from "axios";
 
 export default function FileManager() {
     const [files, setFiles] = useState([]);
-    const [selectedFile, setSelectedFile] = useState(null);
     const [loading, setLoading] = useState(false);
 
     // Fetch files from backend
@@ -23,52 +22,6 @@ export default function FileManager() {
         }
     };
 
-    // Handle file selection
-    const handleFileChange = (event) => {
-        setSelectedFile(event.target.files[0]);
-    };
-
-    // Upload a new file
-    const handleUpload = async () => {
-        if (!selectedFile) return alert("Please select a file");
-
-        const formData = new FormData();
-        formData.append("file", selectedFile);
-
-        setLoading(true);
-        try {
-            await axios.post(
-                "http://localhost:3000/dashboard/Documents",
-                formData,
-                {
-                    withCredentials: true,
-                    headers: { "Content-Type": "multipart/form-data" },
-                }
-            );
-            fetchFiles();
-        } catch (error) {
-            console.error("Error uploading file:", error);
-        }
-        setLoading(false);
-    };
-
-    // Delete a file
-    const handleDelete = async (fileId) => {
-        try {
-            await axios.delete(
-                `http://localhost:3000/dashboard/Documents/${fileId}`,
-                {
-                    withCredentials: true,
-                }
-            );
-            setFiles((prevFiles) =>
-                prevFiles.filter((file) => file.id !== fileId)
-            );
-        } catch (error) {
-            console.error("Error deleting file:", error);
-        }
-    };
-
     useEffect(() => {
         fetchFiles();
     }, []);
@@ -77,7 +30,9 @@ export default function FileManager() {
         <div className="p-6 max-w-2xl mx-auto bg-white rounded-xl shadow-md space-y-4">
             <h2 className="text-xl font-semibold">Document Manager</h2>
             <div>
-                <span>Link to google drive :</span>
+                <span>
+                    edit and cahnge files from this Link to google drive :{" "}
+                </span>
                 <a
                     href="https://drive.google.com/drive/folders/1euwDiYqfHIW-cbUvlorDDSmZRFFYYNUf?usp=sharing"
                     target="_blank"
@@ -86,17 +41,6 @@ export default function FileManager() {
                 >
                     Google Drive
                 </a>
-            </div>
-            {/* File Upload */}
-            <div className="flex items-center space-x-2">
-                <input type="file" onChange={handleFileChange} />
-                <button
-                    onClick={handleUpload}
-                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-                    disabled={loading}
-                >
-                    {loading ? "Uploading..." : "Upload"}
-                </button>
             </div>
 
             {/* File List */}
@@ -114,15 +58,15 @@ export default function FileManager() {
                         >
                             {file.name}
                         </a>
-                        <button
-                            onClick={() => handleDelete(file.id)}
-                            className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
-                        >
-                            Delete
-                        </button>
                     </li>
                 ))}
             </ul>
+            <hr />
+            <iframe
+                src="https://disol-agency.com/test.pdf"
+                width="100%"
+                height="600px"
+            ></iframe>
         </div>
     );
 }
