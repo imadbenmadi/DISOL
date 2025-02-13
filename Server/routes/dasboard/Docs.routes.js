@@ -5,12 +5,4 @@ const Docs_Controller = require("../../controllers/dashboard.controllers/Docs.co
 
 router.get("/Documents", authMiddleware, Docs_Controller.GetDocs);
 
-const formidableMiddleware = require("express-formidable");
-router.use(formidableMiddleware());
-router.post("/Documents", authMiddleware, Docs_Controller.AddDoc);
-router.delete(
-    "/Documents/:fileId",
-    authMiddleware,
-    Docs_Controller.DeleteDoc
-);
 module.exports = router;
