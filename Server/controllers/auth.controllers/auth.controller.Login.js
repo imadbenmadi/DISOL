@@ -1,6 +1,6 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
-const { Admins, Workers, Users, Refresh_tokens } = require("../../models/init");
+const { Admin, Workers, Users, Refresh_tokens } = require("../../models/init");
 
 const generateTokens = (userId, userType, accessSecret, refreshSecret) => {
     const accessToken = jwt.sign({ userId, userType }, accessSecret, {
@@ -44,7 +44,7 @@ const handleLogin = async (req, res) => {
 
     switch (userType.toLowerCase()) {
         case "admin":
-            userModel = Admins;
+            userModel = Admin;
             accessSecret = process.env.ADMIN_ACCESS_TOKEN_SECRET;
             refreshSecret = process.env.ADMIN_REFRESH_TOKEN_SECRET;
             break;
@@ -81,7 +81,6 @@ const handleLogin = async (req, res) => {
         await Refresh_tokens.create({ userId: user.id, token: refreshToken });
 
         setCookies(res, accessToken, refreshToken);
-        
 
         return res.status(200).json({
             message: "Logged in successfully",

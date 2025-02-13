@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-const { Refresh_tokens, Admins, Users, Workers } = require("../../models/init");
+const { Refresh_tokens, Admin, Users, Workers } = require("../../models/init");
 
 // Helper function to clear cookies securely
 const clearCookies = (res) => {
@@ -31,7 +31,7 @@ const getUserDetails = (userType) => {
     switch (userType.toLowerCase()) {
         case "admin":
             return {
-                model: Admins,
+                model: Admin,
                 accessTokenSecret: process.env.ADMIN_ACCESS_TOKEN_SECRET,
                 refreshTokenSecret: process.env.ADMIN_REFRESH_TOKEN_SECRET,
             };

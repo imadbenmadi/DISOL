@@ -1,4 +1,4 @@
-const { Users, Admins, Workers } = require("../../models/init");
+const { Users, Admin, Workers } = require("../../models/init");
 const Welcome_Email = require("../../jobs/Emails/Welcome");
 const handleRegister = async (req, res) => {
     try {
@@ -37,7 +37,7 @@ const handleRegister = async (req, res) => {
         const exist_worker = await Workers.findOne({
             where: { email: email },
         });
-        const exist_Admin = await Admins.findOne({
+        const exist_Admin = await Admin.findOne({
             where: { email: email },
         });
 
@@ -51,7 +51,7 @@ const handleRegister = async (req, res) => {
         if (!userType) {
             return res.status(409).json({ message: "User Type is required" });
         } else if (userType === "admin") {
-            newUser = await Admins.create({
+            newUser = await Admin.create({
                 firstName: firstName,
                 lastName: lastName,
                 email: email,
