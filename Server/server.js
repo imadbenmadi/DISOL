@@ -10,6 +10,8 @@ dotenv.config();
 
 // Initialize the database
 initializeDatabase();
+// initialize Models
+const { init_models } = require("./models/init");
 
 // Initialize directories and middleware
 initializeDirectories();

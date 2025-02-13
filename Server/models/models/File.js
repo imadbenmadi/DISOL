@@ -11,13 +11,7 @@ const File = sequelize.define("File", {
         allowNull: false,
     },
     uploaded_in: {
-        type: DataTypes.ENUM(
-            "local_document",
-            "pdf",
-            "google_drive",
-            "google_sheet",
-            "google_doc"
-        ),
+        type: DataTypes.ENUM("local", "google_drive"),
         allowNull: false,
     },
     fileSize: {
@@ -42,7 +36,7 @@ const Folder = sequelize.define("Folder", {
 });
 
 // ✅ Define the relationship but allow files to be without folders
-Folder.hasMany(File, { foreignKey: "FolderId" });
+Folder.hasMany(File, { foreignKey: "FolderId" }, { allowNull: true });
 File.belongsTo(Folder, { foreignKey: "FolderId", allowNull: true });
 
 module.exports = { File, Folder };

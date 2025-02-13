@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { FaFolder, FaFileAlt } from "react-icons/fa";
-
+import axios from "axios";
 export default function FileManager() {
     const [data, setData] = useState({ folders: [], standaloneFiles: [] });
     const [loading, setLoading] = useState(true);
@@ -13,9 +13,16 @@ export default function FileManager() {
     const fetchFiles = async (folderId = null) => {
         setLoading(true);
         try {
-            const res = await fetch(`/api/files?folderId=${folderId || ""}`);
-            const result = await res.json();
-            setData(result);
+            const res = await axios.get(
+                `http://localhost:3000/dashboard/Files`,
+                {
+                    withCredentials: true,
+                    // validateStatus: () => true,
+                }
+            );
+            console.log(res);
+
+            setData(res.data);
         } catch (error) {
             console.error("Error fetching files", error);
         } finally {
@@ -36,7 +43,19 @@ export default function FileManager() {
             fetchFiles(newPath.length ? newPath[newPath.length - 1].id : null);
         }
     };
-
+    if (loading) {
+        return <div className="h-40 w-full bg-gray-200 animate-pulse" />;
+    }
+    if (
+        !data.folders.length ||
+        (data.folders.length === 0 && data.standaloneFiles.length === 0)
+    ) {
+        return (
+            <div className="h-40 w-full bg-gray-200 flex items-center justify-center">
+                <p>No files found</p>
+            </div>
+        );
+    }
     return (
         <div className="p-4 max-w-4xl mx-auto">
             <div className="flex items-center mb-4">
