@@ -6,12 +6,18 @@ const path = require("path");
 const GetFiles = async (req, res) => {
     try {
         // Fetch all files from DB
-        const all_files = await File.findAll(); // 🔥 Fix: `await` added
+        const all_files = await File.findAll();
 
         // Filter only files that exist on the server
-        const only_existing_files = all_files.filter((file) =>
-            fs.existsSync(path.join(__dirname, "Files", file.fileName))
-        );
+        const only_existing_files = all_files.filter((file) => {
+            if (
+                fs.existsSync(
+                    path.join(__dirname, "../../Files", file.fileName)
+                )
+            ) {
+                return file;
+            }
+        });
 
         // Fetch folders with their document-type files
         const folders = await Folder.findAll({
@@ -34,7 +40,43 @@ const GetFiles = async (req, res) => {
         return res.status(500).json({ message: "Internal Server Error" });
     }
 };
+const Get_unused_files = async (req, res) => {
+    try {
+        // Fetch all files from DB
+        const all_files = await File.findAll();
 
+        const indb_but_not_in_server = all_files
+            .filter((file) => {
+                if (
+                    !fs.existsSync(
+                        path.join(__dirname, "../../Files", file.fileName)
+                    )
+                ) {
+                    return file;
+                }
+            })
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        const in_server_but_not_db = fs
+            .readdirSync(path.join(__dirname, "../../Files"))
+            .filter((file) => !all_files.find((f) => f.fileName === file)) // Correctly filters files
+            .map((file) => ({
+                fileName: file,
+                fullPath: "http://localhost:3000/" + path.join("Files", file), // Make it a valid URL
+            }))
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+        // sorted by date
+        const unused_files = {
+            indb_but_not_in_server,
+            in_server_but_not_db,
+        };
+
+        return res.status(200).json({ unused_files });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Internal Server Error" });
+    }
+};
 const get_file = async (req, res) => {
     try {
         const { fileName } = req.params;
@@ -84,4 +126,5 @@ const get_file = async (req, res) => {
 module.exports = {
     GetFiles,
     get_file,
+    Get_unused_files,
 };

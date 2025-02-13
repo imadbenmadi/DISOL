@@ -36,7 +36,7 @@ const Folder = sequelize.define("Folder", {
 });
 
 // ✅ Define the relationship but allow files to be without folders
-Folder.hasMany(File, { foreignKey: "FolderId" }, { allowNull: true });
+Folder.hasMany(File, { foreignKey: "FolderId" });
 File.belongsTo(Folder, { foreignKey: "FolderId", allowNull: true });
 
 module.exports = { File, Folder };
