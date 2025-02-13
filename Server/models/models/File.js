@@ -6,6 +6,10 @@ const File = sequelize.define("File", {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    fileName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
     uploaded_in: {
         type: DataTypes.ENUM(
             "local_document",
