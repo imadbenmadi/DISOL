@@ -19,6 +19,7 @@ import { MdOutlineWork } from "react-icons/md";
 import { MdContacts } from "react-icons/md";
 import Toogler from "./Toogler";
 import Section from "./Section"; // Import the Section component
+import { FaFileAlt } from "react-icons/fa";
 
 function Laptop() {
     const [open, set_open] = useState(true);
@@ -101,22 +102,24 @@ function Laptop() {
                                         Icon={null}
                                     />{" "}
                                     <Section
-                                        title="Main"
-                                        Icon={GoHome}
+                                        title="Files and Documents"
+                                        Icon={FaFileAlt}
                                         default_open={true}
                                     >
-                                        <LaptopNavItem
-                                            Link="/Main/Documents"
-                                            name="Disol Documents"
-                                            Active_nav={Active_nav}
-                                            Icon={null}
-                                        />{" "}
-                                        <LaptopNavItem
-                                            Link="/Main/Files"
-                                            name="File Manager"
-                                            Active_nav={Active_nav}
-                                            Icon={null}
-                                        />
+                                        <div className=" pl-6">
+                                            <LaptopNavItem
+                                                Link="/Main/Documents"
+                                                name="Disol Documents"
+                                                Active_nav={Active_nav}
+                                                Icon={null}
+                                            />{" "}
+                                            <LaptopNavItem
+                                                Link="/Main/Files"
+                                                name="File Manager"
+                                                Active_nav={Active_nav}
+                                                Icon={null}
+                                            />
+                                        </div>
                                     </Section>
                                 </div>
                             </Section>

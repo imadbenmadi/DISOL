@@ -11,7 +11,7 @@ function Section({ title, Icon, default_open, children }) {
         <div>
             <div
                 onClick={toggleSection}
-                className="cursor-pointer font-semibold pb-4 flex gap-2 items-center"
+                className="cursor-pointer font-semibold pb-2 flex gap-2 items-center"
             >
                 <div className=" flex gap-2">
                     {Icon && <Icon className="text-lg" />}
