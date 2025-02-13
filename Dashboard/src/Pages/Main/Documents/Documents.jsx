@@ -62,11 +62,7 @@ export default function FileManager() {
                 ))}
             </ul>
             <hr />
-            <iframe
-                src="https://disol-agency.com/test.pdf"
-                width="100%"
-                height="600px"
-            ></iframe>
+            
         </div>
     );
 }
