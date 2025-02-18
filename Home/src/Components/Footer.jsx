@@ -105,11 +105,7 @@ const Footer = () => {
                                         {data.contactUs.numberPhone}
                                     </a>
                                 </li>
-                                {/* <li className="text-white">
-                                    <a href={data.contactUs.agency}>
-                                        Agency Address
-                                    </a>
-                                </li> */}
+                                
                             </ul>
                         </div>
 
