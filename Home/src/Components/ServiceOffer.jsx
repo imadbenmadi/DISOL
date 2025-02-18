@@ -33,7 +33,15 @@ const ServiceOffer = () => {
                                 transition duration-300 hover:scale-105 sm:p-8  ${
                                     service.type === "web" &&
                                     "bg-[#0085c8] text-white"
-                                } `}
+                                } 
+                                ${
+                                    service.type === "video"
+                                        ? "order-2 md:order-1"
+                                        : service.type === "web"
+                                        ? "order-1 md:order-2"
+                                        : "order-3"
+                                }
+                                `}
                         >
                             <div className="mb-4 ">
                                 {service.title === "Video editing" ? (

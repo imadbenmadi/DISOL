@@ -98,8 +98,9 @@ const Navbar = () => {
               </div>
 
               {/* Desktop Right Section */}
-              <div className="hidden md:flex md:items-center md:space-x-4">
-                {/* Language Selector */}
+              <div></div>
+              {/* <div className="hidden md:flex md:items-center md:space-x-4">
+                
                 <div className="relative">
                   <button
                     onClick={() => setIsLanguageOpen(!isLanguageOpen)}
@@ -141,7 +142,7 @@ const Navbar = () => {
                 >
                   Sign up
                 </Link>
-              </div>
+              </div> */}
             </div>
 
             {/* Mobile menu button */}
@@ -162,7 +163,7 @@ const Navbar = () => {
                 ) : (
                   ""
                 )}
-                {isLanguageOpen && isOpen && (
+                {/* {isLanguageOpen && isOpen && (
                   <div className="absolute z-[70] w-24 rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5">
                     <div className="relative">
                       <a
@@ -185,7 +186,7 @@ const Navbar = () => {
                       </a>
                     </div>
                   </div>
-                )}
+                )} */}
               </div>
 
               <button
@@ -250,7 +251,7 @@ const Navbar = () => {
                     Contact
                   </a>
                   <div className="border-t text-center border-gray-200 pt-4">
-                    <Link
+                    {/* <Link
                       href="/Login"
                       onClick={()=> setIsOpen(!isOpen)}
                       className="block text-center Log in rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-blue-600"
@@ -263,7 +264,7 @@ const Navbar = () => {
                       className="rounded-full mt-5 block border-2 px-8 py-3 text-base font-medium text-white transition-colors bg-[#0088cc] hover:bg-blue-600"
                     >
                       Sign up
-                    </Link>
+                    </Link> */}
                   </div>
                 </div>
               </div>
