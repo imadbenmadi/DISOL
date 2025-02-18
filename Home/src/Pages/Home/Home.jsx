@@ -6,7 +6,7 @@ import TwinCard from "../../Components/TwinCard";
 import ServiceOffer from "../../Components/ServiceOffer";
 import Package from "../../Components/Package";
 import Projects from "../../Components/Projects";
-import AboutUs from "../../Components/AboutUs";
+import Review from "../../Components/Review";
 import FAQs from "../../Components/FAQ";
 import Footer from "../../Components/Footer";
 import "keen-slider/keen-slider.min.css";
@@ -58,10 +58,10 @@ function Home({ children }) {
             <Package />
 
             {/* Project Section */}
-            <Projects />
+            {/* <Projects /> */}
 
-            {/* Project Section */}
-            <AboutUs />
+            {/* reviews Section */}
+            {/* <Review /> */}
 
             {/* Project Section */}
             <FAQs />
