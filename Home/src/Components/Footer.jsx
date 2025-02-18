@@ -46,40 +46,40 @@ const Footer = () => {
                             </h3>
                             <ul className="space-y-4">
                                 <li>
-                                    <Link
+                                    <a
                                         href={data.socialmedia.facebook}
                                         className="flex items-center justify-center lg:justify-start text-white gap-2 hover:opacity-80"
                                     >
                                         <Facebook className="h-5 w-5" />
                                         Facebook
-                                    </Link>
+                                    </a>
                                 </li>
                                 <li>
-                                    <Link
+                                    <a
                                         href={data.socialmedia.instgram}
                                         className="flex items-center justify-center lg:justify-start text-white gap-2 hover:opacity-80"
                                     >
                                         <Instagram className="h-5 w-5" />
                                         Instagram
-                                    </Link>
+                                    </a>
                                 </li>
                                 <li>
-                                    <Link
+                                    <a
                                         href={data.socialmedia.linkedIn}
                                         className="flex items-center justify-center lg:justify-start text-white gap-2 hover:opacity-80"
                                     >
                                         <Linkedin className="h-5 w-5" />
-                                        LinkedIn
-                                    </Link>
+                                        Linkedin
+                                    </a>
                                 </li>
-                                <li>
+                                {/* <li>
                                     <Link
                                         href={data.socialmedia.X}
                                         className="flex items-center justify-center lg:justify-start text-white gap-2 hover:opacity-80"
                                     >
                                         <Twitter className="h-5 w-5" />X
                                     </Link>
-                                </li>
+                                </li> */}
                             </ul>
                         </div>
 
@@ -105,11 +105,11 @@ const Footer = () => {
                                         {data.contactUs.numberPhone}
                                     </a>
                                 </li>
-                                <li className="text-white">
+                                {/* <li className="text-white">
                                     <a href={data.contactUs.agency}>
                                         Agency Address
                                     </a>
-                                </li>
+                                </li> */}
                             </ul>
                         </div>
 
