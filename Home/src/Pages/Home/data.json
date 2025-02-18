@@ -230,9 +230,9 @@
       }
     ],
     "completeAndClient": {
-      "numberProjects": 12,
+      "numberProjects": 6,
       "textProject": "Completed Projects",
-      "numberClient": 20,
+      "numberClient": 7,
       "textClient": "New Clients",
       "nuberRevenuePerSent": 2.5
     },

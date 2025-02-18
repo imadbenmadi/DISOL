@@ -49,7 +49,7 @@ function Home({ children }) {
             <TwinCard />
 
             <div className="relative">
-                {/* Blue Circle */}
+                {/* // Blue Circle */}
                 <svg
                     className="absolute left-[18%] lg:w-[840px] lg:h-[850px] xl:w-[1000px] hidden lg:block xl:h-[1000px]"
                     width="1248"
@@ -211,11 +211,9 @@ function Home({ children }) {
                         </clipPath>
                     </defs>
                 </svg>
-
-                {/* TwinCard Section */}
+                {/* // TwinCard Section */}
                 <ServiceOffer />
-
-                {/* TwinCard Section */}
+                {/* // TwinCard Section */}
                 <Package />
             </div>
 

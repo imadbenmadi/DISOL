@@ -45,7 +45,7 @@ const Landing = () => {
               modern websites to creating visual content that captures attention and boosts your presence
             </p>
             <div className="mt-10 flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
-              <button className="rounded-full bg-[#0088cc] px-8 py-3 text-base font-medium text-white transition-colors hover:bg-[#006699]">
+              <button className=" shadow-md rounded-full bg-[#0088cc] px-8 py-3 text-base font-medium text-white transition-colors hover:bg-[#006699]">
                 Request a service
               </button>
               <button className="rounded-full border-2 border-[#0088cc] px-8 py-3 text-base font-medium text-[#0088cc] transition-colors hover:bg-[#0088cc] hover:text-white">
