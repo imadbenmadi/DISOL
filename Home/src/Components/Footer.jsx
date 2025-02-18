@@ -105,7 +105,6 @@ const Footer = () => {
                                         {data.contactUs.numberPhone}
                                     </a>
                                 </li>
-                                
                             </ul>
                         </div>
 
@@ -116,28 +115,28 @@ const Footer = () => {
                             </h3>
                             <ul className="space-y-4">
                                 <li>
-                                    <Link
-                                        href="#services/web"
+                                    <a
+                                        href="#services"
                                         className="text-white hover:opacity-80"
                                     >
                                         Website Development
-                                    </Link>
+                                    </a>
                                 </li>
                                 <li>
-                                    <Link
-                                        href="#services/design"
+                                    <a
+                                        href="#services"
                                         className="text-white hover:opacity-80"
                                     >
                                         Graphic Design
-                                    </Link>
+                                    </a>
                                 </li>
                                 <li>
-                                    <Link
-                                        href="#services/video"
+                                    <a
+                                        href="#services"
                                         className="text-white hover:opacity-80"
                                     >
                                         Video Editing
-                                    </Link>
+                                    </a>
                                 </li>
                             </ul>
                         </div>
