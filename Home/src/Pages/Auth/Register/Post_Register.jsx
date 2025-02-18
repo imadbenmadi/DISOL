@@ -39,12 +39,12 @@ async function handleRegister(values, Navigate, { setSubmitting }) {
                     // window.location.href = "/";
                     Navigate("/");
                 } else {
-                    // window.location.replace("/Login");
-                    Navigate("/Login", { replace: true });
+                    // window.location.href = "/Login";
+                    Navigate("/Login");
                 }
             } catch (error) {
-                // window.location.replace("/Login");
-                Navigate("/Login", { replace: true });
+                // window.location.href = "/Login";
+                Navigate("/Login");
             }
         } else if (response.status == 400) {
             setSubmitting(false);

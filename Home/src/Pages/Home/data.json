@@ -1,0 +1,313 @@
+{
+    "faqItems": [
+      {
+        "id": 1,
+        "question": "What services does the agency offer?",
+        "answer": "Our agency offers a variety of digital services to help your brand thrive, including website development, graphic design for social media and branding, and professional video editing. Each service is tailored to meet your unique needs and ensure a cohesive, impactful online presence."
+      },
+      {
+        "id": 2,
+        "question": "How can I request a specific service?",
+        "answer": "You can request a specific service through our contact form, by email, or by scheduling a consultation call. We'll discuss your requirements and provide a customized solution."
+      },
+      {
+        "id": 3,
+        "question": "What is the project completion time?",
+        "answer": "Project completion times vary depending on the scope and complexity. We provide detailed timelines during initial consultations and keep you updated throughout the process."
+      },
+      {
+        "id": 4,
+        "question": "Do you offer custom services tailored to client needs?",
+        "answer": "Yes, we specialize in creating custom solutions that align with your specific requirements and business goals. Each project is uniquely designed for optimal results."
+      },
+      {
+        "id": 5,
+        "question": "What are the expected prices for the services provided?",
+        "answer": "Our pricing varies based on project scope and requirements. We offer transparent pricing and detailed quotes after understanding your specific needs."
+      },
+      {
+        "id": 6,
+        "question": "Can I see samples of the agency's previous work?",
+        "answer": "Yes, we have an extensive portfolio of previous projects. You can view our work samples in the Projects section or request specific examples related to your industry."
+      },
+      {
+        "id": 7,
+        "question": "How can I contact the support team?",
+        "answer": "Our support team is available through multiple channels including email, phone, and live chat. We typically respond within 24 hours on business days."
+      },
+      {
+        "id": 8,
+        "question": "Is there a quality guarantee for the work?",
+        "answer": "Yes, we stand behind our work with a satisfaction guarantee. We work closely with clients to ensure the final product meets or exceeds expectations."
+      },
+      {
+        "id": 9,
+        "question": "What are the steps for working with the agency?",
+        "answer": "The process typically includes initial consultation, proposal review, project planning, development, feedback rounds, and final delivery. We maintain clear communication throughout."
+      },
+      {
+        "id": 10,
+        "question": "Can I make changes to the project after it starts?",
+        "answer": "Yes, we understand that requirements may evolve. We have a flexible change management process to accommodate reasonable modifications during the project."
+      }
+    ],
+    "testimonials": [
+      {
+        "id": 1,
+        "name": "Layla Bouzid",
+        "project": "FlexEdu Website",
+        "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-5T1fkiKDGxKIeDzqSlS1CuEkzhrHbM.png",
+        "rating": 4.5,
+        "text": "One One One One One One",
+        "className": "transform md:-mr-16 md:ml-16 lg:-mr-16 lg:ml-16 rounded-3xl lg:min-h-[270px] bg-white p-6 shadow-xl transition duration-300 hover:shadow-xl sm:p-8"
+      },
+      {
+        "id": 2,
+        "name": "Layla Bouzid",
+        "project": "FlexEdu Website",
+        "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-5T1fkiKDGxKIeDzqSlS1CuEkzhrHbM.png",
+        "rating": 3.5,
+        "text": "two two two two two two",
+        "className": " lg:ml-16 rounded-3xl lg:min-h-[270px] bg-white p-6 shadow-xl transition duration-300 hover:shadow-xl sm:p-8"
+      },
+      {
+        "id": 3,
+        "name": "Layla Bouzid",
+        "project": "FlexEdu Website",
+        "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-5T1fkiKDGxKIeDzqSlS1CuEkzhrHbM.png",
+        "rating": 3,
+        "text": "three three three three three three three",
+        "className": "transform rounded-3xl lg:min-h-[270px] bg-white p-6 shadow-xl transition duration-300 hover:shadow-xl sm:p-8"
+      },
+      {
+        "id": 4,
+        "name": "Layla Bouzid",
+        "project": "FlexEdu Website",
+        "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-5T1fkiKDGxKIeDzqSlS1CuEkzhrHbM.png",
+        "rating": 1.4,
+        "text": "four four four four four four four ",
+        "className": "transform rounded-3xl lg:min-h-[270px] bg-white p-6 shadow-xl transition duration-300 hover:shadow-xl sm:p-8"
+      },
+      {
+        "id": 5,
+        "name": "Layla Bouzid",
+        "project": "FlexEdu Website",
+        "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-5T1fkiKDGxKIeDzqSlS1CuEkzhrHbM.png",
+        "rating": 3,
+        "text": "five five five five fivefive five",
+        "className": "transform rounded-3xl lg:min-h-[270px] bg-white p-6 shadow-xl transition duration-300 hover:shadow-xl sm:p-8"
+      },
+      {
+        "id": 6,
+        "name": "Layla Bouzid",
+        "project": "FlexEdu Website",
+        "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-5T1fkiKDGxKIeDzqSlS1CuEkzhrHbM.png",
+        "rating": 1.4,
+        "text": "sex sex sex sex sex sex sex sex",
+        "className": "transform rounded-3xl lg:min-h-[270px] bg-white p-6 shadow-xl transition duration-300 hover:shadow-xl sm:p-8"
+      },
+      {
+        "id": 7,
+        "name": "Layla Bouzid",
+        "project": "FlexEdu Website",
+        "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-5T1fkiKDGxKIeDzqSlS1CuEkzhrHbM.png",
+        "rating": 3,
+        "text": "seven seven seven seven seven",
+        "className": "transform rounded-3xl lg:min-h-[270px] bg-white p-6 shadow-xl transition duration-300 hover:shadow-xl sm:p-8"
+      },
+      {
+        "id": 8,
+        "name": "Layla Bouzid",
+        "project": "FlexEdu Website",
+        "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-5T1fkiKDGxKIeDzqSlS1CuEkzhrHbM.png",
+        "rating": 1.4,
+        "text": "eight eight eight eight eight eight",
+        "className": "transform rounded-3xl lg:min-h-[270px] bg-white p-6 shadow-xl transition duration-300 hover:shadow-xl sm:p-8"
+      },
+      {
+        "id": 9,
+        "name": "Layla Bouzid",
+        "project": "FlexEdu Website",
+        "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-5T1fkiKDGxKIeDzqSlS1CuEkzhrHbM.png",
+        "rating": 1.4,
+        "text": "nine nine nine nine nine nine",
+        "className": "transform rounded-3xl lg:min-h-[270px] bg-white p-6 shadow-xl transition duration-300 hover:shadow-xl sm:p-8"
+      },
+      {
+        "id": 10,
+        "name": "Layla Bouzid",
+        "project": "FlexEdu Website",
+        "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-5T1fkiKDGxKIeDzqSlS1CuEkzhrHbM.png",
+        "rating": 1.5,
+        "text": "ten ten ten ten ten ten ten",
+        "className": "transform rounded-3xl lg:min-h-[270px] bg-white p-6 shadow-xl transition duration-300 hover:shadow-xl sm:p-8"
+      }
+    ],
+    "projects": [
+      {
+        "id": 1,
+        "title": "FlexEdu Website",
+        "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-5T1fkiKDGxKIeDzqSlS1CuEkzhrHbM.png",
+        "category": "web",
+        "link": "#"
+      },
+      {
+        "id": 2,
+        "title": "FlexEdu Website",
+        "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-5T1fkiKDGxKIeDzqSlS1CuEkzhrHbM.png",
+        "category": "web",
+        "link": "#"
+      },
+      {
+        "id": 3,
+        "title": "FlexEdu Website",
+        "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-5T1fkiKDGxKIeDzqSlS1CuEkzhrHbM.png",
+        "category": "web",
+        "link": "#"
+      },
+      {
+        "id": 4,
+        "title": "FlexEdu Website",
+        "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-5T1fkiKDGxKIeDzqSlS1CuEkzhrHbM.png",
+        "category": "web",
+        "link": "#"
+      },
+      {
+        "id": 5,
+        "title": "FlexEdu Website",
+        "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-5T1fkiKDGxKIeDzqSlS1CuEkzhrHbM.png",
+        "category": "video",
+        "link": "#"
+      },
+      {
+        "id": 6,
+        "title": "FlexEdu Website",
+        "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-5T1fkiKDGxKIeDzqSlS1CuEkzhrHbM.png",
+        "category": "video",
+        "link": "#"
+      },
+      {
+        "id": 7,
+        "title": "FlexEdu Website",
+        "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-5T1fkiKDGxKIeDzqSlS1CuEkzhrHbM.png",
+        "category": "video",
+        "link": "#"
+      },
+      {
+        "id": 8,
+        "title": "FlexEdu Website",
+        "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-5T1fkiKDGxKIeDzqSlS1CuEkzhrHbM.png",
+        "category": "video",
+        "link": "#"
+      },
+      {
+        "id": 9,
+        "title": "FlexEdu Website",
+        "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-5T1fkiKDGxKIeDzqSlS1CuEkzhrHbM.png",
+        "category": "design",
+        "link": "#"
+      },
+      {
+        "id": 10,
+        "title": "FlexEdu Website",
+        "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-5T1fkiKDGxKIeDzqSlS1CuEkzhrHbM.png",
+        "category": "design",
+        "link": "#"
+      },
+      {
+        "id": 11,
+        "title": "FlexEdu Website",
+        "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-5T1fkiKDGxKIeDzqSlS1CuEkzhrHbM.png",
+        "category": "design",
+        "link": "#"
+      },
+      {
+        "id": 12,
+        "title": "FlexEdu Website",
+        "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-5T1fkiKDGxKIeDzqSlS1CuEkzhrHbM.png",
+        "category": "design",
+        "link": "#"
+      }
+    ],
+    "completeAndClient": {
+      "numberProjects": 12,
+      "textProject": "Completed Projects",
+      "numberClient": 20,
+      "textClient": "New Clients",
+      "nuberRevenuePerSent": 2.5
+    },
+
+    "packages": {
+      "video": {
+        "basic": {
+          "title": "Basic Video Package",
+          "price": "8,000 DA",
+          "features": ["Professional editing", "Basic effects", "Quick delivery"]
+        },
+        "premium": {
+          "title": "Premium Video Package",
+          "price": "Custom Pricing",
+          "features": ["Advanced effects", "Full post-production", "Multiple revisions"]
+        }
+      },
+      "web": {
+        "basic": {
+          "title": "Basic Landing Page",
+          "price": "10,000 DA",
+          "features": ["Responsive design", "Basic SEO optimization", "Quick turnaround"]
+        },
+        "premium": {
+          "title": "Complete Platform",
+          "price": "Custom Pricing",
+          "features": [
+            "Advanced design and development",
+            "Full functionality and scalability",
+            "Features based on requirements"
+          ]
+        }
+      },
+      "design": {
+        "basic": {
+          "title": "Basic Design Package",
+          "price": "7,000 DA",
+          "features": ["Logo design", "Basic branding", "Social media kit"]
+        },
+        "premium": {
+          "title": "Complete Branding",
+          "price": "Custom Pricing",
+          "features": ["Full brand identity", "Marketing materials", "Brand guidelines"]
+        }
+      }
+    },
+    "services": [
+      {
+        "type": "video",
+        "title": "Video editing",
+        "description": "We produce engaging videos that convey your message. From promotional videos to social media content, our editing ensures high-quality visuals, smooth transitions, and captivating storytelling.",
+        "same":"role"
+      },
+      {
+        "type": "web",
+        "title": "Web development",
+        "description": "We craft modern, responsive, user-friendly websites tailored to your business needs, ensuring your platform is fast, secure, and optimized for an exceptional user experience to establish a strong digital presence.",
+        "same":"role"
+      },
+      {
+        "type": "design",
+        "title": "Graphic design",
+        "description": "We deliver graphic design solutions that showcase your brand. From social media posts to brand identities with logos and colors, our designs ensure consistency across platforms and include flyers and brochures.",
+        "same":"role"
+      }
+    ],
+    "socialmedia": {
+      "facebook": "#",
+      "instgram": "#",
+      "linkedIn": "#",
+      "X": "#"
+    },
+    "contactUs":{
+      "email":"info@youragency.com",
+      "numberPhone":"+213 123 456 789",
+      "agency":"agency"
+    }
+  }

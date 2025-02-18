@@ -6,7 +6,7 @@ import handleRegister from "./Post_Register";
 import { handle_google_Register } from "../Google_auth/handle_google_Register";
 import { GoogleLogin } from "@react-oauth/google";
 import ReCAPTCHA from "react-google-recaptcha";
-import Google_auth_data from "../../../google-auth.json";
+// import Google_auth_data from "../../../google-auth.json";
 import Swal from "sweetalert2";
 import { useRef } from "react";
 function Register() {

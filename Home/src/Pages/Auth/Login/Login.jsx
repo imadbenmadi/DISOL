@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 import handleLogin from "./Post_Login";
 import { handle_google_Login } from "../Google_auth/handle_google_Login";
 import ReCAPTCHA from "react-google-recaptcha";
-import Google_auth_data from "../../../google-auth.json";
+// import Google_auth_data from "../../../google-auth.json";
 
 function Login() {
     const Navigate = useNavigate();

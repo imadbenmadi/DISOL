@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Outlet } from "react-router";
 import axios from "axios";
 import { useNavigate } from "react-router";
-import Logo from "../public/Logo/Logo.jpg";
+import Logo from "../public/Logo.jpg";
 import { useAppContext } from "./AppContext";
 function App() {
     const Navigate = useNavigate();
@@ -69,6 +69,7 @@ function App() {
     //             setLoading(false);
     //         });
     // }, []);
+    
     if (loading) {
         return (
             <div className=" w-screen h-screen flex flex-col items-center justify-center">
