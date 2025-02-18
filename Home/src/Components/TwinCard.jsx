@@ -7,10 +7,10 @@ import data from "../Pages/Home/data.json";
 const TwinCard = () => {
   return (
     <>
-    <div className=" hidden md:block mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
+    <div className=" hidden md:block mx-auto max-w-4xl px-4 py-12 my-4 sm:px-6 lg:px-8">
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:gap-3">
         {/* Completed Projects Card */}
-        <div className="relative overflow-hidden rounded-full lg:max-w-[368px] lg:max-h-[104px]  bg-white p-6 shadow-lg">
+        <div className="relative overflow-hidden rounded-full lg:max-w-[368px] lg:max-h-[104px]  bg-white p-6 shadow-md">
           <div className="absolute left-0  top-1/2 h-16 w-1 -translate-y-1/2 "></div>
           <div className="ml-8 flex space-x-4  items-baseline ">
             {/* <span className="bg-[#0046FE] w-[61px] h-0 "></span> */}
@@ -20,7 +20,7 @@ const TwinCard = () => {
         </div>
 
         {/* New Clients Card */}
-        <div className="relative overflow-hidden rounded-[46px] lg:max-w-[375px] bg-white p-6 shadow-lg">
+        <div className="relative overflow-hidden rounded-[46px] lg:max-w-[375px] bg-white p-6 shadow-md">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-blue-50">

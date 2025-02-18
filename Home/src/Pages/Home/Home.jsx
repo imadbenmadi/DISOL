@@ -48,7 +48,7 @@ function Home({ children }) {
             {/* TwinCard Section */}
             <TwinCard />
 
-            <div className="relative">
+            <div className="relative py-36">
                 {/* // Blue Circle */}
                 <Bg_of_services />
                 {/* // TwinCard Section */}

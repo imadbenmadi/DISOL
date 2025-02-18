@@ -9,7 +9,7 @@ const ServiceOffer = () => {
   const filteredService = data?.services?.filter((service) => service.same === same) || [];
 
   return (
-    <div className="bg-white px-4 py-16 sm:px-6 -z-30 lg:px-8" id="services">
+    <div className="bg-white px-4 pb-16 sm:px-6 -z-30 lg:px-8" id="services">
       {/* Services Section */}
       <div className="mx-auto max-w-7xl z-30 mt-24">
         <h2 className="mb-12 relative z-30 text-center text-4xl font-bold text-black md:text-4xl">
