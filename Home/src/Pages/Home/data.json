@@ -1,56 +1,4 @@
 {
-    "faqItems": [
-        {
-            "id": 1,
-            "question": "What services does the agency offer?",
-            "answer": "Our agency offers a variety of digital services to help your brand thrive, including website development, graphic design for social media and branding, and professional video editing. Each service is tailored to meet your unique needs and ensure a cohesive, impactful online presence."
-        },
-        {
-            "id": 2,
-            "question": "How can I request a specific service?",
-            "answer": "You can request a specific service through our contact form, by email, or by scheduling a consultation call. We'll discuss your requirements and provide a customized solution."
-        },
-        {
-            "id": 3,
-            "question": "What is the project completion time?",
-            "answer": "Project completion times vary depending on the scope and complexity. We provide detailed timelines during initial consultations and keep you updated throughout the process."
-        },
-        {
-            "id": 4,
-            "question": "Do you offer custom services tailored to client needs?",
-            "answer": "Yes, we specialize in creating custom solutions that align with your specific requirements and business goals. Each project is uniquely designed for optimal results."
-        },
-        {
-            "id": 5,
-            "question": "What are the expected prices for the services provided?",
-            "answer": "Our pricing varies based on project scope and requirements. We offer transparent pricing and detailed quotes after understanding your specific needs."
-        },
-        {
-            "id": 6,
-            "question": "Can I see samples of the agency's previous work?",
-            "answer": "Yes, we have an extensive portfolio of previous projects. You can view our work samples in the Projects section or request specific examples related to your industry."
-        },
-        {
-            "id": 7,
-            "question": "How can I contact the support team?",
-            "answer": "Our support team is available through multiple channels including email, phone, and live chat. We typically respond within 24 hours on business days."
-        },
-        {
-            "id": 8,
-            "question": "Is there a quality guarantee for the work?",
-            "answer": "Yes, we stand behind our work with a satisfaction guarantee. We work closely with clients to ensure the final product meets or exceeds expectations."
-        },
-        {
-            "id": 9,
-            "question": "What are the steps for working with the agency?",
-            "answer": "The process typically includes initial consultation, proposal review, project planning, development, feedback rounds, and final delivery. We maintain clear communication throughout."
-        },
-        {
-            "id": 10,
-            "question": "Can I make changes to the project after it starts?",
-            "answer": "Yes, we understand that requirements may evolve. We have a flexible change management process to accommodate reasonable modifications during the project."
-        }
-    ],
     "testimonials": [
         {
             "id": 1,
@@ -339,8 +287,60 @@
         "linkedIn": "https://www.linkedin.com/company/disol-agency",
         "X": "#"
     },
-    "contactUs": {
+    "contactInfo": {
         "email": "contact@disol-agency.com",
         "numberPhone": "+213 669 396 525"
-    }
+    },
+    "faqItems": [
+        {
+            "id": 1,
+            "question": "What services does the agency offer?",
+            "answer": "Our agency offers a variety of digital services to help your brand thrive, including website development, graphic design for social media and branding, and professional video editing. Each service is tailored to meet your unique needs and ensure a cohesive, impactful online presence."
+        },
+        {
+            "id": 2,
+            "question": "How can I request a specific service?",
+            "answer": "You can request a specific service through our contact form, by email, or by scheduling a consultation call. We'll discuss your requirements and provide a customized solution."
+        },
+        {
+            "id": 3,
+            "question": "What is the project completion time?",
+            "answer": "Project completion times vary depending on the scope and complexity. We provide detailed timelines during initial consultations and keep you updated throughout the process."
+        },
+        {
+            "id": 4,
+            "question": "Do you offer custom services tailored to client needs?",
+            "answer": "Yes, we specialize in creating custom solutions that align with your specific requirements and business goals. Each project is uniquely designed for optimal results."
+        },
+        {
+            "id": 5,
+            "question": "What are the expected prices for the services provided?",
+            "answer": "Our pricing varies based on project scope and requirements. We offer transparent pricing and detailed quotes after understanding your specific needs."
+        },
+        {
+            "id": 6,
+            "question": "Can I see samples of the agency's previous work?",
+            "answer": "Yes, we have an extensive portfolio of previous projects. You can view our work samples in the Projects section or request specific examples related to your industry."
+        },
+        {
+            "id": 7,
+            "question": "How can I contact the support team?",
+            "answer": "Our support team is available through multiple channels including email, phone, and live chat. We typically respond within 24 hours on business days."
+        },
+        {
+            "id": 8,
+            "question": "Is there a quality guarantee for the work?",
+            "answer": "Yes, we stand behind our work with a satisfaction guarantee. We work closely with clients to ensure the final product meets or exceeds expectations."
+        },
+        {
+            "id": 9,
+            "question": "What are the steps for working with the agency?",
+            "answer": "The process typically includes initial consultation, proposal review, project planning, development, feedback rounds, and final delivery. We maintain clear communication throughout."
+        },
+        {
+            "id": 10,
+            "question": "Can I make changes to the project after it starts?",
+            "answer": "Yes, we understand that requirements may evolve. We have a flexible change management process to accommodate reasonable modifications during the project."
+        }
+    ]
 }

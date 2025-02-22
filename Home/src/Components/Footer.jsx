@@ -91,18 +91,18 @@ const Footer = () => {
                             <ul className="space-y-4">
                                 <li>
                                     <a
-                                        href={`mailto:${data.contactUs.email}`}
+                                        href={`mailto:${data.contactInfo.email}`}
                                         className="text-white hover:opacity-80"
                                     >
-                                        {data.contactUs.email}
+                                        {data.contactInfo.email}
                                     </a>
                                 </li>
                                 <li>
                                     <a
-                                        href={`tel:${data.contactUs.numberPhone}`}
+                                        href={`tel:${data.contactInfo.numberPhone}`}
                                         className=" text-white hover:opacity-80"
                                     >
-                                        {data.contactUs.numberPhone}
+                                        {data.contactInfo.numberPhone}
                                     </a>
                                 </li>
                             </ul>
