@@ -46,12 +46,20 @@ const Hero = () => {
                             and impact.{" "}
                         </p>
                         <div className="mt-10 flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
-                            <button className=" shadow-md rounded-full bg-[#0088cc] px-8 py-3 text-base font-medium text-white transition-colors hover:bg-[#006699]">
+                            <a
+                                href="https://www.instagram.com/disol_agency/"
+                                target="_blank"
+                                className=" shadow-md rounded-full bg-[#0088cc] px-8 py-3 text-base font-medium text-white transition-colors hover:bg-[#006699]"
+                            >
                                 Request a service
-                            </button>
-                            <button className="rounded-full border-2 border-[#0088cc] px-8 py-3 text-base font-medium text-[#0088cc] transition-colors hover:bg-[#0088cc] hover:text-white">
+                            </a>
+                            <a
+                                href="https://www.instagram.com/disol_agency/"
+                                target="_blank"
+                                className="rounded-full border-2 border-[#0088cc] px-8 py-3 text-base font-medium text-[#0088cc] transition-colors hover:bg-[#0088cc] hover:text-white"
+                            >
                                 Let's Talk
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>

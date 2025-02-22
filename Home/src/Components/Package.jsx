@@ -67,9 +67,13 @@ const Package = () => {
                                       </ul>
                                   </div>
 
-                                  <button className="w-full rounded-full bg-[#0088cc] px-8 py-3 text-base font-medium text-white transition hover:bg-[#0077b3]">
+                                  <a
+                                      href="https://www.instagram.com/disol_agency/"
+                                      target="_blank"
+                                      className="w-full rounded-full bg-[#0088cc] px-8 py-3 text-base font-medium text-white transition hover:bg-[#0077b3]"
+                                  >
                                       Get Started
-                                  </button>
+                                  </a>
                               </div>
                           ))
                         : data.packages[selectedPackage] && (
@@ -103,9 +107,13 @@ const Package = () => {
                                           ))}
                                       </ul>
                                   </div>
-                                  <button className="w-full  rounded-full bg-[#0088cc] px-8 py-3 text-base font-medium text-white transition hover:bg-[#0077b3]">
+                                  <a
+                                      href="https://www.instagram.com/disol_agency/"
+                                      target="_blank"
+                                      className="w-full  rounded-full bg-[#0088cc] px-8 py-3 text-base font-medium text-white transition hover:bg-[#0077b3]"
+                                  >
                                       Get Started
-                                  </button>
+                                  </a>
                               </div>
                           )}
                 </div>
