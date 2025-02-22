@@ -238,70 +238,70 @@
     },
 
     "packages": {
-        "video": {
-            "basic": {
+        "video": [
+            {
                 "title": "Simple Edit",
-                "price": "8,000 DA",
+                "description": "Basic video editing for social media or simple promos.",
+                "price": "1,500 DA",
                 "features": [
                     "Editing Video Colors",
-                    "Professional writing of video wods"
+                    "Professional writing",
+                    "Basic transitions"
                 ]
             },
-            "premium": {
-                "title": "Premium Video Package",
+            {
+                "title": "Advanced Editing",
+                "description": "Includes effects, improved transitions, and audio enhancements.",
+                "price": "3,500 DA",
+                "features": [
+                    "Color grading",
+                    "Smooth transitions",
+                    "Audio enhancement"
+                ]
+            },
+            {
+                "title": "Full Video Production",
+                "description": "High-end post-production, special effects, and revisions.",
                 "price": "Custom Pricing",
                 "features": [
                     "Advanced effects",
-                    "Full post-production",
-                    "Multiple revisions"
+                    "Multiple revisions",
+                    "Professional voiceover"
                 ]
             }
-        },
-        "web": {
-            "basic": {
+        ],
+        "web": [
+            {
                 "title": "Landing Page",
-                "description": "A modern, user-friendly landing page to showcase your business or product ideal for quick launches with essential features",
+                "description": "Modern landing page with essential features.",
                 "price": "15,000 DA",
                 "features": [
-                    "Professional, modern design",
-                    "Fully responsive (mobile & desktop)",
+                    "Modern design",
+                    "Fully responsive",
                     "Fast loading speed"
                 ]
             },
-            "premium": {
-                "title": "Complete Platform",
-                "description": "A comprehensive platform with custom features and functionalities tailored to your business needs ideal for established businesses or startups",
-                "price": "Custom Pricing",
+            {
+                "title": "Business Website",
+                "description": "Multi-page website with contact forms and SEO.",
+                "price": "30,000 DA",
                 "features": [
-                    "Tailored UI/UX design",
-                    "Scalable backend with database",
-                    "Authentication & user management",
-                    "Custom dashboards & admin panel",
-                    "Payment gateway integration (if needed)",
-                    "SEO & performance optimization",
-                    "Ongoing maintenance & support"
+                    "Up to 5 pages",
+                    "SEO optimization",
+                    "Google Analytics"
                 ]
             }
-        },
-        "design": {
-            "basic": {
-                "title": "Basic Design Package",
-                "price": "7,000 DA",
-                "features": [
-                    "Logo design",
-                    "Basic branding",
-                    "Social media kit"
-                ]
-            },
-            "premium": {
-                "title": "Complete Branding",
-                "price": "Custom Pricing",
-                "features": [
-                    "Full brand identity",
-                    "Marketing materials",
-                    "Brand guidelines"
-                ]
-            }
+        ],
+        "posts": {
+            "title": "Social Media Posts",
+
+            "description": "Custom graphics for social media platforms.",
+            "price": "Contact for pricing",
+            "features": [
+                "Custom designs",
+                "Branding consistency",
+                "High-quality images"
+            ]
         }
     },
     "services": [
