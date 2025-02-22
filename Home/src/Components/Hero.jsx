@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-const Landing = () => {
+const Hero = () => {
     const titleVariants = {
         hidden: { opacity: 0, y: 20 },
         visible: { opacity: 1, y: 0 },
@@ -60,4 +60,4 @@ const Landing = () => {
     );
 };
 
-export default Landing;
+export default Hero;

@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../../Components/Navbar";
-import Landing from "../../Components/Landing";
+import Hero from "../../Components/Hero";
 import TwinCard from "../../Components/TwinCard";
-import ServiceOffer from "../../Components/ServiceOffer";
+import Service from "../../Components/Service";
 import Package from "../../Components/Package";
 import Projects from "../../Components/Projects";
 import Review from "../../Components/Review";
@@ -43,7 +43,7 @@ function Home({ children }) {
             <Navbar />
 
             {/* Hero Section */}
-            <Landing />
+            <Hero />
 
             {/* TwinCard Section */}
             <TwinCard />
@@ -52,7 +52,7 @@ function Home({ children }) {
                 {/* // Blue Circle */}
                 <Bg_of_services />
                 {/* // TwinCard Section */}
-                <ServiceOffer />
+                <Service />
                 {/* // TwinCard Section */}
             </div>
             <Package />
