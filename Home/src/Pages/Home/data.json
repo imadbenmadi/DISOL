@@ -242,31 +242,30 @@
             {
                 "title": "Simple Edit",
                 "description": "Basic video editing for social media or simple promos.",
-                "price": "1,500 DA",
+                "price": "3,000 DA",
                 "features": [
                     "Editing Video Colors",
-                    "Professional writing",
-                    "Basic transitions"
+                    "Professional writing for the video content"
                 ]
             },
             {
-                "title": "Advanced Editing",
-                "description": "Includes effects, improved transitions, and audio enhancements.",
-                "price": "3,500 DA",
+                "title": "3D vril",
+                "description": "High-quality video editing with advanced effects.",
+                "price": "5,000 DA",
                 "features": [
-                    "Color grading",
-                    "Smooth transitions",
-                    "Audio enhancement"
+                    "3D effects",
+                    "Advanced transitions",
+                    "Custom music tracks"
                 ]
             },
             {
-                "title": "Full Video Production",
-                "description": "High-end post-production, special effects, and revisions.",
-                "price": "Custom Pricing",
+                "title": "Motion Graphics",
+                "description": "Dynamic video editing with motion graphics.",
+                "price": "9,000 DA",
                 "features": [
-                    "Advanced effects",
-                    "Multiple revisions",
-                    "Professional voiceover"
+                    "Custom animations",
+                    "Text overlays",
+                    "Visual effects"
                 ]
             }
         ],
@@ -278,7 +277,7 @@
                 "features": [
                     "Modern design",
                     "Fully responsive",
-                    "Fast loading speed"
+                    "Fast loading times"
                 ]
             },
             {
@@ -286,18 +285,28 @@
                 "description": "Multi-page website with contact forms and SEO.",
                 "price": "30,000 DA",
                 "features": [
-                    "Up to 5 pages",
+                    "Dashboard included for Content Management",
                     "SEO optimization",
-                    "Google Analytics"
+                    "Contact forms"
+                ]
+            },
+            {
+                "title": "Business Platform",
+                "description": "Custom web platform for business operations. for start-ups and small businesses.",
+                "price": "Contact for pricing",
+                "features": [
+                    "All features Required for the business",
+                    "Dashboard included for users management and data analysis",
+                    "Payment gateway integration(if needed)"
                 ]
             }
         ],
         "posts": {
             "title": "Social Media Posts",
-
             "description": "Custom graphics for social media platforms.",
             "price": "Contact for pricing",
             "features": [
+                "Opened to do a contract for a month or more",
                 "Custom designs",
                 "Branding consistency",
                 "High-quality images"

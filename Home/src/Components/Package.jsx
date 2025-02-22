@@ -35,70 +35,75 @@ const Package = () => {
                 </div>
 
                 {/* Package Cards */}
-                <div className="grid gap-8 lg:grid-cols-3 md:grid-cols-2 ">
+                <div className="grid gap-8 grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-center">
                     {Array.isArray(data.packages[selectedPackage])
                         ? data.packages[selectedPackage].map((pkg, index) => (
                               <div
                                   key={index}
-                                  className="rounded-3xl bg-white p-8 shadow-2xl"
+                                  className="rounded-3xl bg-white p-8 shadow-2xl flex flex-col justify-between"
                               >
-                                  <h3 className="text-2xl font-bold text-gray-900">
-                                      {pkg.title}
-                                  </h3>
-                                  <p className="mt-4 text-gray-600">
-                                      {pkg.description}
-                                  </p>
-                                  <div className="my-8 text-4xl font-bold text-[#0088cc]">
-                                      {pkg.price}
+                                  <div>
+                                      <h3 className="text-2xl font-bold text-gray-900">
+                                          {pkg.title}
+                                      </h3>
+                                      <p className="mt-4 text-gray-600">
+                                          {pkg.description}
+                                      </p>
+                                      <div className="my-8 text-4xl font-bold text-[#0088cc]">
+                                          {pkg.price}
+                                      </div>
+                                      <ul className="mb-8 space-y-4">
+                                          {pkg.features.map((feature, i) => (
+                                              <li
+                                                  key={i}
+                                                  className="flex items-center"
+                                              >
+                                                  ✅{" "}
+                                                  <span className="text-gray-600 ml-2">
+                                                      {feature}
+                                                  </span>
+                                              </li>
+                                          ))}
+                                      </ul>
                                   </div>
-                                  <ul className="mb-8 space-y-4">
-                                      {pkg.features.map((feature, i) => (
-                                          <li
-                                              key={i}
-                                              className="flex items-center"
-                                          >
-                                              ✅{" "}
-                                              <span className="text-gray-600 ml-2">
-                                                  {feature}
-                                              </span>
-                                          </li>
-                                      ))}
-                                  </ul>
+
                                   <button className="w-full rounded-full bg-[#0088cc] px-8 py-3 text-base font-medium text-white transition hover:bg-[#0077b3]">
                                       Get Started
                                   </button>
                               </div>
                           ))
                         : data.packages[selectedPackage] && (
-                              <div className="rounded-3xl bg-white p-8 shadow-2xl">
-                                  <h3 className="text-2xl font-bold text-gray-900">
-                                      {data.packages[selectedPackage].title}
-                                  </h3>
-                                  <p className="mt-4 text-gray-600">
-                                      {
-                                          data.packages[selectedPackage]
-                                              .description
-                                      }
-                                  </p>
-                                  <div className="my-8 text-4xl font-bold text-[#0088cc]">
-                                      {data.packages[selectedPackage].price}
+                              <div className=" flex flex-col justify-between h-full rounded-3xl bg-white p-8 shadow-2xl">
+                                  <div className="">
+                                      <h3 className="text-2xl font-bold text-gray-900">
+                                          {data.packages[selectedPackage].title}
+                                      </h3>
+                                      <p className="mt-4 text-gray-600">
+                                          {
+                                              data.packages[selectedPackage]
+                                                  .description
+                                          }
+                                      </p>
+                                      <div className="my-8 text-4xl font-bold text-[#0088cc]">
+                                          {data.packages[selectedPackage].price}
+                                      </div>
+                                      <ul className="mb-8 space-y-4">
+                                          {data.packages[
+                                              selectedPackage
+                                          ].features.map((feature, i) => (
+                                              <li
+                                                  key={i}
+                                                  className="flex items-center"
+                                              >
+                                                  ✅{" "}
+                                                  <span className="text-gray-600 ml-2">
+                                                      {feature}
+                                                  </span>
+                                              </li>
+                                          ))}
+                                      </ul>
                                   </div>
-                                  <ul className="mb-8 space-y-4">
-                                      {data.packages[
-                                          selectedPackage
-                                      ].features.map((feature, i) => (
-                                          <li
-                                              key={i}
-                                              className="flex items-center"
-                                          >
-                                              ✅{" "}
-                                              <span className="text-gray-600 ml-2">
-                                                  {feature}
-                                              </span>
-                                          </li>
-                                      ))}
-                                  </ul>
-                                  <button className="w-full rounded-full bg-[#0088cc] px-8 py-3 text-base font-medium text-white transition hover:bg-[#0077b3]">
+                                  <button className="w-full  rounded-full bg-[#0088cc] px-8 py-3 text-base font-medium text-white transition hover:bg-[#0077b3]">
                                       Get Started
                                   </button>
                               </div>
