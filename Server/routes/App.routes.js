@@ -9,6 +9,7 @@ const authMiddleware = require("../middleware/Users/Middlware.Auth");
 router.use(authRoutes);
 router.use(google_auth_rout);
 router.use("/dashboard", authMiddleware, dashboardRoutes);
+
 // router.use("/user", userRoutes);
 
 // router.use("/check_Auth", require("./Auth/check_Auth"));
