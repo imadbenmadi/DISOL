@@ -14,7 +14,7 @@ function Home_Overview() {
     };
 
     return (
-        <div className="w-full h-full flex flex-col items-center justify-center p-4">
+        <div className="w-full h-screen flex flex-col items-center justify-center p-4">
             {/* Loading State */}
             {isLoading && (
                 <div className="flex items-center justify-center text-blue_v">
@@ -36,7 +36,7 @@ function Home_Overview() {
                 title="Website Overview"
                 onLoad={handleIframeLoad}
                 onError={handleIframeError}
-                className={`w-full h-[80vh] border-none rounded-lg shadow-lg ${
+                className={`w-full  h-screen border-none rounded-lg shadow-lg ${
                     isLoading || hasError ? "hidden" : "block"
                 }`}
                 sandbox="allow-scripts allow-same-origin allow-forms"
