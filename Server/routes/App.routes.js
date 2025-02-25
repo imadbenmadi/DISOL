@@ -5,6 +5,8 @@ const userRoutes = require("./User.routes");
 const google_auth_rout = require("./google_auth.routes");
 const router = express.Router();
 const authMiddleware = require("../middleware/Users/Middlware.Auth");
+const mainRouters = require("./main.routes");
+router.use(mainRouters);
 
 router.use(authRoutes);
 router.use(google_auth_rout);

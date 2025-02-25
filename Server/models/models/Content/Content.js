@@ -1,7 +1,16 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const sequelize = require("../../../database/Mysql.database");
+const { Faq } = require("./Faq");
+const { Package } = require("./Package");
+const { Project } = require("./Project");
+const { Review } = require("./Review");
+const { Service } = require("./Service");
+const { Centent } = sequelize.define("Centent", {
+    web_status: {
+        type: DataTypes.ENUM("active", "maintenance", "down"),
+        allowNull: false,
+    },
 
-const Contact_informations = sequelize.define("Contact_informations", {
     phone: {
         type: DataTypes.STRING,
         allowNull: true,
@@ -22,6 +31,10 @@ const Contact_informations = sequelize.define("Contact_informations", {
         type: DataTypes.STRING,
         allowNull: true,
     },
-    
 });
-module.exports =  Contact_informations ;
+Centent.hasMany(Faq);
+Centent.hasMany(Package);
+Centent.hasMany(Project);
+Centent.hasMany(Review);
+Centent.hasMany(Service);
+module.exports = Centent;
