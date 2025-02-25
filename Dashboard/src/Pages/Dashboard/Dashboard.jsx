@@ -1,9 +1,17 @@
-import React from 'react'
+import React from "react";
+import { useEffect } from "react";
+import { useNavigate } from "react-router";
+import { useAppContext } from "./AppContext";
 
-function Dashboard() {
-  return (
-    <div>Dashboard</div>
-  )
+function Default() {
+    const { isAuth, userType, userId } = useAppContext();
+    const Navigate = useNavigate();
+    useEffect(() => {
+        if (isAuth && userType && userId) {
+            Navigate("/Main");
+            return;
+        }
+        Navigate("/Login", { replace: true });
+    }, []);
 }
-
-export default Dashboard
+export default Default;

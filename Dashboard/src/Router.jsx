@@ -25,7 +25,7 @@ import Dashboard_Logger from "./Pages/Dashboard/Dashboard_Logger";
 import Not_Found from "./Components/Not_Found";
 import Not_Finished from "./Components/Not_Finished";
 import ErrorElement from "./Components/ErrorElement";
-import ProtectedRoute from "./ProtectedRoute";
+import ProtectedRoute from "./middlewares/ProtectedRoute";
 const routes = createBrowserRouter([
     {
         path: "/",
