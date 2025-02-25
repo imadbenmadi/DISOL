@@ -14,6 +14,7 @@ import Main_Files from "./Pages/Main/Files/Files";
 import Main_Add_File from "./Pages/Main/Files/Add_Files";
 
 import Dashboard from "./Pages/Dashboard/Dashboard";
+import Dashboard_Default from "./Pages/Dashboard/Dashboard_Default";
 import Dashboard_Statistics from "./Pages/Dashboard/Dashboard_Statistics";
 import Dashboard_Workers from "./Pages/Dashboard/Dashboard_Workers";
 import Dashboard_Admins from "./Pages/Dashboard/Dashboard_Admins";
@@ -74,6 +75,52 @@ const routes = createBrowserRouter([
                             //     caseSensitive: true,
                             //     element: <Main_Add_Document />,
                             // },
+                        ],
+                    },
+                    {
+                        path: "/Dashboard",
+                        element: <Dashboard />,
+                        caseSensitive: true,
+                        children: [
+                            {
+                                index: true,
+                                element: <Dashboard_Default />,
+                            },
+                            {
+                                path: "/Dashboard/Statistics",
+                                caseSensitive: true,
+                                element: <Dashboard_Statistics />,
+                            },
+                            {
+                                path: "/Dashboard/Workers",
+                                caseSensitive: true,
+                                element: <Dashboard_Workers />,
+                            },
+                            {
+                                path: "/Dashboard/Admins",
+                                caseSensitive: true,
+                                element: <Dashboard_Admins />,
+                            },
+                            {
+                                path: "/Dashboard/Users",
+                                caseSensitive: true,
+                                element: <Dashboard_Users />,
+                            },
+                            {
+                                path: "/Dashboard/Settings",
+                                caseSensitive: true,
+                                element: <Dashboard_Settings />,
+                            },
+                            {
+                                path: "/Dashboard/Reports",
+                                caseSensitive: true,
+                                element: <Dashboard_Reports />,
+                            },
+                            {
+                                path: "/Dashboard/Logger",
+                                caseSensitive: true,
+                                element: <Dashboard_Logger />,
+                            },
                         ],
                     },
                 ],
