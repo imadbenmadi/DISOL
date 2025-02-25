@@ -16,7 +16,7 @@ import Main_Add_File from "./Pages/Main/Files/Add_Files";
 import Dashboard from "./Pages/Dashboard/Dashboard";
 import Dashboard_Default from "./Pages/Dashboard/Dashboard_Default";
 import Dashboard_Statistics from "./Pages/Dashboard/Dashboard_Statistics";
-import Dashboard_Workers from "./Pages/Dashboard/Dashboard_Workers";
+import Dashboard_Team from "./Pages/Dashboard/Dashboard_Team";
 import Dashboard_Admins from "./Pages/Dashboard/Dashboard_Admins";
 import Dashboard_Users from "./Pages/Dashboard/Dashboard_Users";
 import Dashboard_Settings from "./Pages/Dashboard/Dashboard_Settings";
@@ -92,9 +92,9 @@ const routes = createBrowserRouter([
                                 element: <Dashboard_Statistics />,
                             },
                             {
-                                path: "/Dashboard/Workers",
+                                path: "/Dashboard/Team",
                                 caseSensitive: true,
-                                element: <Dashboard_Workers />,
+                                element: <Dashboard_Team />,
                             },
                             {
                                 path: "/Dashboard/Admins",

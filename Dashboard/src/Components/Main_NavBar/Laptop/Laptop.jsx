@@ -109,8 +109,8 @@ function Laptop() {
                                         Icon={null}
                                     />
                                     <LaptopNavItem
-                                        Link="/Dashboard/Workers"
-                                        name="Workers"
+                                        Link="/Dashboard/Team"
+                                        name="Team"
                                         Active_nav={Active_nav}
                                         Icon={null}
                                     />

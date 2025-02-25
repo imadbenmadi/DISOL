@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 function Default() {
     const Navigate = useNavigate();
     useEffect(() => {
-        Navigate("/Dasboard/Statistics");
+        Navigate("/Dashboard/Statistics");
     }, []);
 }
 export default Default;
