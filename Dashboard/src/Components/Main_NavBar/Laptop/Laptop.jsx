@@ -103,6 +103,12 @@ function Laptop() {
                                         Icon={null}
                                     />{" "}
                                     <LaptopNavItem
+                                        Link="/Dashboard/Settings"
+                                        name="Settings"
+                                        Active_nav={Active_nav}
+                                        Icon={null}
+                                    />{" "}
+                                    <LaptopNavItem
                                         Link="/Dashboard/Admins"
                                         name="Admins"
                                         Active_nav={Active_nav}

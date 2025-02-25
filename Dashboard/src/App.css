@@ -12,26 +12,26 @@
     scroll-behavior: smooth;
 }
 #root .DraftEditor-root .public-DraftStyleDefault-block {
-  font-family: inherit !important;
-  font-size: inherit !important;
+    font-family: inherit !important;
+    font-size: inherit !important;
 }
 
 #root .public-DraftStyleDefault-block {
-  font-family: inherit;
-  font-size: inherit;
+    font-family: inherit;
+    font-size: inherit;
 }
 
 /* Custom style overrides */
 #root .FONT-FAMILY-SANS-SERIF {
-  font-family: sans-serif !important;
+    font-family: sans-serif !important;
 }
 
 #root .FONT-FAMILY-SERIF {
-  font-family: serif !important;
+    font-family: serif !important;
 }
 
 #root .FONT-FAMILY-MONOSPACE {
-  font-family: monospace !important;
+    font-family: monospace !important;
 }
 input {
     outline: none;
@@ -50,7 +50,7 @@ textarea {
 .loader {
     width: 20px;
     height: 20px;
-    border: 3px solid #2A77F1;
+    border: 3px solid #1692c8;
     border-bottom-color: transparent;
     border-radius: 50%;
     display: inline-block;
@@ -83,7 +83,7 @@ textarea {
 }
 
 .custom-overflow::-webkit-scrollbar-thumb {
-    background-color: #2A77F1; /* Change the color as needed */
+    background-color: #1692c8; /* Change the color as needed */
     border-radius: 999px; /* Makes the thumb round */
     cursor: pointer;
 }
@@ -270,26 +270,26 @@ textarea {
 }
 /* Ensure higher specificity */
 .DraftEditor-root .public-DraftStyleDefault-block {
-  font-family: inherit !important;
-  font-size: inherit !important;
+    font-family: inherit !important;
+    font-size: inherit !important;
 }
 
 .public-DraftStyleDefault-block {
-  font-family: inherit;
-  font-size: inherit;
+    font-family: inherit;
+    font-size: inherit;
 }
 
 /* Custom style overrides */
 .FONT-FAMILY-SANS-SERIF {
-  font-family: sans-serif;
+    font-family: sans-serif;
 }
 
 .FONT-FAMILY-SERIF {
-  font-family: serif;
+    font-family: serif;
 }
 
 .FONT-FAMILY-MONOSPACE {
-  font-family: monospace;
+    font-family: monospace;
 }
 
 /* Add any other required styles here */
