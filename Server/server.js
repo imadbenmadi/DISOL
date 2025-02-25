@@ -18,7 +18,8 @@ initializeDirectories();
 initialize_Middleware(app);
 
 // Serve static files
-app.use("/", express.static(path.join(__dirname, "/public")));
+app.use(express.static(path.join(__dirname, "public")));
+
 // app.get("/files/:id", (req, res) => {
 //     const file_path = req.params.id;
 //     const filePath = path.join(__dirname, "Files", file_path); // Adjust the folder

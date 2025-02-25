@@ -1,14 +1,17 @@
 const express = require("express");
 const path = require("path");
-const Content = require("../models/init");
+const { Content } = require("../models/init");
 const router = express.Router();
-
-router.get("/", async (req, res) => {
+const auth_middlware = require("../middleware/Users/Middlware.Auth");
+router.get("/main", async (req, res) => {
     const centent = await Content.findAll();
-
-    if (!centent) return res.status(404).send("No content found");
-    res.send(centent);
-    res.sendFile(path.join(__dirname, "public", "", "index.html")); // Serve the HTML file
+    return res.status(200).json({ centent });
+});
+router.put("/main", auth_middlware, async (req, res) => {
+    const { web_status } = req.body;
+    
+    const centent = await Content.create({ web_status });
+    return res.status(200).json({ centent });
 });
 
 module.exports = router;
