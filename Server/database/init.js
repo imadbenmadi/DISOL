@@ -1,6 +1,7 @@
 const sequelize = require("./Mysql.database");
 const { Sequelize } = require("sequelize");
 const dbConfig = require("../config/db.conf");
+const errorLogger = require("../utils/ErrorLogger");
 
 const initializeDatabase = async () => {
     try {
@@ -30,9 +31,13 @@ const initializeDatabase = async () => {
             })
             .catch((error) => {
                 console.error("Failed to synchronize database:", error);
+
+                errorLogger.logDetailedError("DB_SYNC_ERROR", error);
             });
     } catch (error) {
         console.error("Failed to initialize database:", error);
+
+        errorLogger.logDetailedError("DB_INIT_ERROR", error);
     }
 };
 module.exports = initializeDatabase;

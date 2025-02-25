@@ -1,6 +1,7 @@
 const nodemailer = require("nodemailer");
 const { google } = require("googleapis");
 const dotenv = require("dotenv");
+const errorLogger = require("../../utils/ErrorLogger");
 dotenv.config();
 
 // Create reusable transporter for shared hosting
@@ -68,6 +69,8 @@ const processQueue = async () => {
             console.log("Email sent successfully!");
         } catch (error) {
             console.error("Failed to send email:", error);
+
+            errorLogger.logDetailedError("EMAIL_SEND_ERROR", error);
         } finally {
             emailQueue.shift(); // Remove the processed job from the queue
         }
@@ -105,6 +108,8 @@ const sendEmail = async (toEmail, userName) => {
         console.log("Email sent (Shared Hosting):", info.response);
     } catch (error) {
         console.error("Shared Hosting failed. Falling back to Gmail...", error);
+
+        errorLogger.logDetailedError("EMAIL_SEND_ERROR", error);
 
         // Fallback to Gmail transporter
         transporter = await createGmailTransporter();

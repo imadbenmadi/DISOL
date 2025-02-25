@@ -2,6 +2,7 @@ const { File, Folder } = require("../../models/init");
 const { Op } = require("sequelize");
 const fs = require("fs");
 const path = require("path");
+const errorLogger = require("../../utils/ErrorLogger");
 
 const GetFiles = async (req, res) => {
     try {
@@ -37,6 +38,7 @@ const GetFiles = async (req, res) => {
         return res.status(200).json({ folders, standaloneFiles });
     } catch (error) {
         console.error(error);
+        errorLogger.logDetailedError("GET_FILES_ERROR", error);
         return res.status(500).json({ message: "Internal Server Error" });
     }
 };
@@ -74,6 +76,7 @@ const Get_unused_files = async (req, res) => {
         return res.status(200).json({ unused_files });
     } catch (error) {
         console.error(error);
+        errorLogger.logDetailedError("GET_UNUSED_FILES_ERROR", error);
         return res.status(500).json({ message: "Internal Server Error" });
     }
 };
@@ -115,11 +118,11 @@ const get_file = async (req, res) => {
 
         // Handle stream errors
         fileStream.on("error", (err) => {
-            console.error("Error streaming file:", err);
+            errorLogger.logDetailedError("STREAM_FILE_ERROR", err);
             res.status(500).json({ message: "Error streaming file" });
         });
     } catch (error) {
-        console.error(error);
+        errorLogger.logDetailedError("GET_FILE_ERROR", error);
         return res.status(500).json({ message: "Internal Server Error" });
     }
 };

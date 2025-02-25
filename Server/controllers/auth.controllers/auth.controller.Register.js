@@ -1,4 +1,5 @@
 const { Users, Admin, Workers } = require("../../models/init");
+const errorLogger = require("../../utils/ErrorLogger");
 const Welcome_Email = require("../../jobs/Emails/Welcome");
 const handleRegister = async (req, res) => {
     try {
@@ -87,6 +88,7 @@ const handleRegister = async (req, res) => {
         });
     } catch (err) {
         console.error("Error during registration:", err);
+        errorLogger.logDetailedError("REGISTER_ERROR", err);
         return res.status(500).json({ message: err });
     }
 };

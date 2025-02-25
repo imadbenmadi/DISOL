@@ -1,7 +1,7 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const { Admin, Workers, Users, Refresh_tokens } = require("../../models/init");
-
+const errorLogger = require("../../utils/ErrorLogger");
 const generateTokens = (userId, userType, accessSecret, refreshSecret) => {
     const accessToken = jwt.sign({ userId, userType }, accessSecret, {
         expiresIn: "1h",
@@ -93,7 +93,8 @@ const handleLogin = async (req, res) => {
             userType,
         });
     } catch (err) {
-        console.error("Login error:", err);
+        errorLogger.logDetailedError("LOGIN_ERROR", err);
+        console.error("LOGIN_ERROR", err);
         return res.status(500).json({ message: "Internal server error" });
     }
 };

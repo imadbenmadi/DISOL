@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const { OAuth2Client } = require("google-auth-library");
 const { Users, Refresh_tokens } = require("../models/init");
 const Welcome_Email = require("../jobs/Emails/Welcome");
+const errorLogger = require("../utils/ErrorLogger");
 
 const router = express.Router();
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
@@ -147,6 +148,8 @@ const handleAuth = async (req, res, isRegister) => {
         });
     } catch (error) {
         console.error("Google authentication error:", error);
+
+        errorLogger.logDetailedError("GOOGLE_AUTH_ERROR", error);
         return res.status(500).json({ message: "Internal server error" });
     }
 };

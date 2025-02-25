@@ -3,6 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const { google } = require("googleapis");
 const dotenv = require("dotenv");
+const errorLogger = require("../../utils/ErrorLogger");
 dotenv.config();
 // Load Service Account JSON
 const serviceAuth = new google.auth.GoogleAuth({
@@ -36,6 +37,7 @@ const GetDocs = async (req, res) => {
         return res.status(200).json({ files });
     } catch (error) {
         console.error(error);
+        errorLogger.logDetailedError("GET_DOCS_ERROR", error);
         return res.status(500).json({ message: "Error fetching files" });
     }
 };
