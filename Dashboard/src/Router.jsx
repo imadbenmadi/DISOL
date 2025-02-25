@@ -20,8 +20,7 @@ import Dashboard_Admins from "./Pages/Dashboard/Dashboard_Admins";
 import Dashboard_Users from "./Pages/Dashboard/Dashboard_Users";
 import Dashboard_Settings from "./Pages/Dashboard/Dashboard_Settings";
 import Dashboard_Reports from "./Pages/Dashboard/Dashboard_Reports";
-import Dashboard_Erros from "./Pages/Dashboard/Dashboard_Erros";
-
+import Dashboard_Logger from "./Pages/Dashboard/Dashboard_Logger";
 
 import Not_Found from "./Components/Not_Found";
 import Not_Finished from "./Components/Not_Finished";
