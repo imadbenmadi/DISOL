@@ -63,7 +63,7 @@ function Laptop() {
     };
     return (
         <div
-            className={`${open ? "w-[230px] " : "w-fit "}   text-sm text-gray_v 
+            className={`${open ? "w-[250px] " : "w-fit "}   text-sm text-gray_v 
                 `}
         >
             <div className="flex flex-col  ">
@@ -92,7 +92,8 @@ function Laptop() {
                             <Section
                                 title="Dashboard"
                                 Icon={FaFileAlt}
-                                default_open={true}
+                                default_open={false}
+                                hasLeftLine={true}
                             >
                                 <div className=" pl-6">
                                     <LaptopNavItem
@@ -125,6 +126,7 @@ function Laptop() {
                                 title="Main"
                                 Icon={GoHome}
                                 default_open={true}
+                                hasLeftLine={true}
                             >
                                 <div className="flex flex-col gap-1 pl-2">
                                     <LaptopNavItem
@@ -136,7 +138,8 @@ function Laptop() {
                                     <Section
                                         title="Files and Documents"
                                         Icon={FaFileAlt}
-                                        default_open={true}
+                                        default_open={false}
+                                        hasLeftLine={true}
                                     >
                                         <div className=" pl-6">
                                             <LaptopNavItem
@@ -155,7 +158,11 @@ function Laptop() {
                                     </Section>
                                 </div>
                             </Section>
-                            <Section title="Edit Content" Icon={FaRegEdit}>
+                            <Section
+                                title="Edit Content"
+                                Icon={FaRegEdit}
+                                hasLeftLine={true}
+                            >
                                 <div className="flex flex-col gap-1 pl-2">
                                     <LaptopNavItem
                                         Link="Edit_Main"
