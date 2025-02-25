@@ -119,6 +119,8 @@ const handleAuth = async (req, res, isRegister) => {
         const register_refresh_token = await Refresh_tokens.create({
             userId: user.id,
             token: refreshToken,
+            userType: "user",
+            expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000),
         });
         if (!register_refresh_token)
             return res

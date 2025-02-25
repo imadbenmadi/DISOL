@@ -13,5 +13,9 @@ const Refresh_tokens = sequelize.define("Refresh_tokens", {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    expires_at: {
+        type: DataTypes.DATE,
+        allowNull: false,
+    },
 });
 module.exports = Refresh_tokens;

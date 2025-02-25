@@ -1,28 +1,31 @@
 const cron = require("node-cron");
+const { Op } = require("sequelize"); // Import Sequelize operators
 const { Refresh_tokens } = require("../models/init");
-const jwt = require("jsonwebtoken");
 
 const cleaning_tokens = async () => {
     try {
-        const refresh_tokens = await Refresh_tokens.findAll();
-        const now = Date.now();
-        refresh_tokens.forEach(async (token) => {
-            if (token.expires_at < now) {
-                // Ensure `expires_at` is the correct field
-                await Refresh_tokens.destroy({
-                    where: {
-                        token: token.token,
-                    },
-                });
-            }
+        const now = new Date(); // Get the current timestamp
+
+        // Delete expired tokens using Sequelize's Op.lt operator
+        const deletedCount = await Refresh_tokens.destroy({
+            where: {
+                expires_at: { [Op.lt]: now }, // Fix the operator usage
+            },
         });
-        console.log("Token cleanup completed at:", new Date().toISOString());
+
+        console.log(
+            `Token cleanup completed. Deleted ${deletedCount} expired tokens at:`,
+            new Date().toISOString()
+        );
     } catch (error) {
         console.error("Error during token cleanup:", error);
     }
 };
 
-// Schedule the task to run every hour
-cron.schedule("0 * * * *", cleaning_tokens); // Runs at the start of every hour
+// Schedule the task to run every minute for testing
+const startTokenCleanup = () => {
+    console.log("Starting token cleanup job...");
+    cron.schedule("*/10 * * * * *", cleaning_tokens); // ✅ Runs every 10 seconds
+};
 
-module.exports = { cleaning_tokens };
+module.exports = startTokenCleanup;

@@ -78,7 +78,12 @@ const handleLogin = async (req, res) => {
             refreshSecret
         );
 
-        await Refresh_tokens.create({ userId: user.id, token: refreshToken });
+        await Refresh_tokens.create({
+            userId: user.id,
+            token: refreshToken,
+            userType: userType.toLowerCase(),
+            expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000),
+        });
 
         setCookies(res, accessToken, refreshToken);
 

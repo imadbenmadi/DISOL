@@ -20,6 +20,6 @@ module.exports = {
     Admin,
     File,
     Folder,
-    init_models,
     Content,
+    init_models,
 };
