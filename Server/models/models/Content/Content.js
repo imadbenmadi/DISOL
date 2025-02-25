@@ -5,13 +5,14 @@ const { Package } = require("./Package");
 const { Project } = require("./Project");
 const { Review } = require("./Review");
 const { Service } = require("./Service");
-const { Centent } = sequelize.define("Centent", {
+const Content = sequelize.define("Content", {
     web_status: {
         type: DataTypes.ENUM("active", "maintenance", "down"),
         allowNull: false,
     },
 
     phone: {
+        
         type: DataTypes.STRING,
         allowNull: true,
     },
@@ -32,9 +33,9 @@ const { Centent } = sequelize.define("Centent", {
         allowNull: true,
     },
 });
-Centent.hasMany(Faq);
-Centent.hasMany(Package);
-Centent.hasMany(Project);
-Centent.hasMany(Review);
-Centent.hasMany(Service);
-module.exports = Centent;
+Content.hasMany(Faq);
+Content.hasMany(Package);
+Content.hasMany(Project);
+Content.hasMany(Review);
+Content.hasMany(Service);
+module.exports = { Content };

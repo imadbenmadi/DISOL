@@ -3,6 +3,7 @@ const Users = require("./models/Users/User");
 const Workers = require("./models/Users/Worker");
 const Admin = require("./models/Users/Admin");
 const { File, Folder } = require("./models/File");
+const { Content } = require("./models/Content/Content");
 const init_models = {
     Refresh_tokens,
     Users,
@@ -10,6 +11,7 @@ const init_models = {
     Admin,
     File,
     Folder,
+    Content,
 };
 module.exports = {
     Refresh_tokens,
@@ -19,4 +21,5 @@ module.exports = {
     File,
     Folder,
     init_models,
+    Content,
 };
