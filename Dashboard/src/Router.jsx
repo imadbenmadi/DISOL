@@ -13,6 +13,16 @@ import Main_Documents from "./Pages/Main/Documents/Documents";
 import Main_Files from "./Pages/Main/Files/Files";
 import Main_Add_File from "./Pages/Main/Files/Add_Files";
 
+import Dashboard from "./Pages/Dashboard/Dashboard";
+import Dashboard_Statistics from "./Pages/Dashboard/Dashboard_Statistics";
+import Dashboard_Workers from "./Pages/Dashboard/Dashboard_Workers";
+import Dashboard_Admins from "./Pages/Dashboard/Dashboard_Admins";
+import Dashboard_Users from "./Pages/Dashboard/Dashboard_Users";
+import Dashboard_Settings from "./Pages/Dashboard/Dashboard_Settings";
+import Dashboard_Reports from "./Pages/Dashboard/Dashboard_Reports";
+import Dashboard_Erros from "./Pages/Dashboard/Dashboard_Erros";
+
+
 import Not_Found from "./Components/Not_Found";
 import Not_Finished from "./Components/Not_Finished";
 import ErrorElement from "./Components/ErrorElement";

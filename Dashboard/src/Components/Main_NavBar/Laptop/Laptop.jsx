@@ -90,6 +90,38 @@ function Laptop() {
                     <div className="flex flex-col gap-4 pl-8 pb-4">
                         <div className="flex flex-col gap-5 mt-6">
                             <Section
+                                title="Dashboard"
+                                Icon={FaFileAlt}
+                                default_open={true}
+                            >
+                                <div className=" pl-6">
+                                    <LaptopNavItem
+                                        Link="/Dashboard/Statistics"
+                                        name="Statistics"
+                                        Active_nav={Active_nav}
+                                        Icon={null}
+                                    />{" "}
+                                    <LaptopNavItem
+                                        Link="/Dashboard/Admins"
+                                        name="Admins"
+                                        Active_nav={Active_nav}
+                                        Icon={null}
+                                    />
+                                    <LaptopNavItem
+                                        Link="/Dashboard/Workers"
+                                        name="Workers"
+                                        Active_nav={Active_nav}
+                                        Icon={null}
+                                    />
+                                    <LaptopNavItem
+                                        Link="/Dashboard/Logger"
+                                        name="Loggers"
+                                        Active_nav={Active_nav}
+                                        Icon={null}
+                                    />
+                                </div>
+                            </Section>
+                            <Section
                                 title="Main"
                                 Icon={GoHome}
                                 default_open={true}
