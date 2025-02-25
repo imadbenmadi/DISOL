@@ -9,8 +9,25 @@ router.get("/main", async (req, res) => {
 });
 router.put("/main", auth_middlware, async (req, res) => {
     const { web_status } = req.body;
-    
-    const centent = await Content.create({ web_status });
+    if (!web_status)
+        return res.status(400).json({ msg: "web_status is required" });
+    if (
+        web_status !== "active" &&
+        web_status !== "maintenance" &&
+        web_status !== "down"
+    )
+        return res
+            .status(400)
+            .json({ msg: "web_status must be active or maintenance or down" });
+    content_exist = await Content.findOne({ where: { id: 1 } });
+    const centent = null;
+    if (content_exist) {
+        centent = await Content.update({ web_status }, { where: { id: 1 } });
+    } else {
+        // destroy everything and create new one
+        await Content.destroy({ where: {} });
+        centent = await Content.create({ web_status });
+    }
     return res.status(200).json({ centent });
 });
 
