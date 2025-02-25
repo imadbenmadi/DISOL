@@ -108,6 +108,7 @@ function Laptop() {
                                         Active_nav={Active_nav}
                                         Icon={null}
                                     />{" "}
+                                    <hr className="my-2" />
                                     <LaptopNavItem
                                         Link="/Dashboard/Admins"
                                         name="Admins"
@@ -121,8 +122,21 @@ function Laptop() {
                                         Icon={null}
                                     />
                                     <LaptopNavItem
+                                        Link="/Dashboard/Users"
+                                        name="Users"
+                                        Active_nav={Active_nav}
+                                        Icon={null}
+                                    />
+                                    <hr className="my-2" />
+                                    <LaptopNavItem
                                         Link="/Dashboard/Logger"
                                         name="Loggers"
+                                        Active_nav={Active_nav}
+                                        Icon={null}
+                                    />
+                                    <LaptopNavItem
+                                        Link="/Dashboard/Report"
+                                        name="Report"
                                         Active_nav={Active_nav}
                                         Icon={null}
                                     />

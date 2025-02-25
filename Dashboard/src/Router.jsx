@@ -112,7 +112,7 @@ const routes = createBrowserRouter([
                                 element: <Dashboard_Settings />,
                             },
                             {
-                                path: "/Dashboard/Reports",
+                                path: "/Dashboard/Report",
                                 caseSensitive: true,
                                 element: <Dashboard_Reports />,
                             },
