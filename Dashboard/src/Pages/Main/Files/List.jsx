@@ -132,8 +132,8 @@ function List({
                                 </div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
-                                <span className="text-sm text-gray-500">
-                                    {file.fileType?.toUpperCase()}
+                                <span className="text-sm text-gray-500 ">
+                                    {file.fileType?.toUpperCase().slice(0, 20)}
                                 </span>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">

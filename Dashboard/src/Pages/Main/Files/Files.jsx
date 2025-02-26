@@ -26,6 +26,15 @@ import UploadFile_popup from "./popups/UploadFile";
 import RenameFolder from "./popups/RenameFolder";
 import CreateFolder from "./popups/CreateFolder";
 import Swal from "sweetalert2";
+import Nav from "./Nav";
+import {
+    fetchFiles,
+    fetchAllFolders,
+    handleRenameFolder,
+    handleMoveFile,
+    handleDeleteFile,
+    handleDeleteFolder,
+} from "./apis/apis";
 
 export default function FileManager() {
     const [data, setData] = useState({ folders: [], standaloneFiles: [] });
@@ -51,60 +60,16 @@ export default function FileManager() {
     // Toast notifications
     const [toast, setToast] = useState({ show: false, message: "", type: "" });
 
-    // Fetch files from backend
-    const fetchFiles = async (folderId = null) => {
-        setLoading(true);
-        try {
-            const endpoint = folderId
-                ? // ? `http://localhost:3000/dashboard/Folders/${folderId}`
-                  `http://localhost:3000/dashboard/Folders/${folderId}`
-                : "http://localhost:3000/dashboard/Files";
-
-            const response = await axios.get(endpoint, {
-                withCredentials: true,
-            });
-            console.log(response.data);
-
-            if (folderId) {
-                setData({
-                    folders: [],
-                    standaloneFiles: response.data.folder.files || [],
-                });
-            } else {
-                setData(response.data);
-            }
-        } catch (error) {
-            console.error("Error fetching files:", error);
-            ShowToast("Failed to load files", "error", setToast);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    // Fetch all folders for move file functionality
-    const fetchAllFolders = async () => {
-        try {
-            const response = await axios.get(
-                "http://localhost:3000/dashboard/Folders",
-                {
-                    withCredentials: true,
-                }
-            );
-            setAllFolders(response.data.folders || []);
-        } catch (error) {
-            console.error("Error fetching folders:", error);
-        }
-    };
-
     useEffect(() => {
-        fetchFiles();
-        fetchAllFolders();
+        // Initial data load
+        fetchFiles(null, apiParams);
+        fetchAllFolders(apiParams);
     }, []);
 
     // FOLDER NAVIGATION
     const openFolder = (folder) => {
         setCurrentPath([...currentPath, folder]);
-        fetchFiles(folder.id);
+        fetchFiles(folder.id, apiParams);
     };
 
     const goBack = () => {
@@ -112,150 +77,67 @@ export default function FileManager() {
             const newPath = [...currentPath];
             newPath.pop();
             setCurrentPath(newPath);
-            fetchFiles(newPath.length ? newPath[newPath.length - 1].id : null);
-        }
-    };
-
-    // RENAME FOLDER
-    const handleRenameFolder = async (e) => {
-        e.preventDefault();
-        if (!newFolderName.trim() || !selectedFolder) return;
-
-        try {
-            await axios.put(
-                `http://localhost:3000/dashboard/Folders/${selectedFolder.id}`,
-                { folderName: newFolderName },
-                { withCredentials: true }
-            );
-
-            setNewFolderName("");
-            setShowRenameFolderModal(false);
-            setSelectedFolder(null);
-
-            // Update current path if renamed folder is in it
-            const updatedPath = currentPath.map((folder) => {
-                if (folder.id === selectedFolder.id) {
-                    return { ...folder, folderName: newFolderName };
-                }
-                return folder;
-            });
-            setCurrentPath(updatedPath);
-
             fetchFiles(
-                currentPath.length
-                    ? currentPath[currentPath.length - 1].id
-                    : null
+                newPath.length ? newPath[newPath.length - 1].id : null,
+                apiParams
             );
-            ShowToast("Folder renamed successfully", "success", setToast);
-        } catch (error) {
-            console.error("Error renaming folder:", error);
-            ShowToast("Failed to rename folder", "error", setToast);
         }
     };
 
-    // MOVE FILE
-    const handleMoveFile = async (e) => {
-        e.preventDefault();
-        if (!selectedFile) return;
-
-        try {
-            await axios.post(
-                `http://localhost:3000/dashboard/Files/${selectedFile.id}`,
-                {
-                    folderId: moveToRoot ? null : moveToFolderId,
-                    toRoot: moveToRoot,
-                },
-                { withCredentials: true }
-            );
-
-            setShowMoveFileModal(false);
-            setSelectedFile(null);
-            setMoveToFolderId("");
-            setMoveToRoot(false);
-            fetchFiles(
-                currentPath.length
-                    ? currentPath[currentPath.length - 1].id
-                    : null
-            );
-            ShowToast("File moved successfully", "success", setToast);
-        } catch (error) {
-            console.error("Error moving file:", error);
-            ShowToast("Failed to move file", "error", setToast);
-        }
+    // Wrapper functions to call API functions with correct parameters
+    const handleRenameAction = (e) => {
+        handleRenameFolder(e, {
+            newFolderName,
+            selectedFolder,
+            setNewFolderName,
+            setShowRenameFolderModal,
+            setSelectedFolder,
+            currentPath,
+            setCurrentPath,
+            fetchFiles,
+            ShowToast,
+            setToast,
+        });
     };
 
-    // DELETE FILE
-    const handleDeleteFile = async (file) => {
-        if (
-            !window.confirm(`Are you sure you want to delete ${file.fileName}?`)
-        )
-            return;
-
-        try {
-            await axios.delete(
-                `http://localhost:3000/dashboard/Files/${file.id}`,
-                {
-                    withCredentials: true,
-                }
-            );
-
-            fetchFiles(
-                currentPath.length
-                    ? currentPath[currentPath.length - 1].id
-                    : null
-            );
-            ShowToast("File deleted successfully", "success", setToast);
-        } catch (error) {
-            console.error("Error deleting file:", error);
-            ShowToast("Failed to delete file", "error", setToast);
-        }
+    const handleMoveAction = (e) => {
+        handleMoveFile(e, {
+            selectedFile,
+            moveToRoot,
+            moveToFolderId,
+            setShowMoveFileModal,
+            setSelectedFile,
+            setMoveToFolderId,
+            setMoveToRoot,
+            fetchFiles,
+            currentPath,
+            ShowToast,
+            setToast,
+            setLoading,
+            setData,
+        });
     };
 
-    // DELETE FOLDER
-    const handleDeleteFolder = async (folder) => {
-        Swal.fire({
-            title: "Are you sure?",
-            text: `Are you sure you want to delete ${folder.folderName} and all its contents?`,
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!",
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                try {
-                    await axios.delete(
-                        `http://localhost:3000/dashboard/Folders/${folder.id}`,
-                        {
-                            withCredentials: true,
-                        }
-                    );
+    const handleDeleteFileAction = (file) => {
+        handleDeleteFile(file, {
+            fetchFiles,
+            currentPath,
+            ShowToast,
+            setToast,
+            setLoading,
+            setData,
+        });
+    };
 
-                    // If the folder being deleted is in the current path, go back
-                    if (
-                        currentPath.some(
-                            (pathFolder) => pathFolder.id === folder.id
-                        )
-                    ) {
-                        goBack();
-                    } else {
-                        fetchFiles(
-                            currentPath.length
-                                ? currentPath[currentPath.length - 1].id
-                                : null
-                        );
-                    }
-
-                    ShowToast(
-                        "Folder deleted successfully",
-                        "success",
-                        setToast
-                    );
-                } catch (error) {
-                    console.error("Error deleting folder:", error);
-                    ShowToast("Failed to delete folder", "error", setToast);
-                }
-            }
+    const handleDeleteFolderAction = (folder) => {
+        handleDeleteFolder(folder, {
+            fetchFiles,
+            currentPath,
+            goBack,
+            ShowToast,
+            setToast,
+            setLoading,
+            setData,
         });
     };
 
@@ -287,36 +169,38 @@ export default function FileManager() {
         }
         return 0;
     });
+    // Create params object for API functions
+    const apiParams = {
+        setLoading,
+        setData,
+        ShowToast,
+        setToast,
+        setAllFolders,
+        currentPath,
+        setCurrentPath,
+        setNewFolderName,
+        setShowRenameFolderModal,
+        setSelectedFolder,
+        setShowMoveFileModal,
+        setSelectedFile,
+        setMoveToFolderId,
+        setMoveToRoot,
+        goBack,
+        moveToRoot,
+        moveToFolderId,
+    };
 
     return (
         <div className="bg-white rounded-xl shadow-md overflow-hidden max-w-4xl mx-auto">
             {/* Header Section */}
             <Header
-                fetchFiles={fetchFiles}
+                fetchFiles={(folderId) => fetchFiles(folderId, apiParams)}
                 currentPath={currentPath}
                 viewMode={viewMode}
                 setViewMode={setViewMode}
             />
             {/* Navigation Bar */}
-            <div className="px-6 py-3 bg-gray-50 border-b flex items-center">
-                <div className="flex items-center space-x-2">
-                    {currentPath.length > 0 && (
-                        <button
-                            onClick={goBack}
-                            className="px-3 py-1 bg-blue-100 text-blue-700 rounded-md hover:bg-blue-200 transition-colors"
-                        >
-                            ⬅ Back
-                        </button>
-                    )}
-                    <span className="text-sm font-medium">
-                        {currentPath.length > 0
-                            ? `Location: ${currentPath
-                                  .map((folder) => folder.folderName)
-                                  .join(" > ")}`
-                            : "Location: Root"}
-                    </span>
-                </div>
-            </div>
+            <Nav currentPath={currentPath} goBack={goBack} />
             {/* Search and Controls */}
             <div className="p-4 bg-gray-50 border-b flex flex-col sm:flex-row gap-3 justify-between">
                 <div className="relative flex-grow max-w-md">
@@ -405,14 +289,14 @@ export default function FileManager() {
                             setSelectedFolder={setSelectedFolder}
                             setNewFolderName={setNewFolderName}
                             setShowRenameFolderModal={setShowRenameFolderModal}
-                            handleDeleteFolder={handleDeleteFolder}
+                            handleDeleteFolder={handleDeleteFolderAction}
                             FileIcon={FileIcon}
                             setSelectedFile={setSelectedFile}
                             setMoveToFolderId={setMoveToFolderId}
                             setMoveToRoot={setMoveToRoot}
-                            fetchAllFolders={fetchAllFolders}
+                            fetchAllFolders={() => fetchAllFolders(apiParams)}
                             setShowMoveFileModal={setShowMoveFileModal}
-                            handleDeleteFile={handleDeleteFile}
+                            handleDeleteFile={handleDeleteFileAction}
                         />
                     ) : (
                         <Grid
@@ -422,14 +306,14 @@ export default function FileManager() {
                             setSelectedFolder={setSelectedFolder}
                             setNewFolderName={setNewFolderName}
                             setShowRenameFolderModal={setShowRenameFolderModal}
-                            handleDeleteFolder={handleDeleteFolder}
+                            handleDeleteFolder={handleDeleteFolderAction}
                             FileIcon={FileIcon}
                             setSelectedFile={setSelectedFile}
                             setMoveToFolderId={setMoveToFolderId}
                             setMoveToRoot={setMoveToRoot}
-                            fetchAllFolders={fetchAllFolders}
+                            fetchAllFolders={() => fetchAllFolders(apiParams)}
                             setShowMoveFileModal={setShowMoveFileModal}
-                            handleDeleteFile={handleDeleteFile}
+                            handleDeleteFile={handleDeleteFileAction}
                         />
                     )}
                 </div>
@@ -451,7 +335,7 @@ export default function FileManager() {
                 newFolderName={newFolderName}
                 setNewFolderName={setNewFolderName}
                 currentPath={currentPath}
-                fetchFiles={fetchFiles}
+                fetchFiles={(folderId) => fetchFiles(folderId, apiParams)}
                 ShowToast={ShowToast}
                 setToast={setToast}
             />
@@ -460,7 +344,7 @@ export default function FileManager() {
                 showUploadFileModal={showUploadFileModal}
                 setShowUploadFileModal={setShowUploadFileModal}
                 currentPath={currentPath}
-                fetchFiles={fetchFiles}
+                fetchFiles={(folderId) => fetchFiles(folderId, apiParams)}
                 ShowToast={ShowToast}
                 setToast={setToast}
                 selectedFolder={selectedFolder}
@@ -474,7 +358,7 @@ export default function FileManager() {
                 setNewFolderName={setNewFolderName}
                 setShowRenameFolderModal={setShowRenameFolderModal}
                 setSelectedFolder={setSelectedFolder}
-                handleRenameFolder={handleRenameFolder}
+                handleRenameFolder={handleRenameAction}
             />
             {/* Move File Modal */}
             <MoveFile
@@ -483,7 +367,7 @@ export default function FileManager() {
                 selectedFile={selectedFile}
                 setSelectedFile={setSelectedFile}
                 allFolders={allFolders}
-                handleMoveFile={handleMoveFile}
+                handleMoveFile={handleMoveAction}
                 setMoveToFolderId={setMoveToFolderId}
                 setMoveToRoot={setMoveToRoot}
                 moveToFolderId={moveToFolderId}
