@@ -66,3 +66,36 @@ Stack Trace: TypeError [ERR_INVALID_ARG_TYPE]: The "path" argument must be of ty
 Stack Trace: TypeError: Cannot read properties of undefined (reading 'filter')
     at GetFolder (C:\Users\imadb\OneDrive\Bureau\DISOL_Website\server\controllers\dashboard.controllers\Files.controller.js:146:50)
     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[2025-02-26T14:46:15.791Z] [ERROR] [CREATE_FILE_ERROR] Data truncated for column 'uploaded_in' at row 1
+Stack Trace: Error
+    at Query.run (C:\Users\imadb\OneDrive\Bureau\DISOL_Website\server\node_modules\sequelize\lib\dialects\mysql\query.js:52:25)
+    at C:\Users\imadb\OneDrive\Bureau\DISOL_Website\server\node_modules\sequelize\lib\sequelize.js:315:28
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async MySQLQueryInterface.insert (C:\Users\imadb\OneDrive\Bureau\DISOL_Website\server\node_modules\sequelize\lib\dialects\abstract\query-interface.js:308:21)
+    at async model.save (C:\Users\imadb\OneDrive\Bureau\DISOL_Website\server\node_modules\sequelize\lib\model.js:2490:35)
+    at async File.create (C:\Users\imadb\OneDrive\Bureau\DISOL_Website\server\node_modules\sequelize\lib\model.js:1362:12)
+    at async Create_File (C:\Users\imadb\OneDrive\Bureau\DISOL_Website\server\controllers\dashboard.controllers\Files.controller.js:239:25)
+[2025-02-26T14:48:53.547Z] [ERROR] [CREATE_FILE_ERROR] The "data" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received undefined
+Stack Trace: TypeError [ERR_INVALID_ARG_TYPE]: The "data" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received undefined
+    at Object.writeFileSync (node:fs:2375:5)
+    at Create_File (C:\Users\imadb\OneDrive\Bureau\DISOL_Website\server\controllers\dashboard.controllers\Files.controller.js:268:20)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[2025-02-26T14:49:13.479Z] [ERROR] [CREATE_FILE_ERROR] The "data" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received undefined
+Stack Trace: TypeError [ERR_INVALID_ARG_TYPE]: The "data" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received undefined
+    at Object.writeFileSync (node:fs:2375:5)
+    at Create_File (C:\Users\imadb\OneDrive\Bureau\DISOL_Website\server\controllers\dashboard.controllers\Files.controller.js:268:20)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[2025-02-26T14:55:21.123Z] [ERROR] [CREATE_FILE_ERROR] The "data" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received undefined
+Stack Trace: TypeError [ERR_INVALID_ARG_TYPE]: The "data" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received undefined
+    at Object.writeFileSync (node:fs:2375:5)
+    at Create_File (C:\Users\imadb\OneDrive\Bureau\DISOL_Website\server\controllers\dashboard.controllers\Files.controller.js:273:20)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[2025-02-26T14:57:50.292Z] [ERROR] [CREATE_FILE_ERROR] The "data" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received undefined
+Stack Trace: TypeError [ERR_INVALID_ARG_TYPE]: The "data" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received undefined
+    at Object.writeFileSync (node:fs:2375:5)
+    at Create_File (C:\Users\imadb\OneDrive\Bureau\DISOL_Website\server\controllers\dashboard.controllers\Files.controller.js:268:20)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[2025-02-26T15:09:23.304Z] [ERROR] [DELETE_FOLDER_ERROR] Cannot read properties of undefined (reading 'forEach')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'forEach')
+    at Delete_folder (C:\Users\imadb\OneDrive\Bureau\DISOL_Website\server\controllers\dashboard.controllers\Files.controller.js:310:22)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)

@@ -8,6 +8,8 @@ import {
     FaPlus,
     FaArrowRight,
 } from "react-icons/fa";
+import Footer from "./Footer";
+import List from "./List";
 import FileIcon from "../../../Components/Icons/FileIcon";
 import ListIcon from "../../../Components/Icons/ListIcon";
 import GridIcon from "../../../Components/Icons/GridIcon";
@@ -16,7 +18,8 @@ import AsendingOrder from "../../../Components/Icons/AsendingOrder";
 import DescendingOrder from "../../../Components/Icons/DescendingOrder";
 import InfoIcon from "../../../Components/Icons/InfoIcon";
 import RefreshIcon from "../../../Components/Icons/RefreshIcon";
-
+import ShowToast from "../../../Components/Alerts/ShowToast";
+import Grid from "./Grid";
 export default function FileManager() {
     const [data, setData] = useState({ folders: [], standaloneFiles: [] });
     const [loading, setLoading] = useState(true);
@@ -46,26 +49,19 @@ export default function FileManager() {
     // Toast notifications
     const [toast, setToast] = useState({ show: false, message: "", type: "" });
 
-    // Helper function to show toast notifications
-    const showToast = (message, type = "success") => {
-        setToast({ show: true, message, type });
-        setTimeout(
-            () => setToast({ show: false, message: "", type: "" }),
-            3000
-        );
-    };
-
     // Fetch files from backend
     const fetchFiles = async (folderId = null) => {
         setLoading(true);
         try {
             const endpoint = folderId
-                ? `http://localhost:3000/dashboard/Folders/${folderId}`
+                ? // ? `http://localhost:3000/dashboard/Folders/${folderId}`
+                  `http://localhost:3000/dashboard/Folders/${folderId}`
                 : "http://localhost:3000/dashboard/Files";
 
             const response = await axios.get(endpoint, {
                 withCredentials: true,
             });
+            console.log(response.data);
 
             if (folderId) {
                 setData({
@@ -77,7 +73,7 @@ export default function FileManager() {
             }
         } catch (error) {
             console.error("Error fetching files:", error);
-            showToast("Failed to load files", "error");
+            ShowToast("Failed to load files", "error", setToast);
         } finally {
             setLoading(false);
         }
@@ -120,6 +116,8 @@ export default function FileManager() {
 
     // CREATE FOLDER
     const handleCreateFolder = async (e) => {
+        console.log("Creating folder");
+
         e.preventDefault();
         if (!newFolderName.trim()) return;
 
@@ -129,6 +127,7 @@ export default function FileManager() {
                 { folderName: newFolderName },
                 { withCredentials: true }
             );
+            console.log(response);
 
             setNewFolderName("");
             setShowCreateFolderModal(false);
@@ -137,10 +136,10 @@ export default function FileManager() {
                     ? currentPath[currentPath.length - 1].id
                     : null
             );
-            showToast("Folder created successfully");
+            ShowToast("Folder created successfully", "success", setToast);
         } catch (error) {
             console.error("Error creating folder:", error);
-            showToast("Failed to create folder", "error");
+            ShowToast("Failed to create folder", "error", setToast);
         }
     };
 
@@ -161,12 +160,8 @@ export default function FileManager() {
         formData.append("file", uploadFile);
         formData.append("fileType", uploadFile.type);
         formData.append("fileName", uploadFile.name);
-        formData.append("uploaded_in", new Date().toISOString());
+        formData.append("uploaded_in", "local");
         formData.append("fileSize", Math.round(uploadFile.size / 1024)); // Convert to KB
-        formData.append(
-            "file_Link",
-            `http://localhost:3000/Files/${uploadFile.name}`
-        );
 
         try {
             const endpoint = currentPath.length
@@ -175,24 +170,30 @@ export default function FileManager() {
                   }`
                 : "http://localhost:3000/dashboard/Files";
 
-            await axios.post(endpoint, formData, {
+            const response = await axios.post(endpoint, formData, {
                 withCredentials: true,
+                validateStatus: (status) => status < 500,
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
             });
+            console.log(response.data);
 
-            setUploadFile(null);
-            setShowUploadFileModal(false);
-            fetchFiles(
-                currentPath.length
-                    ? currentPath[currentPath.length - 1].id
-                    : null
-            );
-            showToast("File uploaded successfully");
+            if (response.status === 200 || response.status === 201) {
+                setUploadFile(null);
+                setShowUploadFileModal(false);
+                fetchFiles(
+                    currentPath.length
+                        ? currentPath[currentPath.length - 1].id
+                        : null
+                );
+                ShowToast("File uploaded successfully", "success", setToast);
+            } else {
+                ShowToast("Failed to upload file", "error", setToast);
+            }
         } catch (error) {
             console.error("Error uploading file:", error);
-            showToast("Failed to upload file", "error");
+            ShowToast("Failed to upload file", "error", setToast);
         } finally {
             setUploading(false);
         }
@@ -228,10 +229,10 @@ export default function FileManager() {
                     ? currentPath[currentPath.length - 1].id
                     : null
             );
-            showToast("Folder renamed successfully");
+            ShowToast("Folder renamed successfully", "success", setToast);
         } catch (error) {
             console.error("Error renaming folder:", error);
-            showToast("Failed to rename folder", "error");
+            ShowToast("Failed to rename folder", "error", setToast);
         }
     };
 
@@ -259,10 +260,10 @@ export default function FileManager() {
                     ? currentPath[currentPath.length - 1].id
                     : null
             );
-            showToast("File moved successfully");
+            ShowToast("File moved successfully", "success", setToast);
         } catch (error) {
             console.error("Error moving file:", error);
-            showToast("Failed to move file", "error");
+            ShowToast("Failed to move file", "error", setToast);
         }
     };
 
@@ -286,10 +287,10 @@ export default function FileManager() {
                     ? currentPath[currentPath.length - 1].id
                     : null
             );
-            showToast("File deleted successfully");
+            ShowToast("File deleted successfully", "success", setToast);
         } catch (error) {
             console.error("Error deleting file:", error);
-            showToast("Failed to delete file", "error");
+            ShowToast("Failed to delete file", "error", setToast);
         }
     };
 
@@ -321,10 +322,10 @@ export default function FileManager() {
                 );
             }
 
-            showToast("Folder deleted successfully");
+            ShowToast("Folder deleted successfully", "success", setToast);
         } catch (error) {
             console.error("Error deleting folder:", error);
-            showToast("Failed to delete folder", "error");
+            ShowToast("Failed to delete folder", "error", setToast);
         }
     };
 
@@ -514,315 +515,44 @@ export default function FileManager() {
                             </p>
                         </div>
                     ) : viewMode === "list" ? (
-                        <div className="overflow-hidden rounded-lg border border-gray-200">
-                            <table className="min-w-full divide-y divide-gray-200">
-                                <thead className="bg-gray-50">
-                                    <tr>
-                                        <th
-                                            scope="col"
-                                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                                        >
-                                            Name
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                                        >
-                                            Type
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                                        >
-                                            Size
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
-                                        >
-                                            Actions
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody className="bg-white divide-y divide-gray-200">
-                                    {/* Folders */}
-                                    {sortedFolders.map((folder) => (
-                                        <tr
-                                            key={`folder-${folder.id}`}
-                                            className="hover:bg-gray-50 transition-colors"
-                                        >
-                                            <td
-                                                className="px-6 py-4 whitespace-nowrap cursor-pointer"
-                                                onClick={() =>
-                                                    openFolder(folder)
-                                                }
-                                            >
-                                                <div className="flex items-center">
-                                                    <div className="flex-shrink-0 text-blue-500">
-                                                        <FaFolder size={20} />
-                                                    </div>
-                                                    <div className="ml-4">
-                                                        <span className="text-sm font-medium text-gray-900">
-                                                            {folder.folderName}
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-4 whitespace-nowrap">
-                                                <span className="text-sm text-gray-500">
-                                                    Folder
-                                                </span>
-                                            </td>
-                                            <td className="px-6 py-4 whitespace-nowrap">
-                                                <span className="text-sm text-gray-500">
-                                                    -
-                                                </span>
-                                            </td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                <div className="flex justify-end space-x-2">
-                                                    <button
-                                                        onClick={() => {
-                                                            setSelectedFolder(
-                                                                folder
-                                                            );
-                                                            setNewFolderName(
-                                                                folder.folderName
-                                                            );
-                                                            setShowRenameFolderModal(
-                                                                true
-                                                            );
-                                                        }}
-                                                        className="text-indigo-600 hover:text-indigo-900"
-                                                    >
-                                                        <FaEdit />
-                                                    </button>
-                                                    <button
-                                                        onClick={() =>
-                                                            handleDeleteFolder(
-                                                                folder
-                                                            )
-                                                        }
-                                                        className="text-red-600 hover:text-red-900"
-                                                    >
-                                                        <FaTrash />
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                    {/* Files */}
-                                    {sortedFiles.map((file) => (
-                                        <tr
-                                            key={`file-${file.id}`}
-                                            className="hover:bg-gray-50 transition-colors"
-                                        >
-                                            <td className="px-6 py-4 whitespace-nowrap">
-                                                <div className="flex items-center">
-                                                    <div className="flex-shrink-0">
-                                                        <FileIcon
-                                                            fileName={
-                                                                file.fileName
-                                                            }
-                                                        />
-                                                    </div>
-                                                    <div className="ml-4">
-                                                        <a
-                                                            href={
-                                                                file.file_Link
-                                                            }
-                                                            target="_blank"
-                                                            rel="noopener noreferrer"
-                                                            className="text-sm font-medium text-blue-600 hover:underline"
-                                                        >
-                                                            {file.fileName}
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-4 whitespace-nowrap">
-                                                <span className="text-sm text-gray-500">
-                                                    {file.fileType?.toUpperCase()}
-                                                </span>
-                                            </td>
-                                            <td className="px-6 py-4 whitespace-nowrap">
-                                                <span className="text-sm text-gray-500">
-                                                    {file.fileSize
-                                                        ? `${file.fileSize} KB`
-                                                        : "Unknown"}
-                                                </span>
-                                            </td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                <div className="flex justify-end space-x-2">
-                                                    <button
-                                                        onClick={() => {
-                                                            setSelectedFile(
-                                                                file
-                                                            );
-                                                            setMoveToFolderId(
-                                                                ""
-                                                            );
-                                                            setMoveToRoot(
-                                                                false
-                                                            );
-                                                            fetchAllFolders();
-                                                            setShowMoveFileModal(
-                                                                true
-                                                            );
-                                                        }}
-                                                        className="text-indigo-600 hover:text-indigo-900"
-                                                    >
-                                                        <FaArrowRight />
-                                                    </button>
-                                                    <button
-                                                        onClick={() =>
-                                                            handleDeleteFile(
-                                                                file
-                                                            )
-                                                        }
-                                                        className="text-red-600 hover:text-red-900"
-                                                    >
-                                                        <FaTrash />
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
+                        <List
+                            sortedFolders={sortedFolders}
+                            sortedFiles={sortedFiles}
+                            openFolder={openFolder}
+                            setSelectedFolder={setSelectedFolder}
+                            setNewFolderName={setNewFolderName}
+                            setShowRenameFolderModal={setShowRenameFolderModal}
+                            handleDeleteFolder={handleDeleteFolder}
+                            FileIcon={FileIcon}
+                            setSelectedFile={setSelectedFile}
+                            setMoveToFolderId={setMoveToFolderId}
+                            setMoveToRoot={setMoveToRoot}
+                            fetchAllFolders={fetchAllFolders}
+                            setShowMoveFileModal={setShowMoveFileModal}
+                            handleDeleteFile={handleDeleteFile}
+                        />
                     ) : (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                            {/* Folders */}
-                            {sortedFolders.map((folder) => (
-                                <div
-                                    key={`folder-${folder.id}`}
-                                    className="p-4 border rounded-lg hover:shadow-md transition-shadow group relative"
-                                >
-                                    <div
-                                        className="flex flex-col items-center cursor-pointer"
-                                        onClick={() => openFolder(folder)}
-                                    >
-                                        <div className="text-blue-500 mb-2">
-                                            <FaFolder size={40} />
-                                        </div>
-                                        <span className="text-sm font-medium text-gray-900 text-center truncate w-full">
-                                            {folder.folderName}
-                                        </span>
-                                    </div>
-                                    <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <div className="dropdown inline-block relative">
-                                            <button className="text-gray-500 hover:text-gray-700">
-                                                <FaEllipsisV />
-                                            </button>
-                                            <div className="dropdown-menu absolute hidden right-0 bg-white shadow-lg rounded-lg py-1 mt-1 w-32 z-10 group-hover:block">
-                                                <button
-                                                    onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        setSelectedFolder(
-                                                            folder
-                                                        );
-                                                        setNewFolderName(
-                                                            folder.folderName
-                                                        );
-                                                        setShowRenameFolderModal(
-                                                            true
-                                                        );
-                                                    }}
-                                                    className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                                >
-                                                    Rename
-                                                </button>
-                                                <button
-                                                    onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        handleDeleteFolder(
-                                                            folder
-                                                        );
-                                                    }}
-                                                    className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
-                                                >
-                                                    Delete
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                            {/* Files */}
-                            {sortedFiles.map((file) => (
-                                <div
-                                    key={`file-${file.id}`}
-                                    className="p-4 border rounded-lg hover:shadow-md transition-shadow group relative"
-                                >
-                                    <div className="flex flex-col items-center">
-                                        <FileIcon
-                                            fileName={file.fileName}
-                                            size={40}
-                                        />
-                                        <a
-                                            href={file.file_Link}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="mt-2 text-sm font-medium text-blue-600 hover:underline truncate w-full text-center"
-                                        >
-                                            {file.fileName}
-                                        </a>
-                                        <span className="text-xs text-gray-500 mt-1">
-                                            {file.fileSize
-                                                ? `${file.fileSize} KB`
-                                                : "Unknown"}
-                                        </span>
-                                    </div>
-                                    <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <div className="dropdown inline-block relative">
-                                            <button className="text-gray-500 hover:text-gray-700">
-                                                <FaEllipsisV />
-                                            </button>
-                                            <div className="dropdown-menu absolute hidden right-0 bg-white shadow-lg rounded-lg py-1 mt-1 w-32 z-10 group-hover:block">
-                                                <button
-                                                    onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        setSelectedFile(file);
-                                                        setMoveToFolderId("");
-                                                        setMoveToRoot(false);
-                                                        fetchAllFolders();
-                                                        setShowMoveFileModal(
-                                                            true
-                                                        );
-                                                    }}
-                                                    className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                                >
-                                                    Move
-                                                </button>
-                                                <button
-                                                    onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        handleDeleteFile(file);
-                                                    }}
-                                                    className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
-                                                >
-                                                    Delete
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
+                        <Grid
+                            sortedFolders={sortedFolders}
+                            sortedFiles={sortedFiles}
+                            openFolder={openFolder}
+                            setSelectedFolder={setSelectedFolder}
+                            setNewFolderName={setNewFolderName}
+                            setShowRenameFolderModal={setShowRenameFolderModal}
+                            handleDeleteFolder={handleDeleteFolder}
+                            FileIcon={FileIcon}
+                            setSelectedFile={setSelectedFile}
+                            setMoveToFolderId={setMoveToFolderId}
+                            setMoveToRoot={setMoveToRoot}
+                            fetchAllFolders={fetchAllFolders}
+                            setShowMoveFileModal={setShowMoveFileModal}
+                            handleDeleteFile={handleDeleteFile}
+                        />
                     )}
                 </div>
             )}
 
-            {/* Footer */}
-            <div className="bg-gray-50 px-6 py-4 border-t text-right">
-                <span className="text-xs text-gray-500">
-                    {sortedFolders.length} folder
-                    {sortedFolders.length !== 1 ? "s" : ""} and{" "}
-                    {sortedFiles.length} file
-                    {sortedFiles.length !== 1 ? "s" : ""} • Last refreshed at{" "}
-                    {new Date().toLocaleTimeString()}
-                </span>
-            </div>
+            <Footer sortedFolders={sortedFolders} sortedFiles={sortedFiles} />
             {toast.show && (
                 <div
                     className={`fixed bottom-4 right-4 px-4 py-2 rounded-lg shadow-lg ${

@@ -166,7 +166,8 @@ const GetFolder = async (req, res) => {
 const Create_folder = async (req, res) => {
     try {
         const { folderName } = req.body;
-
+        console.log(folderName);
+        
         // Validate the folderName to prevent directory traversal attacks
         if (
             !folderName ||
@@ -220,14 +221,12 @@ const Create_folder = async (req, res) => {
 const Create_File = async (req, res) => {
     try {
         const { folderId } = req.params;
-        const { fileType, fileName, uploaded_in, fileSize, file_Link } =
-            req.fields;
-        // Validate the fileName to prevent directory traversal attacks
+        const { fileType, fileName, uploaded_in, fileSize } = req.fields;
+
         if (!fileName || fileName.includes("..") || fileName.includes("/")) {
             return res.status(400).json({ message: "Invalid file name" });
         }
 
-        // Check if the file already exists in the database
         const existingFile = await File.findOne({ where: { fileName } });
         if (existingFile) {
             return res
@@ -235,7 +234,40 @@ const Create_File = async (req, res) => {
                 .json({ message: "File already exists in the Database" });
         }
 
-        // Create the file in the database
+        if (!req.files || !req.files.file) {
+            return res.status(400).json({ message: "No file uploaded" });
+        }
+
+        const uploadedFile = req.files.file; // formidable stores file details here
+        let filePath;
+        let destinationFolder;
+
+        if (folderId) {
+            const folder = await Folder.findByPk(folderId);
+            if (!folder) {
+                return res.status(404).json({ message: "Folder not found" });
+            }
+            destinationFolder = path.join(
+                __dirname,
+                "../../Files/Folders",
+                folder.folderName
+            );
+        } else {
+            destinationFolder = path.join(__dirname, "../../Files");
+        }
+
+        // Ensure the folder exists
+        if (!fs.existsSync(destinationFolder)) {
+            fs.mkdirSync(destinationFolder, { recursive: true });
+        }
+
+        filePath = path.join(destinationFolder, fileName);
+
+        // Move file from temp location to the final folder
+        fs.renameSync(uploadedFile.path, filePath); // Faster and works on shared hosting
+        const file_Link =
+            "http://localhost:3000/" + path.join("Files", fileName); // Make it a valid URL
+        // Create file record in DB
         const newFile = await File.create({
             fileType,
             fileName,
@@ -244,30 +276,6 @@ const Create_File = async (req, res) => {
             file_Link,
             FolderId: folderId || null,
         });
-        // Create the file on the server
-        if (folderId) {
-            const folder = await Folder.findByPk(folderId);
-            if (!folder) {
-                return res.status(404).json({ message: "Folder not found" });
-            }
-            const folderPath = path.join(
-                __dirname,
-                "../../Files/Folders",
-                folder.folderName
-            );
-            if (!fs.existsSync(folderPath)) {
-                fs.mkdirSync(folderPath, { recursive: true });
-            }
-            const filePath = path.join(folderPath, fileName);
-            if (!fs.existsSync(filePath)) {
-                fs.writeFileSync(filePath, req.files.file.data);
-            }
-        } else {
-            const filePath = path.join(__dirname, "../../Files", fileName);
-            if (!fs.existsSync(filePath)) {
-                fs.writeFileSync(filePath, req.files.file.data);
-            }
-        }
 
         return res.status(201).json({
             message: "File created successfully",
