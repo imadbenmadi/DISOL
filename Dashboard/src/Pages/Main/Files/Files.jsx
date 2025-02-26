@@ -23,6 +23,10 @@ import ShowToast from "../../../Components/Alerts/ShowToast";
 import Grid from "./Grid";
 import MoveFile from "./MoveFile";
 import UploadFile_popup from "./popups/UploadFile";
+import RenameFolder from "./popups/RenameFolder";
+import CreateFolder from "./popups/CreateFolder";
+import Swal from "sweetalert2";
+
 export default function FileManager() {
     const [data, setData] = useState({ folders: [], standaloneFiles: [] });
     const [loading, setLoading] = useState(true);
@@ -209,37 +213,50 @@ export default function FileManager() {
 
     // DELETE FOLDER
     const handleDeleteFolder = async (folder) => {
-        if (
-            !window.confirm(
-                `Are you sure you want to delete ${folder.folderName} and all its contents?`
-            )
-        )
-            return;
+        Swal.fire({
+            title: "Are you sure?",
+            text: `Are you sure you want to delete ${folder.folderName} and all its contents?`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!",
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    await axios.delete(
+                        `http://localhost:3000/dashboard/Folders/${folder.id}`,
+                        {
+                            withCredentials: true,
+                        }
+                    );
 
-        try {
-            await axios.delete(
-                `http://localhost:3000/dashboard/Folders/${folder.id}`,
-                {
-                    withCredentials: true,
+                    // If the folder being deleted is in the current path, go back
+                    if (
+                        currentPath.some(
+                            (pathFolder) => pathFolder.id === folder.id
+                        )
+                    ) {
+                        goBack();
+                    } else {
+                        fetchFiles(
+                            currentPath.length
+                                ? currentPath[currentPath.length - 1].id
+                                : null
+                        );
+                    }
+
+                    ShowToast(
+                        "Folder deleted successfully",
+                        "success",
+                        setToast
+                    );
+                } catch (error) {
+                    console.error("Error deleting folder:", error);
+                    ShowToast("Failed to delete folder", "error", setToast);
                 }
-            );
-
-            // If the folder being deleted is in the current path, go back
-            if (currentPath.some((pathFolder) => pathFolder.id === folder.id)) {
-                goBack();
-            } else {
-                fetchFiles(
-                    currentPath.length
-                        ? currentPath[currentPath.length - 1].id
-                        : null
-                );
             }
-
-            ShowToast("Folder deleted successfully", "success", setToast);
-        } catch (error) {
-            console.error("Error deleting folder:", error);
-            ShowToast("Failed to delete folder", "error", setToast);
-        }
+        });
     };
 
     // Filter files based on search query
@@ -428,53 +445,17 @@ export default function FileManager() {
                 </div>
             )}
             {/*Create Folder Modal */}
-            {showCreateFolderModal && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                    <div className="bg-white rounded-lg shadow-xl p-6 w-full max-w-md">
-                        <h3 className="text-lg font-medium text-gray-900 mb-4">
-                            Create New Folder
-                        </h3>
-                        <form onSubmit={handleCreateFolder}>
-                            <div className="mb-4">
-                                <label
-                                    htmlFor="folderName"
-                                    className="block text-sm font-medium text-gray-700 mb-1"
-                                >
-                                    Folder Name
-                                </label>
-                                <input
-                                    type="text"
-                                    id="folderName"
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    value={newFolderName}
-                                    onChange={(e) =>
-                                        setNewFolderName(e.target.value)
-                                    }
-                                    required
-                                />
-                            </div>
-                            <div className="flex justify-end space-x-3">
-                                <button
-                                    type="button"
-                                    onClick={() => {
-                                        setShowCreateFolderModal(false);
-                                        setNewFolderName("");
-                                    }}
-                                    className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
-                                >
-                                    Cancel
-                                </button>
-                                <button
-                                    type="submit"
-                                    className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700"
-                                >
-                                    Create
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            )}
+            <CreateFolder
+                showCreateFolderModal={showCreateFolderModal}
+                setShowCreateFolderModal={setShowCreateFolderModal}
+                newFolderName={newFolderName}
+                setNewFolderName={setNewFolderName}
+                currentPath={currentPath}
+                fetchFiles={fetchFiles}
+                ShowToast={ShowToast}
+                setToast={setToast}
+            />
+            {/* upload file popup */}
             <UploadFile_popup
                 showUploadFileModal={showUploadFileModal}
                 setShowUploadFileModal={setShowUploadFileModal}
@@ -486,54 +467,15 @@ export default function FileManager() {
                 data={data}
             />
             {/* Rename Folder Modal */}
-            {showRenameFolderModal && selectedFolder && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                    <div className="bg-white rounded-lg shadow-xl p-6 w-full max-w-md">
-                        <h3 className="text-lg font-medium text-gray-900 mb-4">
-                            Rename Folder
-                        </h3>
-                        <form onSubmit={handleRenameFolder}>
-                            <div className="mb-4">
-                                <label
-                                    htmlFor="newFolderName"
-                                    className="block text-sm font-medium text-gray-700 mb-1"
-                                >
-                                    New Folder Name
-                                </label>
-                                <input
-                                    type="text"
-                                    id="newFolderName"
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    value={newFolderName}
-                                    onChange={(e) =>
-                                        setNewFolderName(e.target.value)
-                                    }
-                                    required
-                                />
-                            </div>
-                            <div className="flex justify-end space-x-3">
-                                <button
-                                    type="button"
-                                    onClick={() => {
-                                        setShowRenameFolderModal(false);
-                                        setSelectedFolder(null);
-                                        setNewFolderName("");
-                                    }}
-                                    className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
-                                >
-                                    Cancel
-                                </button>
-                                <button
-                                    type="submit"
-                                    className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700"
-                                >
-                                    Rename
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            )}
+            <RenameFolder
+                showRenameFolderModal={showRenameFolderModal}
+                selectedFolder={selectedFolder}
+                newFolderName={newFolderName}
+                setNewFolderName={setNewFolderName}
+                setShowRenameFolderModal={setShowRenameFolderModal}
+                setSelectedFolder={setSelectedFolder}
+                handleRenameFolder={handleRenameFolder}
+            />
             {/* Move File Modal */}
             <MoveFile
                 showMoveFileModal={showMoveFileModal}

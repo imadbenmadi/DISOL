@@ -1,62 +1,34 @@
 import React from "react";
-import axios from "axios";
-function CreateFolder({
-    showCreateFolderModal,
-    setShowCreateFolderModal,
+
+function RenameFolder({
+    showRenameFolderModal,
+    selectedFolder,
     newFolderName,
     setNewFolderName,
-    currentPath,
-    fetchFiles,
-    ShowToast,
-    setToast
+    setShowRenameFolderModal,
+    setSelectedFolder,
+    handleRenameFolder, 
+    
 }) {
-    // CREATE FOLDER
-    const handleCreateFolder = async (e) => {
-        console.log("Creating folder");
-
-        e.preventDefault();
-        if (!newFolderName.trim()) return;
-
-        try {
-            await axios.post(
-                "http://localhost:3000/dashboard/Folders",
-                { folderName: newFolderName },
-                { withCredentials: true }
-            );
-            console.log(response);
-
-            setNewFolderName("");
-            setShowCreateFolderModal(false);
-            fetchFiles(
-                currentPath.length
-                    ? currentPath[currentPath.length - 1].id
-                    : null
-            );
-            ShowToast("Folder created successfully", "success", setToast);
-        } catch (error) {
-            console.error("Error creating folder:", error);
-            ShowToast("Failed to create folder", "error", setToast);
-        }
-    };
     return (
         <>
-            {showCreateFolderModal && (
+            {showRenameFolderModal && selectedFolder && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                     <div className="bg-white rounded-lg shadow-xl p-6 w-full max-w-md">
                         <h3 className="text-lg font-medium text-gray-900 mb-4">
-                            Create New Folder
+                            Rename Folder
                         </h3>
-                        <form onSubmit={handleCreateFolder}>
+                        <form onSubmit={handleRenameFolder}>
                             <div className="mb-4">
                                 <label
-                                    htmlFor="folderName"
+                                    htmlFor="newFolderName"
                                     className="block text-sm font-medium text-gray-700 mb-1"
                                 >
-                                    Folder Name
+                                    New Folder Name
                                 </label>
                                 <input
                                     type="text"
-                                    id="folderName"
+                                    id="newFolderName"
                                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     value={newFolderName}
                                     onChange={(e) =>
@@ -69,7 +41,8 @@ function CreateFolder({
                                 <button
                                     type="button"
                                     onClick={() => {
-                                        setShowCreateFolderModal(false);
+                                        setShowRenameFolderModal(false);
+                                        setSelectedFolder(null);
                                         setNewFolderName("");
                                     }}
                                     className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
@@ -80,7 +53,7 @@ function CreateFolder({
                                     type="submit"
                                     className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700"
                                 >
-                                    Create
+                                    Rename
                                 </button>
                             </div>
                         </form>
@@ -91,4 +64,4 @@ function CreateFolder({
     );
 }
 
-export default CreateFolder;
+export default RenameFolder;
