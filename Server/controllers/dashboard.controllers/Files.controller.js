@@ -242,6 +242,30 @@ const Create_File = async (req, res) => {
             file_Link,
             FolderId: folderId || null,
         });
+        // Create the file on the server
+        if (folderId) {
+            const folder = await Folder.findByPk(folderId);
+            if (!folder) {
+                return res.status(404).json({ message: "Folder not found" });
+            }
+            const folderPath = path.join(
+                __dirname,
+                "../../Files/Folders",
+                folder.folderName
+            );
+            if (!fs.existsSync(folderPath)) {
+                fs.mkdirSync(folderPath, { recursive: true });
+            }
+            const filePath = path.join(folderPath, fileName);
+            if (!fs.existsSync(filePath)) {
+                fs.writeFileSync(filePath, req.files.file.data);
+            }
+        } else {
+            const filePath = path.join(__dirname, "../../Files", fileName);
+            if (!fs.existsSync(filePath)) {
+                fs.writeFileSync(filePath, req.files.file.data);
+            }
+        }
 
         return res.status(201).json({
             message: "File created successfully",
