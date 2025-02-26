@@ -22,7 +22,6 @@ async function handleRegister(values, Navigate, { setSubmitting }) {
                 validateStatus: () => true,
             }
         );
-        console.log(response);
 
         if (response.status == 200) {
             try {

@@ -27,11 +27,9 @@ export default function FileManager() {
                     withCredentials: true,
                 }
             );
-            console.log(response.data.files);
             setFiles(response.data.files);
             setLoading(false);
         } catch (error) {
-            console.error("Error fetching files:", error);
             setLoading(false);
         }
     };

@@ -63,7 +63,6 @@ const Navbar = () => {
                                     href="#"
                                     onClick={() => {
                                         setNavbarActive("Home");
-                                        console.log(navbarActive);
                                     }}
                                     className={`font-semibold ${
                                         navbarActive === "Home"
@@ -77,7 +76,6 @@ const Navbar = () => {
                                     href="#services"
                                     onClick={() => {
                                         setNavbarActive("Our services");
-                                        console.log(navbarActive);
                                     }}
                                     className={`font-semibold ${
                                         navbarActive === "Our services"
@@ -91,7 +89,6 @@ const Navbar = () => {
                                     href="#about"
                                     onClick={() => {
                                         setNavbarActive("About us");
-                                        console.log(navbarActive);
                                     }}
                                     className={`font-semibold ${
                                         navbarActive === "About us"
@@ -105,7 +102,6 @@ const Navbar = () => {
                                     href="#contact"
                                     onClick={() => {
                                         setNavbarActive("Contact");
-                                        console.log(navbarActive);
                                     }}
                                     className={`font-semibold ${
                                         navbarActive === "Contact"

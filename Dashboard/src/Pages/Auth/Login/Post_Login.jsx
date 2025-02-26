@@ -13,10 +13,8 @@ async function handleLogin(values, Navigate, { setSubmitting }) {
             withCredentials: true,
             validateStatus: () => true,
         });
-        console.log(response);
 
         if (response.status == 200) {
-            console.log(response.data);
 
             Swal.fire("Success!", "Logged in successfully", "success");
             // window.location.href = `/`;
@@ -32,7 +30,6 @@ async function handleLogin(values, Navigate, { setSubmitting }) {
         }
     } catch (error) {
         Swal.fire("Error!", `Something Went Wrong `, "error");
-        console.log(error);
     } finally {
         setSubmitting(false);
     }
