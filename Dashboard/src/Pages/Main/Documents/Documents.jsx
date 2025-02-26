@@ -2,6 +2,13 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Googl_drive_icon from "./Googl_drive_icon";
 import FileIcon from "./FileIcon";
+import ListIcon from "../../../Components/Icons/ListIcon";
+import GridIcon from "../../../Components/Icons/GridIcon";
+import SearchIcon from "../../../Components/Icons/SearchIcon";
+import AsendingOrder from "../../../Components/Icons/AsendingOrder";
+import DescendingOrder from "../../../Components/Icons/DescendingOrder";
+import InfoIcon from "../../../Components/Icons/InfoIcon";
+import RefreshIcon from "../../../Components/Icons/RefreshIcon";
 export default function FileManager() {
     const [files, setFiles] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -69,16 +76,7 @@ export default function FileManager() {
                             onClick={fetchFiles}
                             className="bg-blue-100 text-blue-700 p-2 rounded-full hover:bg-blue-200 transition-colors"
                         >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-5 w-5"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                            >
-                                <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                            </svg>
+                            <RefreshIcon />
                         </button>
                         <button
                             onClick={() =>
@@ -88,34 +86,7 @@ export default function FileManager() {
                             }
                             className="bg-blue-100 text-blue-700 p-2 rounded-full hover:bg-blue-200 transition-colors"
                         >
-                            {viewMode === "list" ? (
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="h-5 w-5"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                >
-                                    <rect x="3" y="3" width="7" height="7" />
-                                    <rect x="14" y="3" width="7" height="7" />
-                                    <rect x="14" y="14" width="7" height="7" />
-                                    <rect x="3" y="14" width="7" height="7" />
-                                </svg>
-                            ) : (
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="h-5 w-5"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                >
-                                    <line x1="3" y1="6" x2="21" y2="6" />
-                                    <line x1="3" y1="12" x2="21" y2="12" />
-                                    <line x1="3" y1="18" x2="21" y2="18" />
-                                </svg>
-                            )}
+                            {viewMode === "list" ? <ListIcon /> : <GridIcon />}
                         </button>
                     </div>
                 </div>
@@ -125,20 +96,7 @@ export default function FileManager() {
             <div className="p-4 bg-gray-50 border-b flex flex-col sm:flex-row gap-3 justify-between">
                 <div className="relative flex-grow max-w-md">
                     <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                        <svg
-                            className="w-4 h-4 text-gray-500"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                            />
-                        </svg>
+                        <SearchIcon />
                     </div>
                     <input
                         type="search"
@@ -163,35 +121,9 @@ export default function FileManager() {
                         className="p-2 border rounded-lg hover:bg-gray-100"
                     >
                         {sortOrder === "asc" ? (
-                            <svg
-                                className="w-5 h-5 text-gray-600"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"
-                                />
-                            </svg>
+                            <AsendingOrder />
                         ) : (
-                            <svg
-                                className="w-5 h-5 text-gray-600"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4"
-                                />
-                            </svg>
+                            <DescendingOrder />
                         )}
                     </button>
                 </div>
@@ -199,20 +131,7 @@ export default function FileManager() {
 
             {/* Google Drive Link */}
             <div className="px-6 py-3 bg-yellow-50 border-b flex items-center">
-                <svg
-                    className="w-5 h-5 text-yellow-600 mr-2"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                >
-                    <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                </svg>
+                <InfoIcon />
                 <span className="text-sm text-gray-700">
                     Edit and change files from this link to{" "}
                     <a
@@ -228,27 +147,13 @@ export default function FileManager() {
 
             {/* File List */}
             {loading ? (
-                <div className="p-12 flex justify-center">
-                    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+                <div className=" w-full h-full my-6 flex flex-col items-center justify-center">
+                    <span className="loader"></span>
                 </div>
             ) : (
                 <div className="p-6">
                     {sortedFiles.length === 0 ? (
                         <div className="text-center py-8">
-                            <svg
-                                className="mx-auto h-12 w-12 text-gray-400"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"
-                                />
-                            </svg>
                             <h3 className="mt-2 text-sm font-medium text-gray-900">
                                 No files found
                             </h3>
