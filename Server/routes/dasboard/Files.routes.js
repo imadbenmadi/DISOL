@@ -5,9 +5,30 @@ const Files_Controller = require("../../controllers/dashboard.controllers/Files.
 
 router.get("/Files", authMiddleware, Files_Controller.GetFiles);
 router.get("/Files/Unused", authMiddleware, Files_Controller.Get_unused_files);
+router.get("/Folders", authMiddleware, Files_Controller.GetFolders);
+router.get("/Folders/:id", authMiddleware, Files_Controller.GetFolder);
 
 const formidableMiddleware = require("express-formidable");
 router.use(formidableMiddleware());
-// router.post("/Files", authMiddleware, Files_Controller.AddDoc);
-// router.delete("/Files/:fileId", authMiddleware, Files_Controller.DeleteDoc);
+
+router.post("/Files", authMiddleware, Files_Controller.Create_File);
+router.post("/Folders", authMiddleware, Files_Controller.Create_folder);
+
+router.delete("/Files/:fileId", authMiddleware, Files_Controller.Delete_File);
+router.delete(
+    "/Folders/:folderId",
+    authMiddleware,
+    Files_Controller.Delete_folder
+);
+router.put(
+    "/Folders/:folderId",
+    authMiddleware,
+    Files_Controller.update_folder_name
+);
+router.post(
+    "/Folders/:folderId",
+    authMiddleware,
+    Files_Controller.move_file
+);
+
 module.exports = router;

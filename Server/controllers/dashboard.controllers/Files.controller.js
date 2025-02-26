@@ -80,49 +80,382 @@ const Get_unused_files = async (req, res) => {
         return res.status(500).json({ message: "Internal Server Error" });
     }
 };
-const get_file = async (req, res) => {
-    try {
-        const { fileName } = req.params;
 
+const GetFolders = async (req, res) => {
+    try {
+        // Fetch all files from DB
+        const all_Folders = await Folder.findAll();
+
+        // Filter only Folders that exist on the server
+        const only_existing_Folders = all_Folders.filter((file) => {
+            if (
+                fs.existsSync(
+                    path.join(__dirname, "../../Files/Folders", file.fileName)
+                )
+            ) {
+                return file;
+            }
+        });
+
+        // Fetch folders with their document-type Folders
+        const folders = only_existing_Folders.map((folder) => {
+            return {
+                ...folder.dataValues,
+                // files: folder.files.filter((file) =>
+                //     fs.existsSync(
+                //         path.join(__dirname, "../../Files", file.fileName)
+                //     )
+                // ),
+                files: (folder.files || []).filter((file) =>
+                    fs.existsSync(
+                        path.join(__dirname, "../../Files", file.fileName)
+                    )
+                ),
+            };
+        });
+
+        return res.status(200).json({ folders });
+    } catch (error) {
+        console.error(error);
+        errorLogger.logDetailedError("GET_FILES_ERROR", error);
+        return res.status(500).json({ message: "Internal Server Error" });
+    }
+};
+
+const GetFolder = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        // Fetch the folder from the database
+        const folder = await Folder.findByPk(id, {
+            include: [
+                {
+                    model: File,
+                    required: false,
+                },
+            ],
+        });
+
+        // Check if the folder exists
+        if (!folder) {
+            return res.status(404).json({ message: "Folder not found" });
+        }
+
+        // Filter only files that exist on the server
+        const only_existing_files = folder.files.filter((file) => {
+            if (
+                fs.existsSync(
+                    path.join(__dirname, "../../Files", file.fileName)
+                )
+            ) {
+                return file;
+            }
+        });
+
+        return res.status(200).json({
+            folder: { ...folder.dataValues, files: only_existing_files },
+        });
+    } catch (error) {
+        console.error(error);
+        errorLogger.logDetailedError("GET_FOLDER_ERROR", error);
+        return res.status(500).json({ message: "Internal Server Error" });
+    }
+};
+const Create_folder = async (req, res) => {
+    try {
+        const { folderName } = req.body;
+
+        // Validate the folderName to prevent directory traversal attacks
+        if (
+            !folderName ||
+            folderName.includes("..") ||
+            folderName.includes("/")
+        ) {
+            return res.status(400).json({ message: "Invalid folder name" });
+        }
+
+        // Check if the folder already exists in the database
+        const existingFolder = await Folder.findOne({ where: { folderName } });
+        if (existingFolder) {
+            return res
+                .status(409)
+                .json({ message: "Folder already exists in the Database" });
+        }
+        const existingFolderPath = path.join(
+            __dirname,
+            "../../Files/Folders",
+            folderName
+        );
+        if (fs.existsSync(existingFolderPath)) {
+            return res
+                .status(409)
+                .json({ message: "Folder already exists in the server" });
+        }
+
+        // Create the folder in the database
+        const newFolder = await Folder.create({ folderName });
+
+        // Create the folder on the server
+        const folderPath = path.join(
+            __dirname,
+            "../../Files/Folders",
+            folderName
+        );
+        if (!fs.existsSync(folderPath)) {
+            fs.mkdirSync(folderPath, { recursive: true });
+        }
+
+        return res.status(201).json({
+            message: "Folder created successfully",
+            folder: newFolder,
+        });
+    } catch (error) {
+        console.error(error);
+        errorLogger.logDetailedError("CREATE_FOLDER_ERROR", error);
+        return res.status(500).json({ message: "Internal Server Error" });
+    }
+};
+const Create_File = async (req, res) => {
+    try {
+        const { folderId } = req.params;
+        const { fileType, fileName, uploaded_in, fileSize, file_Link } =
+            req.fields;
         // Validate the fileName to prevent directory traversal attacks
-        if (fileName.includes("..") || fileName.includes("/")) {
+        if (!fileName || fileName.includes("..") || fileName.includes("/")) {
             return res.status(400).json({ message: "Invalid file name" });
         }
 
-        // Construct the file path
-        const filePath = path.join(__dirname, "Files", fileName); // Adjust the path as needed
+        // Check if the file already exists in the database
+        const existingFile = await File.findOne({ where: { fileName } });
+        if (existingFile) {
+            return res
+                .status(409)
+                .json({ message: "File already exists in the Database" });
+        }
+
+        // Create the file in the database
+        const newFile = await File.create({
+            fileType,
+            fileName,
+            uploaded_in,
+            fileSize,
+            file_Link,
+            FolderId: folderId || null,
+        });
+
+        return res.status(201).json({
+            message: "File created successfully",
+            file: newFile,
+        });
+    } catch (error) {
+        console.error(error);
+        errorLogger.logDetailedError("CREATE_FILE_ERROR", error);
+        return res.status(500).json({ message: "Internal Server Error" });
+    }
+};
+
+const Delete_folder = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        // Fetch the folder from the database
+        const folder = await Folder.findByPk(id, {
+            include: [
+                {
+                    model: File,
+                    required: false,
+                },
+            ],
+        });
+
+        // Check if the folder exists
+        if (!folder) {
+            return res.status(404).json({ message: "Folder not found" });
+        }
+
+        // Delete the files in the folder from the server
+        folder.files.forEach((file) => {
+            const filePath = path.join(__dirname, "../../Files", file.fileName);
+            if (fs.existsSync(filePath)) {
+                fs.unlinkSync(filePath);
+            }
+        });
+        // Delete the folder from the server
+        const folderPath = path.join(
+            __dirname,
+            "../../Files/Folders",
+            folder.folderName
+        );
+        if (fs.existsSync(folderPath)) {
+            fs.rmdirSync(folderPath, { recursive: true });
+        }
+        // Delete the files in the folder from the database
+        await File.destroy({
+            where: {
+                FolderId: folder.id,
+            },
+        });
+        // Delete the folder from the database
+        await folder.destroy();
+        return res.status(200).json({ message: "Folder deleted successfully" });
+    } catch (error) {
+        console.error(error);
+        errorLogger.logDetailedError("DELETE_FOLDER_ERROR", error);
+        return res.status(500).json({ message: "Internal Server Error" });
+    }
+};
+const Delete_File = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        // Fetch the file from the database
+        const file = await File.findByPk(id);
 
         // Check if the file exists
-        if (!fs.existsSync(filePath)) {
+        if (!file) {
             return res.status(404).json({ message: "File not found" });
         }
 
-        // Get the file's MIME type dynamically
-        const mimeType =
-            {
-                ".pdf": "application/pdf",
-                ".png": "image/png",
-                ".jpg": "image/jpeg",
-                ".jpeg": "image/jpeg",
-                ".txt": "text/plain",
-            }[path.extname(fileName).toLowerCase()] ||
-            "application/octet-stream";
-
-        // Set the appropriate headers
-        res.setHeader("Content-Type", mimeType);
-        res.setHeader("Content-Disposition", `inline; filename="${fileName}"`); // Use "inline" to display in the browser
-
-        // Stream the file to the client
-        const fileStream = fs.createReadStream(filePath);
-        fileStream.pipe(res);
-
-        // Handle stream errors
-        fileStream.on("error", (err) => {
-            errorLogger.logDetailedError("STREAM_FILE_ERROR", err);
-            res.status(500).json({ message: "Error streaming file" });
-        });
+        // Delete the file from the server
+        const filePath = path.join(__dirname, "../../Files", file.fileName);
+        if (fs.existsSync(filePath)) {
+            fs.unlinkSync(filePath);
+        }
+        // Delete the file from the database
+        await file.destroy();
+        return res.status(200).json({ message: "File deleted successfully" });
     } catch (error) {
-        errorLogger.logDetailedError("GET_FILE_ERROR", error);
+        console.error(error);
+        errorLogger.logDetailedError("DELETE_FILE_ERROR", error);
+        return res.status(500).json({ message: "Internal Server Error" });
+    }
+};
+const update_folder_name = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { folderName } = req.body;
+
+        // Validate the folderName to prevent directory traversal attacks
+        if (
+            !folderName ||
+            folderName.includes("..") ||
+            folderName.includes("/")
+        ) {
+            return res.status(400).json({ message: "Invalid folder name" });
+        }
+
+        // Fetch the folder from the database
+        const folder = await Folder.findByPk(id);
+
+        // Check if the folder exists
+        if (!folder) {
+            return res.status(404).json({ message: "Folder not found" });
+        }
+
+        // Check if the folder name is already taken
+        const existingFolder = await Folder.findOne({
+            where: {
+                folderName,
+                id: {
+                    [Op.ne]: id,
+                },
+            },
+        });
+        if (existingFolder) {
+            return res
+                .status(409)
+                .json({ message: "Folder name already exists" });
+        }
+
+        // Rename the folder on the server
+        const oldFolderPath = path.join(
+            __dirname,
+            "../../Files/Folders",
+            folder.folderName
+        );
+        const newFolderPath = path.join(
+            __dirname,
+            "../../Files/Folders",
+            folderName
+        );
+        if (fs.existsSync(oldFolderPath)) {
+            fs.renameSync(oldFolderPath, newFolderPath);
+        }
+
+        // Update the folder in the database
+        folder.folderName = folderName;
+        await folder.save();
+
+        return res.status(200).json({ message: "Folder updated successfully" });
+    } catch (error) {
+        console.error(error);
+        errorLogger.logDetailedError("UPDATE_FOLDER_ERROR", error);
+        return res.status(500).json({ message: "Internal Server Error" });
+    }
+};
+const move_file = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { folderId, toRoot } = req.body;
+
+        // Fetch the file from the database
+        const file = await File.findByPk(id);
+
+        // Check if the file exists
+        if (!file) {
+            return res.status(404).json({ message: "File not found" });
+        }
+        if (toRoot) {
+            file.FolderId = null;
+            // Move the file to the root in the server
+            const oldFilePath = path.join(
+                __dirname,
+                "../../Files",
+                file.fileName
+            );
+            const newFilePath = path.join(
+                __dirname,
+                "../../Files",
+                file.fileName
+            );
+            if (fs.existsSync(oldFilePath)) {
+                fs.renameSync(oldFilePath, newFilePath);
+            }
+            await file.save();
+
+            return res.status(200).json({ message: "File moved successfully" });
+        } else {
+            // Check if the folder exists
+            const folder = await Folder.findByPk(folderId);
+            if (!folder) {
+                return res.status(404).json({ message: "Folder not found" });
+            }
+
+            // Move the file to the folder
+            file.FolderId = folderId;
+            // Move the file to the folder in the server
+            const oldFilePath = path.join(
+                __dirname,
+                "../../Files",
+                file.fileName
+            );
+            const newFilePath = path.join(
+                __dirname,
+                "../../Files/Folders",
+                folder.folderName,
+                file.fileName
+            );
+            if (fs.existsSync(oldFilePath)) {
+                fs.renameSync(oldFilePath, newFilePath);
+            }
+
+            await file.save();
+        }
+
+        return res.status(200).json({ message: "File moved successfully" });
+    } catch (error) {
+        console.error(error);
+        errorLogger.logDetailedError("MOVE_FILE_ERROR", error);
         return res.status(500).json({ message: "Internal Server Error" });
     }
 };
@@ -130,4 +463,12 @@ module.exports = {
     GetFiles,
     get_file,
     Get_unused_files,
+    GetFolders,
+    GetFolder,
+    Create_folder,
+    Create_File,
+    Delete_folder,
+    Delete_File,
+    update_folder_name,
+    move_file,
 };

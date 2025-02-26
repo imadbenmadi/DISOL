@@ -1,0 +1,46 @@
+const get_file = async (req, res) => {
+    try {
+        const { fileName } = req.params;
+
+        // Validate the fileName to prevent directory traversal attacks
+        if (fileName.includes("..") || fileName.includes("/")) {
+            return res.status(400).json({ message: "Invalid file name" });
+        }
+
+        // Construct the file path
+        const filePath = path.join(__dirname, "Files", fileName); // Adjust the path as needed
+
+        // Check if the file exists
+        if (!fs.existsSync(filePath)) {
+            return res.status(404).json({ message: "File not found" });
+        }
+
+        // Get the file's MIME type dynamically
+        const mimeType =
+            {
+                ".pdf": "application/pdf",
+                ".png": "image/png",
+                ".jpg": "image/jpeg",
+                ".jpeg": "image/jpeg",
+                ".txt": "text/plain",
+            }[path.extname(fileName).toLowerCase()] ||
+            "application/octet-stream";
+
+        // Set the appropriate headers
+        res.setHeader("Content-Type", mimeType);
+        res.setHeader("Content-Disposition", `inline; filename="${fileName}"`); // Use "inline" to display in the browser
+
+        // Stream the file to the client
+        const fileStream = fs.createReadStream(filePath);
+        fileStream.pipe(res);
+
+        // Handle stream errors
+        fileStream.on("error", (err) => {
+            errorLogger.logDetailedError("STREAM_FILE_ERROR", err);
+            res.status(500).json({ message: "Error streaming file" });
+        });
+    } catch (error) {
+        errorLogger.logDetailedError("GET_FILE_ERROR", error);
+        return res.status(500).json({ message: "Internal Server Error" });
+    }
+};

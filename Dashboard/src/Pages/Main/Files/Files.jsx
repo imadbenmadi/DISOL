@@ -24,7 +24,7 @@ export default function FileManager() {
         setLoading(true);
         try {
             const endpoint = folderId
-                ? `http://localhost:3000/dashboard/Files/${folderId}`
+                ? `http://localhost:3000/dashboard/Folders/${folderId}`
                 : "http://localhost:3000/dashboard/Files";
 
             const response = await axios.get(endpoint, {
