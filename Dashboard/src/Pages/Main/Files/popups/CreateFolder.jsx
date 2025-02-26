@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+
 function CreateFolder({
     showCreateFolderModal,
     setShowCreateFolderModal,
@@ -8,17 +9,17 @@ function CreateFolder({
     currentPath,
     fetchFiles,
     ShowToast,
-    setToast
+    setToast,
 }) {
     // CREATE FOLDER
     const handleCreateFolder = async (e) => {
-        console.log("Creating folder");
 
         e.preventDefault();
         if (!newFolderName.trim()) return;
+        console.log("Creating folder");
 
         try {
-            await axios.post(
+            const response = await axios.post(
                 "http://localhost:3000/dashboard/Folders",
                 { folderName: newFolderName },
                 { withCredentials: true }
@@ -38,6 +39,7 @@ function CreateFolder({
             ShowToast("Failed to create folder", "error", setToast);
         }
     };
+
     return (
         <>
             {showCreateFolderModal && (

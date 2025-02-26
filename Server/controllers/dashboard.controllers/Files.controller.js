@@ -159,6 +159,7 @@ const GetFolder = async (req, res) => {
 };
 
 const Create_folder = async (req, res) => {
+    console.log("test");
     try {
         const { folderName } = req.fields; // ✅ Fix: Use `req.fields` instead of `req.body`
 
