@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Googl_drive_icon from "./Googl_drive_icon";
-import FileIcon from "./FileIcon";
+import FileIcon from "../../../Components/Icons/FileIcon";
 import ListIcon from "../../../Components/Icons/ListIcon";
 import GridIcon from "../../../Components/Icons/GridIcon";
 import SearchIcon from "../../../Components/Icons/SearchIcon";
