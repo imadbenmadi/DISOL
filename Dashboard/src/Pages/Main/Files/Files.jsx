@@ -22,6 +22,7 @@ import RefreshIcon from "../../../Components/Icons/RefreshIcon";
 import ShowToast from "../../../Components/Alerts/ShowToast";
 import Grid from "./Grid";
 import MoveFile from "./MoveFile";
+import UploadFile_popup from "./popups/UploadFile";
 export default function FileManager() {
     const [data, setData] = useState({ folders: [], standaloneFiles: [] });
     const [loading, setLoading] = useState(true);
@@ -42,11 +43,6 @@ export default function FileManager() {
     const [allFolders, setAllFolders] = useState([]);
     const [moveToFolderId, setMoveToFolderId] = useState("");
     const [moveToRoot, setMoveToRoot] = useState(false);
-
-    // File upload refs and state
-    const fileInputRef = useRef(null);
-    const [uploadFile, setUploadFile] = useState(null);
-    const [uploading, setUploading] = useState(false);
 
     // Toast notifications
     const [toast, setToast] = useState({ show: false, message: "", type: "" });
@@ -142,62 +138,6 @@ export default function FileManager() {
         } catch (error) {
             console.error("Error creating folder:", error);
             ShowToast("Failed to create folder", "error", setToast);
-        }
-    };
-
-    // UPLOAD FILE
-    const handleFileChange = (e) => {
-        if (e.target.files[0]) {
-            setUploadFile(e.target.files[0]);
-        }
-    };
-
-    const handleFileUpload = async (e) => {
-        e.preventDefault();
-        if (!uploadFile) return;
-
-        setUploading(true);
-
-        const formData = new FormData();
-        formData.append("file", uploadFile);
-        formData.append("fileType", uploadFile.type);
-        formData.append("fileName", uploadFile.name);
-        formData.append("uploaded_in", "local");
-        formData.append("fileSize", Math.round(uploadFile.size / 1024)); // Convert to KB
-
-        try {
-            const endpoint = currentPath.length
-                ? `http://localhost:3000/dashboard/Files/${
-                      currentPath[currentPath.length - 1].id
-                  }`
-                : "http://localhost:3000/dashboard/Files";
-
-            const response = await axios.post(endpoint, formData, {
-                withCredentials: true,
-                validateStatus: (status) => status < 500,
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
-            });
-            console.log(response.data);
-
-            if (response.status === 200 || response.status === 201) {
-                setUploadFile(null);
-                setShowUploadFileModal(false);
-                fetchFiles(
-                    currentPath.length
-                        ? currentPath[currentPath.length - 1].id
-                        : null
-                );
-                ShowToast("File uploaded successfully", "success", setToast);
-            } else {
-                ShowToast("Failed to upload file", "error", setToast);
-            }
-        } catch (error) {
-            console.error("Error uploading file:", error);
-            ShowToast("Failed to upload file", "error", setToast);
-        } finally {
-            setUploading(false);
         }
     };
 
@@ -369,7 +309,6 @@ export default function FileManager() {
                 viewMode={viewMode}
                 setViewMode={setViewMode}
             />
-
             {/* Navigation Bar */}
             <div className="px-6 py-3 bg-gray-50 border-b flex items-center">
                 <div className="flex items-center space-x-2">
@@ -390,7 +329,6 @@ export default function FileManager() {
                     </span>
                 </div>
             </div>
-
             {/* Search and Controls */}
             <div className="p-4 bg-gray-50 border-b flex flex-col sm:flex-row gap-3 justify-between">
                 <div className="relative flex-grow max-w-md">
@@ -427,7 +365,6 @@ export default function FileManager() {
                     </button>
                 </div>
             </div>
-
             {/* Action Bar */}
             <div className="px-6 py-3 bg-yellow-50 border-b flex items-center justify-between">
                 <div className="flex items-center">
@@ -454,7 +391,6 @@ export default function FileManager() {
                     </button>
                 </div>
             </div>
-
             {/* File and Folder List */}
             {loading ? (
                 <div className="w-full my-6 flex flex-col items-center justify-center py-12">
@@ -510,7 +446,6 @@ export default function FileManager() {
                     )}
                 </div>
             )}
-
             <Footer sortedFolders={sortedFolders} sortedFiles={sortedFiles} />
             {toast.show && (
                 <div
@@ -521,9 +456,7 @@ export default function FileManager() {
                     {toast.message}
                 </div>
             )}
-
             {/*Create Folder Modal */}
-
             {showCreateFolderModal && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                     <div className="bg-white rounded-lg shadow-xl p-6 w-full max-w-md">
@@ -571,67 +504,16 @@ export default function FileManager() {
                     </div>
                 </div>
             )}
-
-            {/* Upload File Modal */}
-            {showUploadFileModal && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                    <div className="bg-white rounded-lg shadow-xl p-6 w-full max-w-md">
-                        <h3 className="text-lg font-medium text-gray-900 mb-4">
-                            Upload File
-                        </h3>
-                        <form onSubmit={handleFileUpload}>
-                            <div className="mb-4">
-                                <label className="block text-sm font-medium text-gray-700 mb-1">
-                                    Select File
-                                </label>
-                                <input
-                                    type="file"
-                                    ref={fileInputRef}
-                                    onChange={handleFileChange}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    required
-                                />
-                            </div>
-                            {uploadFile && (
-                                <div className="mb-4 p-3 bg-gray-50 rounded-md">
-                                    <p className="text-sm text-gray-700">
-                                        <strong>File:</strong> {uploadFile.name}
-                                    </p>
-                                    <p className="text-sm text-gray-700">
-                                        <strong>Size:</strong>{" "}
-                                        {Math.round(uploadFile.size / 1024)} KB
-                                    </p>
-                                    <p className="text-sm text-gray-700">
-                                        <strong>Type:</strong>{" "}
-                                        {uploadFile.type || "Unknown"}
-                                    </p>
-                                </div>
-                            )}
-                            <div className="flex justify-end space-x-3">
-                                <button
-                                    type="button"
-                                    onClick={() => {
-                                        setShowUploadFileModal(false);
-                                        setUploadFile(null);
-                                    }}
-                                    className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
-                                    disabled={uploading}
-                                >
-                                    Cancel
-                                </button>
-                                <button
-                                    type="submit"
-                                    className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 disabled:bg-blue-400"
-                                    disabled={uploading || !uploadFile}
-                                >
-                                    {uploading ? "Uploading..." : "Upload"}
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            )}
-
+            <UploadFile_popup
+                showUploadFileModal={showUploadFileModal}
+                setShowUploadFileModal={setShowUploadFileModal}
+                currentPath={currentPath}
+                fetchFiles={fetchFiles}
+                ShowToast={ShowToast}
+                setToast={setToast}
+                selectedFolder={selectedFolder}
+                data={data}
+            />
             {/* Rename Folder Modal */}
             {showRenameFolderModal && selectedFolder && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -681,7 +563,6 @@ export default function FileManager() {
                     </div>
                 </div>
             )}
-
             {/* Move File Modal */}
             <MoveFile
                 showMoveFileModal={showMoveFileModal}

@@ -1,0 +1,325 @@
+%-------------------------
+% Resume in Latex
+% Author : Jake Gutierrez
+% Based off of: https://github.com/sb2nov/resume
+% License : MIT
+%------------------------
+
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\input{glyphtounicode}
+
+
+%----------FONT OPTIONS----------
+% sans-serif
+% \usepackage[sfdefault]{FiraSans}
+% \usepackage[sfdefault]{roboto}
+% \usepackage[sfdefault]{noto-sans}
+% \usepackage[default]{sourcesanspro}
+
+% serif
+% \usepackage{CormorantGaramond}
+% \usepackage{charter}
+
+
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.5in}
+\addtolength{\textheight}{1.0in}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Sections formatting
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+% Ensure that generate pdf is machine readable/ATS parsable
+\pdfgentounicode=1
+
+%-------------------------
+% Custom commands
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubSubheading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textit{\small#1} & \textit{\small #2} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & #2 \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-4pt}}
+
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+%-------------------------------------------
+%%%%%%  RESUME STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+%----------HEADING----------
+% \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r}
+%   \textbf{\href{http://sourabhbajaj.com/}{\Large Sourabh Bajaj}} & Email : \href{mailto:sourabh@sourabhbajaj.com}{sourabh@sourabhbajaj.com}\\
+%   \href{http://sourabhbajaj.com/}{http://www.sourabhbajaj.com} & Mobile : +1-123-456-7890 \\
+% \end{tabular*}
+
+\begin{center}
+    \textbf{\Huge \scshape Imed Benmadi} \\ \vspace{1pt}
+    \small +36703130769 $|$ \href{mailto:benmadi.imed@gmail.com}{\underline{benmadi.imed@gmail.com}} $|$ 
+    \href{https://linkedin.com/in/https://www.linkedin.com/in/imed-eddine-b-4b5a72236/}{\fbox{LinkedIn}} $|$
+    \href{https://github.com/imadbenmadi}{\fbox{github}}
+\end{center}
+
+
+%-----------EDUCATION-----------
+\section{Education}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {Eotvos Lorand University}{Budapest, Hungary}
+      {Master Degree in Data science}{Sep. 2024 -- Current}
+    \resumeSubheading
+      {Kasdi Merbah University}{Ouargla, Algeria}
+      {Bachelor's in Computer science}{Sep. 2021 -- Juin 2024}
+  \resumeSubHeadingListEnd
+
+
+
+%-----------PROJECTS-----------
+\section{Projects}
+    \resumeSubHeadingListStart
+      \resumeProjectHeading
+          {\textbf{\href{https://github.com/imadbenmadi/Medical-Insurance-Price-Prediction}{\underline{Medical Insurance Price Prediction model}}
+} $|$ \emph{Python, Sql, Data Visualization , ML }}{June 2020 -- Present}
+
+
+          \resumeItemListStart
+            \resumeItem{Exploratory Data Analysis (EDA) – Cleaning, transformations, and understanding trends}
+            \resumeItem{Feature Engineering – Handling categorical and numerical features}
+            \resumeItem{Model Training and Validation – From basic regression to polynomial regression with cross-validation}
+            \resumeItem{Hyperparameter Tuning – Finding the best degree and regularization (Ridge Regression)} \resumeItem{Visualizing Performance – Score plots, distribution plots, and comparisons of different models}
+          \resumeItemListEnd
+
+
+
+
+\resumeProjectHeading
+{\textbf{\href{https://flexedu-dz.com/}{\underline{Flexedu Platform}}} 
+$|$ \emph{React, Tailwind, NodeJs/ExpressJs, JWT, Mysql} 
+\hfill {\textbf{\href{https://github.com/imadbenmadi/FlexEdu}{\textbf{\underline{GitHub}}}}}}  
+{Sep 2024 -- Oct 2024}
+
+
+          \resumeItemListStart
+            \resumeItem{Course Management - Users can enroll in courses, access payed content, track progress}
+            \resumeItem{Admin Dashboard - Manage courses, users, and analytics through a user-friendly dashboard.}
+            \resumeItem{Authentication and Authorization - Secure login system using JWT, role-based access for users and admins}
+            
+          \resumeItemListEnd
+
+          
+
+
+
+
+
+
+
+
+\resumeProjectHeading
+{\textbf{\href{https://Dzidcom.com/}{\underline{Dzidcom Platform}}} 
+$|$ \emph{React, Tailwind, NodeJs/ExpressJs, JWT, Mysql} 
+\hfill {\textbf{\href{https://github.com/imadbenmadi/Dzidcom}{\textbf{\underline{GitHub}}}}}}  
+{Apr 2024 - Jun 2024}
+          \resumeItemListStart
+            \resumeItem{Freelancer-Client Connection – A platform that seamlessly connects clients with freelancers for various projects.}
+            \resumeItem{End-to-End Project Management – Supports secure communication, project tracking, and real-time notifications to streamline collaboration.}
+            \resumeItem{Secure and Scalable – Ensures safe transactions, user authentication, and efficient data management for a smooth experience.}
+            
+          \resumeItemListEnd
+
+
+
+
+
+
+
+ 
+\resumeProjectHeading
+{\textbf{\href{https://Skate.dz/}{\underline{
+Skate Platform}}} 
+$|$ \emph{React, Tailwind, NodeJs/ExpressJs, JWT, MongoDb} 
+\hfill }  
+{Jan 2024 - Jun 2024}
+          \resumeItemListStart
+            \resumeItem{ Full-Stack Platform for Skate Consult – Developed a secure, user-friendly website with React, Tailwind CSS, Node.js, and MongoDB, ensuring scalability and smooth user experience.}
+            \resumeItem{Comprehensive Features – Implemented JWT authentication, multi-language support (Arabic and English), and a dashboard for efficient content and user management.}
+            
+            
+          \resumeItemListEnd
+
+
+
+
+%
+%-----------PROGRAMMING SKILLS-----------
+\section{Technical Skills}
+\begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+     \textbf{Languages}{: Java, Python, SQL (MySQL, PostgreSQL), JavaScript, TypeScript} \\
+     \textbf{Frameworks and Libraries}{: React.js, Next.js, Node.js, Express.js, Flask, Spring Boot} \\
+     \textbf{Databases}{: MySQL, PostgreSQL, MongoDB, Firebase} \\
+     \textbf{Developer Tools}{: Git, Docker, cPanel, Vercel,  GitHub Actions, Google Cloud Platform, Aws Services} \\
+     \textbf{Data Science and Machine Learning}{: pandas, NumPy, Matplotlib, scikit-learn, TensorFlow} \\
+     \textbf{Other}{: WebSockets, JWT Authentication, REST APIs, GraphQL, Redis, CI/CD, Cloud Deployment}
+    }}
+\end{itemize}
+% %-----------Certificates-----------
+
+\section*{Certificates}
+
+\begin{itemize}
+    \item \textbf{Data Analysis with Python}  
+    \textit{IBM - Issued Feb 2025}  
+    \fbox{\href{https://www.coursera.org/account/accomplishments/verify/0JC0FART4TO5}{View Credential}}
+
+
+
+
+    \item \textbf{
+Databases and SQL for Data Science with Python}  
+    \textit{IBM - Issued Feb 2025}  
+    \fbox{\href{https://www.coursera.org/account/accomplishments/verify/HM5X0JKEKNCR}{View Credential}}
+
+
+
+
+
+
+
+
+
+    \item \textbf{
+Python for Data Science, AI & Development}  
+    \textit{IBM - Issued Jan 2025}  
+    \fbox{\href{https://www.coursera.org/account/accomplishments/verify/02WJEP5DHRN6}{View Credential}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+    \item \textbf{
+The Complete Data Science Bootcamp}  
+    \textit{365 Careers - Issued May 2024}  
+    \fbox{\href{https://www.udemy.com/certificate/UC-75251017-e20d-4507-961d-0008cfe7d399/}{View Credential}}
+
+
+ \item \textbf{
+Internship Completion Certificate}  
+    \textit{\href{https://www.enageo.com/}{ENAGEO} - Issued May 2024}  
+\end{itemize}
+
+
+% %-----------EXPERIENCE-----------
+% \section{Experience}
+%   \resumeSubHeadingListStart
+
+%     \resumeSubheading
+%       {Undergraduate Research Assistant}{June 2020 -- Present}
+%       {Texas A\&M University}{College Station, TX}
+%       \resumeItemListStart
+%         \resumeItem{Developed a REST API using FastAPI and PostgreSQL to store data from learning management systems}
+%         \resumeItem{Developed a full-stack web application using Flask, React, PostgreSQL and Docker to analyze GitHub data}
+%         \resumeItem{Explored ways to visualize GitHub collaboration in a classroom setting}
+%       \resumeItemListEnd
+      
+% % -----------Multiple Positions Heading-----------
+% %    \resumeSubSubheading
+% %     {Software Engineer I}{Oct 2014 - Sep 2016}
+% %     \resumeItemListStart
+% %        \resumeItem{Apache Beam}
+% %          {Apache Beam is a unified model for defining both batch and streaming data-parallel processing pipelines}
+% %     \resumeItemListEnd
+% %    \resumeSubHeadingListEnd
+% %-------------------------------------------
+
+%     \resumeSubheading
+%       {Information Technology Support Specialist}{Sep. 2018 -- Present}
+%       {Southwestern University}{Georgetown, TX}
+%       \resumeItemListStart
+%         \resumeItem{Communicate with managers to set up campus computers used on campus}
+%         \resumeItem{Assess and troubleshoot computer problems brought by students, faculty and staff}
+%         \resumeItem{Maintain upkeep of computers, classroom equipment, and 200 printers across campus}
+%     \resumeItemListEnd
+
+%     \resumeSubheading
+%       {Artificial Intelligence Research Assistant}{May 2019 -- July 2019}
+%       {Southwestern University}{Georgetown, TX}
+%       \resumeItemListStart
+%         \resumeItem{Explored methods to generate video game dungeons based off of \emph{The Legend of Zelda}}
+%         \resumeItem{Developed a game in Java to test the generated dungeons}
+%         \resumeItem{Contributed 50K+ lines of code to an established codebase via Git}
+%         \resumeItem{Conducted  a human subject study to determine which video game dungeon generation technique is enjoyable}
+%         \resumeItem{Wrote an 8-page paper and gave multiple presentations on-campus}
+%         \resumeItem{Presented virtually to the World Conference on Computational Intelligence}
+%       \resumeItemListEnd
+
+%   \resumeSubHeadingListEnd
+
+%-------------------------------------------
+\end{document}
