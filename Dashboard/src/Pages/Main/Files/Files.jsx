@@ -1,31 +1,17 @@
 import { useEffect, useState, useRef } from "react";
-import axios from "axios";
-import {
-    FaFolder,
-    FaEdit,
-    FaTrash,
-    FaEllipsisV,
-    FaPlus,
-    FaArrowRight,
-} from "react-icons/fa";
 import Header from "./Header";
 import Footer from "./Footer";
 import List from "./List";
 import FileIcon from "../../../Components/Icons/FileIcon";
-import ListIcon from "../../../Components/Icons/ListIcon";
-import GridIcon from "../../../Components/Icons/GridIcon";
-import SearchIcon from "../../../Components/Icons/SearchIcon";
-import AsendingOrder from "../../../Components/Icons/AsendingOrder";
-import DescendingOrder from "../../../Components/Icons/DescendingOrder";
+
 import InfoIcon from "../../../Components/Icons/InfoIcon";
-import RefreshIcon from "../../../Components/Icons/RefreshIcon";
 import ShowToast from "../../../Components/Alerts/ShowToast";
 import Grid from "./Grid";
 import MoveFile from "./MoveFile";
 import UploadFile_popup from "./popups/UploadFile";
 import RenameFolder from "./popups/RenameFolder";
 import CreateFolder from "./popups/CreateFolder";
-import Swal from "sweetalert2";
+import SearchControl from "./SearchControl";
 import Nav from "./Nav";
 import {
     fetchFiles,
@@ -202,41 +188,14 @@ export default function FileManager() {
             {/* Navigation Bar */}
             <Nav currentPath={currentPath} goBack={goBack} />
             {/* Search and Controls */}
-            <div className="p-4 bg-gray-50 border-b flex flex-col sm:flex-row gap-3 justify-between">
-                <div className="relative flex-grow max-w-md">
-                    <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                        <SearchIcon />
-                    </div>
-                    <input
-                        type="search"
-                        className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        placeholder="Search files and folders..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                    />
-                </div>
-                <div className="flex items-center space-x-2">
-                    <select
-                        className="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        value={sortBy}
-                        onChange={(e) => setSortBy(e.target.value)}
-                    >
-                        <option value="name">Sort by Name</option>
-                    </select>
-                    <button
-                        onClick={() =>
-                            setSortOrder(sortOrder === "asc" ? "desc" : "asc")
-                        }
-                        className="p-2 border rounded-lg hover:bg-gray-100"
-                    >
-                        {sortOrder === "asc" ? (
-                            <AsendingOrder />
-                        ) : (
-                            <DescendingOrder />
-                        )}
-                    </button>
-                </div>
-            </div>
+            <SearchControl
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+                sortBy={sortBy}
+                setSortBy={setSortBy}
+                sortOrder={sortOrder}
+                setSortOrder={setSortOrder}
+            />
             {/* Action Bar */}
             <div className="px-6 py-3 bg-yellow-50 border-b flex items-center justify-between">
                 <div className="flex items-center">
