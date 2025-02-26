@@ -163,12 +163,11 @@ const GetFolder = async (req, res) => {
         return res.status(500).json({ message: "Internal Server Error" });
     }
 };
+
 const Create_folder = async (req, res) => {
     try {
-        const { folderName } = req.body;
-        console.log(folderName);
-        
-        // Validate the folderName to prevent directory traversal attacks
+        const { folderName } = req.fields; // ✅ Fix: Use `req.fields` instead of `req.body`
+
         if (
             !folderName ||
             folderName.includes("..") ||
@@ -177,44 +176,27 @@ const Create_folder = async (req, res) => {
             return res.status(400).json({ message: "Invalid folder name" });
         }
 
-        // Check if the folder already exists in the database
-        const existingFolder = await Folder.findOne({ where: { folderName } });
-        if (existingFolder) {
-            return res
-                .status(409)
-                .json({ message: "Folder already exists in the Database" });
-        }
-        const existingFolderPath = path.join(
-            __dirname,
-            "../../Files/Folders",
-            folderName
-        );
-        if (fs.existsSync(existingFolderPath)) {
-            return res
-                .status(409)
-                .json({ message: "Folder already exists in the server" });
+        const folderPath = path.join(__dirname, "../../Files", folderName);
+
+        if (
+            fs.existsSync(folderPath) ||
+            folderName === "Folders" ||
+            folderName === "Files" ||
+            Folder.findOne({ where: { folderName } })
+        ) {
+            return res.status(409).json({ message: "Folder already exists" });
         }
 
-        // Create the folder in the database
+        fs.mkdirSync(folderPath, { recursive: true });
+
         const newFolder = await Folder.create({ folderName });
-
-        // Create the folder on the server
-        const folderPath = path.join(
-            __dirname,
-            "../../Files/Folders",
-            folderName
-        );
-        if (!fs.existsSync(folderPath)) {
-            fs.mkdirSync(folderPath, { recursive: true });
-        }
 
         return res.status(201).json({
             message: "Folder created successfully",
             folder: newFolder,
         });
     } catch (error) {
-        console.error(error);
-        errorLogger.logDetailedError("CREATE_FOLDER_ERROR", error);
+        console.error("CREATE_FOLDER_ERROR:", error);
         return res.status(500).json({ message: "Internal Server Error" });
     }
 };

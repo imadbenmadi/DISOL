@@ -8,6 +8,7 @@ import {
     FaPlus,
     FaArrowRight,
 } from "react-icons/fa";
+import Header from "./Header";
 import Footer from "./Footer";
 import List from "./List";
 import FileIcon from "../../../Components/Icons/FileIcon";
@@ -20,6 +21,7 @@ import InfoIcon from "../../../Components/Icons/InfoIcon";
 import RefreshIcon from "../../../Components/Icons/RefreshIcon";
 import ShowToast from "../../../Components/Alerts/ShowToast";
 import Grid from "./Grid";
+import MoveFile from "./MoveFile";
 export default function FileManager() {
     const [data, setData] = useState({ folders: [], standaloneFiles: [] });
     const [loading, setLoading] = useState(true);
@@ -361,55 +363,12 @@ export default function FileManager() {
     return (
         <div className="bg-white rounded-xl shadow-md overflow-hidden max-w-4xl mx-auto">
             {/* Header Section */}
-            <div className="bg-blue-50 p-6 border-b">
-                <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                        <div className="text-blue-700">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-8 w-8"
-                                viewBox="0 0 24 24"
-                                fill="currentColor"
-                            >
-                                <path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z" />
-                                <path d="M12 9h4v4h-4zm-6 0h4v4H6zm6 6h4v4h-4zm-6 0h4v4H6z" />
-                            </svg>
-                        </div>
-                        <div>
-                            <h2 className="text-xl font-bold text-gray-800">
-                                File Manager
-                            </h2>
-                            <p className="text-sm text-gray-600">
-                                Server Files
-                            </p>
-                        </div>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                        <button
-                            onClick={() =>
-                                fetchFiles(
-                                    currentPath.length
-                                        ? currentPath[currentPath.length - 1].id
-                                        : null
-                                )
-                            }
-                            className="bg-blue-100 text-blue-700 p-2 rounded-full hover:bg-blue-200 transition-colors"
-                        >
-                            <RefreshIcon />
-                        </button>
-                        <button
-                            onClick={() =>
-                                setViewMode(
-                                    viewMode === "list" ? "grid" : "list"
-                                )
-                            }
-                            className="bg-blue-100 text-blue-700 p-2 rounded-full hover:bg-blue-200 transition-colors"
-                        >
-                            {viewMode === "list" ? <GridIcon /> : <ListIcon />}
-                        </button>
-                    </div>
-                </div>
-            </div>
+            <Header
+                fetchFiles={fetchFiles}
+                currentPath={currentPath}
+                viewMode={viewMode}
+                setViewMode={setViewMode}
+            />
 
             {/* Navigation Bar */}
             <div className="px-6 py-3 bg-gray-50 border-b flex items-center">
@@ -724,96 +683,18 @@ export default function FileManager() {
             )}
 
             {/* Move File Modal */}
-            {showMoveFileModal && selectedFile && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                    <div className="bg-white rounded-lg shadow-xl p-6 w-full max-w-md">
-                        <h3 className="text-lg font-medium text-gray-900 mb-4">
-                            Move File
-                        </h3>
-                        <form onSubmit={handleMoveFile}>
-                            <div className="mb-4">
-                                <p className="text-sm text-gray-700 mb-2">
-                                    Moving:{" "}
-                                    <strong>{selectedFile.fileName}</strong>
-                                </p>
-                                <div className="mb-3">
-                                    <label className="inline-flex items-center">
-                                        <input
-                                            type="checkbox"
-                                            className="form-checkbox h-4 w-4 text-blue-600"
-                                            checked={moveToRoot}
-                                            onChange={(e) => {
-                                                setMoveToRoot(e.target.checked);
-                                                if (e.target.checked) {
-                                                    setMoveToFolderId("");
-                                                }
-                                            }}
-                                        />
-                                        <span className="ml-2 text-sm text-gray-700">
-                                            Move to root folder
-                                        </span>
-                                    </label>
-                                </div>
-                                {!moveToRoot && (
-                                    <div>
-                                        <label
-                                            htmlFor="targetFolder"
-                                            className="block text-sm font-medium text-gray-700 mb-1"
-                                        >
-                                            Select Destination Folder
-                                        </label>
-                                        <select
-                                            id="targetFolder"
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                            value={moveToFolderId}
-                                            onChange={(e) =>
-                                                setMoveToFolderId(
-                                                    e.target.value
-                                                )
-                                            }
-                                            required={!moveToRoot}
-                                            disabled={moveToRoot}
-                                        >
-                                            <option value="">
-                                                Select a folder
-                                            </option>
-                                            {allFolders.map((folder) => (
-                                                <option
-                                                    key={folder.id}
-                                                    value={folder.id}
-                                                >
-                                                    {folder.folderName}
-                                                </option>
-                                            ))}
-                                        </select>
-                                    </div>
-                                )}
-                            </div>
-                            <div className="flex justify-end space-x-3">
-                                <button
-                                    type="button"
-                                    onClick={() => {
-                                        setShowMoveFileModal(false);
-                                        setSelectedFile(null);
-                                        setMoveToFolderId("");
-                                        setMoveToRoot(false);
-                                    }}
-                                    className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
-                                >
-                                    Cancel
-                                </button>
-                                <button
-                                    type="submit"
-                                    className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700"
-                                    disabled={!moveToRoot && !moveToFolderId}
-                                >
-                                    Move
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            )}
+            <MoveFile
+                showMoveFileModal={showMoveFileModal}
+                setShowMoveFileModal={setShowMoveFileModal}
+                selectedFile={selectedFile}
+                setSelectedFile={setSelectedFile}
+                allFolders={allFolders}
+                handleMoveFile={handleMoveFile}
+                setMoveToFolderId={setMoveToFolderId}
+                setMoveToRoot={setMoveToRoot}
+                moveToFolderId={moveToFolderId}
+                moveToRoot={moveToRoot}
+            />
         </div>
     );
 }
