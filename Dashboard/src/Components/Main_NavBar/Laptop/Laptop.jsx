@@ -33,8 +33,6 @@ function Laptop() {
     const [Active_nav, setActive_nav] = useState();
     const location = useLocation();
     useEffect(() => {
-        console.log(location.pathname.split("/").slice(1));
-
         setActive_nav(location.pathname.split("/").slice(1));
     }, [location.pathname]);
 

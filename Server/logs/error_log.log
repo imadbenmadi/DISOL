@@ -1,0 +1,68 @@
+[2025-02-26T11:03:46.293Z] [ERROR] [GET_FILES_ERROR] The "path" argument must be of type string. Received undefined
+Stack Trace: TypeError [ERR_INVALID_ARG_TYPE]: The "path" argument must be of type string. Received undefined
+    at Object.join (node:path:461:7)
+    at C:\Users\imadb\OneDrive\Bureau\DISOL_Website\server\controllers\dashboard.controllers\Files.controller.js:138:26
+    at Array.filter (<anonymous>)
+    at GetFolders (C:\Users\imadb\OneDrive\Bureau\DISOL_Website\server\controllers\dashboard.controllers\Files.controller.js:135:51)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[2025-02-26T11:03:46.326Z] [ERROR] [GET_FILES_ERROR] The "path" argument must be of type string. Received undefined
+Stack Trace: TypeError [ERR_INVALID_ARG_TYPE]: The "path" argument must be of type string. Received undefined
+    at Object.join (node:path:461:7)
+    at C:\Users\imadb\OneDrive\Bureau\DISOL_Website\server\controllers\dashboard.controllers\Files.controller.js:138:26
+    at Array.filter (<anonymous>)
+    at GetFolders (C:\Users\imadb\OneDrive\Bureau\DISOL_Website\server\controllers\dashboard.controllers\Files.controller.js:135:51)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[2025-02-26T11:03:49.624Z] [ERROR] [GET_FILES_ERROR] The "path" argument must be of type string. Received undefined
+Stack Trace: TypeError [ERR_INVALID_ARG_TYPE]: The "path" argument must be of type string. Received undefined
+    at Object.join (node:path:461:7)
+    at C:\Users\imadb\OneDrive\Bureau\DISOL_Website\server\controllers\dashboard.controllers\Files.controller.js:138:26
+    at Array.filter (<anonymous>)
+    at GetFolders (C:\Users\imadb\OneDrive\Bureau\DISOL_Website\server\controllers\dashboard.controllers\Files.controller.js:135:51)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[2025-02-26T11:03:49.646Z] [ERROR] [GET_FILES_ERROR] The "path" argument must be of type string. Received undefined
+Stack Trace: TypeError [ERR_INVALID_ARG_TYPE]: The "path" argument must be of type string. Received undefined
+    at Object.join (node:path:461:7)
+    at C:\Users\imadb\OneDrive\Bureau\DISOL_Website\server\controllers\dashboard.controllers\Files.controller.js:138:26
+    at Array.filter (<anonymous>)
+    at GetFolders (C:\Users\imadb\OneDrive\Bureau\DISOL_Website\server\controllers\dashboard.controllers\Files.controller.js:135:51)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[2025-02-26T11:03:51.376Z] [ERROR] [GET_FOLDER_ERROR] Cannot read properties of undefined (reading 'filter')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'filter')
+    at GetFolder (C:\Users\imadb\OneDrive\Bureau\DISOL_Website\server\controllers\dashboard.controllers\Files.controller.js:185:50)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[2025-02-26T11:03:54.376Z] [ERROR] [GET_FOLDER_ERROR] Cannot read properties of undefined (reading 'filter')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'filter')
+    at GetFolder (C:\Users\imadb\OneDrive\Bureau\DISOL_Website\server\controllers\dashboard.controllers\Files.controller.js:185:50)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[2025-02-26T11:05:16.424Z] [ERROR] [GET_FILES_ERROR] The "path" argument must be of type string. Received undefined
+Stack Trace: TypeError [ERR_INVALID_ARG_TYPE]: The "path" argument must be of type string. Received undefined
+    at Object.join (node:path:461:7)
+    at C:\Users\imadb\OneDrive\Bureau\DISOL_Website\server\controllers\dashboard.controllers\Files.controller.js:138:26
+    at Array.filter (<anonymous>)
+    at GetFolders (C:\Users\imadb\OneDrive\Bureau\DISOL_Website\server\controllers\dashboard.controllers\Files.controller.js:135:51)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[2025-02-26T11:05:16.442Z] [ERROR] [GET_FILES_ERROR] The "path" argument must be of type string. Received undefined
+Stack Trace: TypeError [ERR_INVALID_ARG_TYPE]: The "path" argument must be of type string. Received undefined
+    at Object.join (node:path:461:7)
+    at C:\Users\imadb\OneDrive\Bureau\DISOL_Website\server\controllers\dashboard.controllers\Files.controller.js:138:26
+    at Array.filter (<anonymous>)
+    at GetFolders (C:\Users\imadb\OneDrive\Bureau\DISOL_Website\server\controllers\dashboard.controllers\Files.controller.js:135:51)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[2025-02-26T11:21:26.840Z] [ERROR] [GET_FILES_ERROR] The "path" argument must be of type string. Received undefined
+Stack Trace: TypeError [ERR_INVALID_ARG_TYPE]: The "path" argument must be of type string. Received undefined
+    at Object.join (node:path:461:7)
+    at C:\Users\imadb\OneDrive\Bureau\DISOL_Website\server\controllers\dashboard.controllers\Files.controller.js:93:26
+    at Array.filter (<anonymous>)
+    at GetFolders (C:\Users\imadb\OneDrive\Bureau\DISOL_Website\server\controllers\dashboard.controllers\Files.controller.js:90:51)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[2025-02-26T11:21:26.868Z] [ERROR] [GET_FILES_ERROR] The "path" argument must be of type string. Received undefined
+Stack Trace: TypeError [ERR_INVALID_ARG_TYPE]: The "path" argument must be of type string. Received undefined
+    at Object.join (node:path:461:7)
+    at C:\Users\imadb\OneDrive\Bureau\DISOL_Website\server\controllers\dashboard.controllers\Files.controller.js:93:26
+    at Array.filter (<anonymous>)
+    at GetFolders (C:\Users\imadb\OneDrive\Bureau\DISOL_Website\server\controllers\dashboard.controllers\Files.controller.js:90:51)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[2025-02-26T11:24:25.324Z] [ERROR] [GET_FOLDER_ERROR] Cannot read properties of undefined (reading 'filter')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'filter')
+    at GetFolder (C:\Users\imadb\OneDrive\Bureau\DISOL_Website\server\controllers\dashboard.controllers\Files.controller.js:146:50)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)

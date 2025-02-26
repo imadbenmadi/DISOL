@@ -4,4 +4,4 @@ config
 google_auth.json
 Service_google.json
 Google_Services
-logs/*
+token_cleanup.log

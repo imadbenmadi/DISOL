@@ -89,6 +89,7 @@ const GetFolders = async (req, res) => {
         // Filter only Folders that exist on the server
         const only_existing_Folders = all_Folders.filter((file) => {
             if (
+                file.fileName &&
                 fs.existsSync(
                     path.join(__dirname, "../../Files/Folders", file.fileName)
                 )
@@ -142,7 +143,8 @@ const GetFolder = async (req, res) => {
         }
 
         // Filter only files that exist on the server
-        const only_existing_files = folder.files.filter((file) => {
+
+        const only_existing_files = (folder.files || []).filter((file) => {
             if (
                 fs.existsSync(
                     path.join(__dirname, "../../Files", file.fileName)
@@ -485,7 +487,6 @@ const move_file = async (req, res) => {
 };
 module.exports = {
     GetFiles,
-    get_file,
     Get_unused_files,
     GetFolders,
     GetFolder,
