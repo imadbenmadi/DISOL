@@ -15,15 +15,24 @@ const fetchFiles = async (
         const response = await axios.get(endpoint, {
             withCredentials: true,
         });
-        console.log(response.data);
+        console.log("API Response:", response.data);
 
-        if (folderId) {
+        if (folderId && response.data.folder) {
+            // Check both possible file property names (Files and files)
+            const folderFiles =
+                response.data.folder.Files || response.data.folder.files || [];
+            const subfolders = response.data.folder.subfolder || [];
+
             setData({
-                folders: response.data.folder.subfolder || [],
-                standaloneFiles: response.data.folder.files || [],
+                folders: subfolders,
+                standaloneFiles: folderFiles,
             });
         } else {
-            setData(response.data);
+            // Handle the root folder response
+            setData({
+                folders: response.data.folders || [],
+                standaloneFiles: response.data.standaloneFiles || [],
+            });
         }
     } catch (error) {
         console.error("Error fetching files:", error);
