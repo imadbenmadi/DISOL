@@ -17,6 +17,6 @@ router.post("/Folders", authMiddleware, Files_Controller.Create_folder);
 router.delete("/Files/:id", authMiddleware, Files_Controller.Delete_File);
 router.delete("/Folders/:id", authMiddleware, Files_Controller.Delete_folder);
 router.put("/Folders/:id", authMiddleware, Files_Controller.update_folder_name);
-router.post("/Files/:id", authMiddleware, Files_Controller.move_file);
+router.post("/Files/:id/move", authMiddleware, Files_Controller.move_file);
 
 module.exports = router;

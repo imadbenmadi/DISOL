@@ -27,8 +27,7 @@ function UploadFile({
     };
 
     const handleFileUpload = async (e) => {
-        e.preventDefault();
-        if (!uploadFile) return;
+        e.preventDefault();        if (!uploadFile) return;
 
         setUploading(true);
 
@@ -41,7 +40,11 @@ function UploadFile({
         formData.append("folderId", folder_selected_to_upload_in || null);
 
         try {
-            const endpoint = "http://localhost:3000/dashboard/Files";
+            const endpoint = currentPath.length
+                ? `http://localhost:3000/dashboard/Files/${
+                      folder_selected_to_upload_in || null
+                  }`
+                : "http://localhost:3000/dashboard/Files";
 
             const response = await axios.post(endpoint, formData, {
                 withCredentials: true,

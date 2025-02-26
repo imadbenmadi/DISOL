@@ -112,35 +112,6 @@ export default function FileManager() {
         }
     };
 
-    // CREATE FOLDER
-    const handleCreateFolder = async (e) => {
-        console.log("Creating folder");
-
-        e.preventDefault();
-        if (!newFolderName.trim()) return;
-
-        try {
-            await axios.post(
-                "http://localhost:3000/dashboard/Folders",
-                { folderName: newFolderName },
-                { withCredentials: true }
-            );
-            console.log(response);
-
-            setNewFolderName("");
-            setShowCreateFolderModal(false);
-            fetchFiles(
-                currentPath.length
-                    ? currentPath[currentPath.length - 1].id
-                    : null
-            );
-            ShowToast("Folder created successfully", "success", setToast);
-        } catch (error) {
-            console.error("Error creating folder:", error);
-            ShowToast("Failed to create folder", "error", setToast);
-        }
-    };
-
     // RENAME FOLDER
     const handleRenameFolder = async (e) => {
         e.preventDefault();

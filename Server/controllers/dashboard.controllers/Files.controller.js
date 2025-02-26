@@ -91,7 +91,7 @@ const GetFolders = async (req, res) => {
             if (
                 file.fileName &&
                 fs.existsSync(
-                    path.join(__dirname, "../../Files/Folders", file.fileName)
+                    path.join(__dirname, "../../Files", file.fileName)
                 )
             ) {
                 return file;
@@ -145,13 +145,7 @@ const GetFolder = async (req, res) => {
         // Filter only files that exist on the server
 
         const only_existing_files = (folder.files || []).filter((file) => {
-            if (
-                fs.existsSync(
-                    path.join(__dirname, "../../Files", file.fileName)
-                )
-            ) {
-                return file;
-            }
+            fs.existsSync(path.join(__dirname, file.file_Link));
         });
 
         return res.status(200).json({
@@ -202,8 +196,8 @@ const Create_folder = async (req, res) => {
 };
 const Create_File = async (req, res) => {
     try {
-        const { folderId } = req.params;
-        const { fileType, fileName, uploaded_in, fileSize } = req.fields;
+        const { fileType, fileName, uploaded_in, fileSize, folderId } =
+            req.fields;
 
         if (!fileName || fileName.includes("..") || fileName.includes("/")) {
             return res.status(400).json({ message: "Invalid file name" });
@@ -226,29 +220,31 @@ const Create_File = async (req, res) => {
 
         if (folderId) {
             const folder = await Folder.findByPk(folderId);
-            if (!folder) {
-                return res.status(404).json({ message: "Folder not found" });
+            if (
+                !folder ||
+                !fs.existsSync(
+                    path.join(__dirname, "../../Files", folder.folderName)
+                )
+            ) {
+                destinationFolder = path.join(__dirname, "../../Files");
+                filePath = path.join(destinationFolder, fileName);
+            } else {
+                destinationFolder = path.join(
+                    __dirname,
+                    "../../Files",
+                    folder.folderName
+                );
+                filePath = path.join(destinationFolder, fileName);
             }
-            destinationFolder = path.join(
-                __dirname,
-                "../../Files/Folders",
-                folder.folderName
-            );
         } else {
             destinationFolder = path.join(__dirname, "../../Files");
+            filePath = path.join(destinationFolder, fileName);
         }
-
-        // Ensure the folder exists
-        if (!fs.existsSync(destinationFolder)) {
-            fs.mkdirSync(destinationFolder, { recursive: true });
-        }
-
-        filePath = path.join(destinationFolder, fileName);
 
         // Move file from temp location to the final folder
         fs.renameSync(uploadedFile.path, filePath); // Faster and works on shared hosting
         const file_Link =
-            "http://localhost:3000/" + path.join("Files", fileName); // Make it a valid URL
+            "http://localhost:3000/" + path.join(destinationFolder); // Make it a valid URL
         // Create file record in DB
         const newFile = await File.create({
             fileType,
@@ -299,7 +295,7 @@ const Delete_folder = async (req, res) => {
         // Delete the folder from the server
         const folderPath = path.join(
             __dirname,
-            "../../Files/Folders",
+            "../../Files",
             folder.folderName
         );
         if (fs.existsSync(folderPath)) {
@@ -386,14 +382,10 @@ const update_folder_name = async (req, res) => {
         // Rename the folder on the server
         const oldFolderPath = path.join(
             __dirname,
-            "../../Files/Folders",
+            "../../Files",
             folder.folderName
         );
-        const newFolderPath = path.join(
-            __dirname,
-            "../../Files/Folders",
-            folderName
-        );
+        const newFolderPath = path.join(__dirname, "../../Files", folderName);
         if (fs.existsSync(oldFolderPath)) {
             fs.renameSync(oldFolderPath, newFolderPath);
         }
@@ -457,7 +449,7 @@ const move_file = async (req, res) => {
             );
             const newFilePath = path.join(
                 __dirname,
-                "../../Files/Folders",
+                "../../Files",
                 folder.folderName,
                 file.fileName
             );
