@@ -4,6 +4,11 @@ import Footer from "./Footer";
 import List from "./List";
 import FileIcon from "../../../Components/Icons/FileIcon";
 
+import Sub_Nav from "../../../Components/Sub_Nav/Sub_Nav";
+import NavItem from "../../../Components/Sub_Nav/NavItem";
+import DropdownItem from "../../../Components/Sub_Nav/DropdownItem";
+import { Home, Settings, User, LogOut, Bell, Search } from "lucide-react";
+
 import InfoIcon from "../../../Components/Icons/InfoIcon";
 import ShowToast from "../../../Components/Alerts/ShowToast";
 import Grid from "./Grid";
@@ -177,161 +182,224 @@ export default function FileManager() {
     };
 
     return (
-        <div className="bg-white rounded-xl shadow-md overflow-hidden max-w-4xl mx-auto">
-            {/* Header Section */}
-            <Header
-                fetchFiles={(folderId) => fetchFiles(folderId, apiParams)}
-                currentPath={currentPath}
-                viewMode={viewMode}
-                setViewMode={setViewMode}
-            />
-            {/* Navigation Bar */}
-            <Nav currentPath={currentPath} goBack={goBack} />
-            {/* Search and Controls */}
-            <SearchControl
-                searchQuery={searchQuery}
-                setSearchQuery={setSearchQuery}
-                sortBy={sortBy}
-                setSortBy={setSortBy}
-                sortOrder={sortOrder}
-                setSortOrder={setSortOrder}
-            />
-            {/* Action Bar */}
-            <div className="px-6 py-3 bg-yellow-50 border-b flex items-center justify-between">
-                <div className="flex items-center">
-                    <InfoIcon />
-                    <span className="text-sm text-gray-700 ml-2">
-                        {sortedFolders.length} folder
-                        {sortedFolders.length !== 1 ? "s" : ""} and{" "}
-                        {sortedFiles.length} file
-                        {sortedFiles.length !== 1 ? "s" : ""}
-                    </span>
+        <div className="bg-white rounded-xl shadow-md overflow-hidden w-full">
+            <Sub_Nav>
+                <NavItem label="Home" href="/" />
+                <NavItem label="Products" href="/products" />
+
+                <NavItem label="Services">
+                    <DropdownItem
+                        label="Consulting"
+                        href="/services/consulting"
+                    />
+                    <DropdownItem
+                        label="Development"
+                        href="/services/development"
+                    />
+                    <DropdownItem label="Design" href="/services/design" />
+                </NavItem>
+
+                <NavItem label="Resources">
+                    <DropdownItem
+                        label="Documentation"
+                        href="/resources/docs"
+                        icon={<Search className="h-4 w-4" />}
+                    />
+                    <DropdownItem
+                        label="Tutorials"
+                        href="/resources/tutorials"
+                        icon={<Bell className="h-4 w-4" />}
+                    />
+                </NavItem>
+
+                <NavItem label="Account">
+                    <DropdownItem
+                        label="Profile"
+                        href="/account/profile"
+                        icon={<User className="h-4 w-4" />}
+                    />
+                    <DropdownItem
+                        label="Settings"
+                        href="/account/settings"
+                        icon={<Settings className="h-4 w-4" />}
+                    />
+                    <DropdownItem
+                        label="Logout"
+                        onClick={() => console.log("Logged out")}
+                        icon={<LogOut className="h-4 w-4" />}
+                    />
+                </NavItem>
+            </Sub_Nav>
+            <div className=" max-w-4xl mx-auto ">
+                {/* Header Section */}
+                <Header
+                    fetchFiles={(folderId) => fetchFiles(folderId, apiParams)}
+                    currentPath={currentPath}
+                    viewMode={viewMode}
+                    setViewMode={setViewMode}
+                />
+                {/* Navigation Bar */}
+                <Nav currentPath={currentPath} goBack={goBack} />
+                {/* Search and Controls */}
+                <SearchControl
+                    searchQuery={searchQuery}
+                    setSearchQuery={setSearchQuery}
+                    sortBy={sortBy}
+                    setSortBy={setSortBy}
+                    sortOrder={sortOrder}
+                    setSortOrder={setSortOrder}
+                />
+                {/* Action Bar */}
+                <div className="px-6 py-3 bg-yellow-50 border-b flex items-center justify-between">
+                    <div className="flex items-center">
+                        <InfoIcon />
+                        <span className="text-sm text-gray-700 ml-2">
+                            {sortedFolders.length} folder
+                            {sortedFolders.length !== 1 ? "s" : ""} and{" "}
+                            {sortedFiles.length} file
+                            {sortedFiles.length !== 1 ? "s" : ""}
+                        </span>
+                    </div>
+                    <div className="flex space-x-3">
+                        <button
+                            onClick={() => setShowCreateFolderModal(true)}
+                            className="text-blue-600 font-medium hover:underline text-sm"
+                        >
+                            + New folder
+                        </button>
+                        <button
+                            onClick={() => setShowUploadFileModal(true)}
+                            className="text-blue-600 font-medium hover:underline text-sm"
+                        >
+                            + Upload file
+                        </button>
+                    </div>
                 </div>
-                <div className="flex space-x-3">
-                    <button
-                        onClick={() => setShowCreateFolderModal(true)}
-                        className="text-blue-600 font-medium hover:underline text-sm"
+                {/* File and Folder List */}
+                {loading ? (
+                    <div className="w-full my-6 flex flex-col items-center justify-center py-12">
+                        <span className="loader"></span>
+                    </div>
+                ) : (
+                    <div className="p-6">
+                        {sortedFolders.length === 0 &&
+                        sortedFiles.length === 0 ? (
+                            <div className="text-center py-8">
+                                <h3 className="mt-2 text-sm font-medium text-gray-900">
+                                    No files or folders found
+                                </h3>
+                                <p className="mt-1 text-sm text-gray-500">
+                                    {searchQuery
+                                        ? "Try a different search term"
+                                        : "Add files or folders to see them here"}
+                                </p>
+                            </div>
+                        ) : viewMode === "list" ? (
+                            <List
+                                sortedFolders={sortedFolders}
+                                sortedFiles={sortedFiles}
+                                openFolder={openFolder}
+                                setSelectedFolder={setSelectedFolder}
+                                setNewFolderName={setNewFolderName}
+                                setShowRenameFolderModal={
+                                    setShowRenameFolderModal
+                                }
+                                handleDeleteFolder={handleDeleteFolderAction}
+                                FileIcon={FileIcon}
+                                setSelectedFile={setSelectedFile}
+                                setMoveToFolderId={setMoveToFolderId}
+                                setMoveToRoot={setMoveToRoot}
+                                fetchAllFolders={() =>
+                                    fetchAllFolders(apiParams)
+                                }
+                                setShowMoveFileModal={setShowMoveFileModal}
+                                handleDeleteFile={handleDeleteFileAction}
+                            />
+                        ) : (
+                            <Grid
+                                sortedFolders={sortedFolders}
+                                sortedFiles={sortedFiles}
+                                openFolder={openFolder}
+                                setSelectedFolder={setSelectedFolder}
+                                setNewFolderName={setNewFolderName}
+                                setShowRenameFolderModal={
+                                    setShowRenameFolderModal
+                                }
+                                handleDeleteFolder={handleDeleteFolderAction}
+                                FileIcon={FileIcon}
+                                setSelectedFile={setSelectedFile}
+                                setMoveToFolderId={setMoveToFolderId}
+                                setMoveToRoot={setMoveToRoot}
+                                fetchAllFolders={() =>
+                                    fetchAllFolders(apiParams)
+                                }
+                                setShowMoveFileModal={setShowMoveFileModal}
+                                handleDeleteFile={handleDeleteFileAction}
+                            />
+                        )}
+                    </div>
+                )}
+                <Footer
+                    sortedFolders={sortedFolders}
+                    sortedFiles={sortedFiles}
+                />
+                {toast.show && (
+                    <div
+                        className={`fixed bottom-4 right-4 px-4 py-2 rounded-lg shadow-lg ${
+                            toast.type === "error"
+                                ? "bg-red-500"
+                                : "bg-green-500"
+                        } text-white`}
                     >
-                        + New folder
-                    </button>
-                    <button
-                        onClick={() => setShowUploadFileModal(true)}
-                        className="text-blue-600 font-medium hover:underline text-sm"
-                    >
-                        + Upload file
-                    </button>
-                </div>
+                        {toast.message}
+                    </div>
+                )}
+                {/*Create Folder Modal */}
+                <CreateFolder
+                    showCreateFolderModal={showCreateFolderModal}
+                    setShowCreateFolderModal={setShowCreateFolderModal}
+                    newFolderName={newFolderName}
+                    setNewFolderName={setNewFolderName}
+                    currentPath={currentPath}
+                    fetchFiles={(folderId) => fetchFiles(folderId, apiParams)}
+                    ShowToast={ShowToast}
+                    setToast={setToast}
+                />
+                {/* upload file popup */}
+                <UploadFile_popup
+                    showUploadFileModal={showUploadFileModal}
+                    setShowUploadFileModal={setShowUploadFileModal}
+                    currentPath={currentPath}
+                    fetchFiles={(folderId) => fetchFiles(folderId, apiParams)}
+                    ShowToast={ShowToast}
+                    setToast={setToast}
+                    selectedFolder={selectedFolder}
+                    data={data}
+                />
+                {/* Rename Folder Modal */}
+                <RenameFolder
+                    showRenameFolderModal={showRenameFolderModal}
+                    selectedFolder={selectedFolder}
+                    newFolderName={newFolderName}
+                    setNewFolderName={setNewFolderName}
+                    setShowRenameFolderModal={setShowRenameFolderModal}
+                    setSelectedFolder={setSelectedFolder}
+                    handleRenameFolder={handleRenameAction}
+                />
+                {/* Move File Modal */}
+                <MoveFile
+                    showMoveFileModal={showMoveFileModal}
+                    setShowMoveFileModal={setShowMoveFileModal}
+                    selectedFile={selectedFile}
+                    setSelectedFile={setSelectedFile}
+                    allFolders={allFolders}
+                    handleMoveFile={handleMoveAction}
+                    setMoveToFolderId={setMoveToFolderId}
+                    setMoveToRoot={setMoveToRoot}
+                    moveToFolderId={moveToFolderId}
+                    moveToRoot={moveToRoot}
+                />
             </div>
-            {/* File and Folder List */}
-            {loading ? (
-                <div className="w-full my-6 flex flex-col items-center justify-center py-12">
-                    <span className="loader"></span>
-                </div>
-            ) : (
-                <div className="p-6">
-                    {sortedFolders.length === 0 && sortedFiles.length === 0 ? (
-                        <div className="text-center py-8">
-                            <h3 className="mt-2 text-sm font-medium text-gray-900">
-                                No files or folders found
-                            </h3>
-                            <p className="mt-1 text-sm text-gray-500">
-                                {searchQuery
-                                    ? "Try a different search term"
-                                    : "Add files or folders to see them here"}
-                            </p>
-                        </div>
-                    ) : viewMode === "list" ? (
-                        <List
-                            sortedFolders={sortedFolders}
-                            sortedFiles={sortedFiles}
-                            openFolder={openFolder}
-                            setSelectedFolder={setSelectedFolder}
-                            setNewFolderName={setNewFolderName}
-                            setShowRenameFolderModal={setShowRenameFolderModal}
-                            handleDeleteFolder={handleDeleteFolderAction}
-                            FileIcon={FileIcon}
-                            setSelectedFile={setSelectedFile}
-                            setMoveToFolderId={setMoveToFolderId}
-                            setMoveToRoot={setMoveToRoot}
-                            fetchAllFolders={() => fetchAllFolders(apiParams)}
-                            setShowMoveFileModal={setShowMoveFileModal}
-                            handleDeleteFile={handleDeleteFileAction}
-                        />
-                    ) : (
-                        <Grid
-                            sortedFolders={sortedFolders}
-                            sortedFiles={sortedFiles}
-                            openFolder={openFolder}
-                            setSelectedFolder={setSelectedFolder}
-                            setNewFolderName={setNewFolderName}
-                            setShowRenameFolderModal={setShowRenameFolderModal}
-                            handleDeleteFolder={handleDeleteFolderAction}
-                            FileIcon={FileIcon}
-                            setSelectedFile={setSelectedFile}
-                            setMoveToFolderId={setMoveToFolderId}
-                            setMoveToRoot={setMoveToRoot}
-                            fetchAllFolders={() => fetchAllFolders(apiParams)}
-                            setShowMoveFileModal={setShowMoveFileModal}
-                            handleDeleteFile={handleDeleteFileAction}
-                        />
-                    )}
-                </div>
-            )}
-            <Footer sortedFolders={sortedFolders} sortedFiles={sortedFiles} />
-            {toast.show && (
-                <div
-                    className={`fixed bottom-4 right-4 px-4 py-2 rounded-lg shadow-lg ${
-                        toast.type === "error" ? "bg-red-500" : "bg-green-500"
-                    } text-white`}
-                >
-                    {toast.message}
-                </div>
-            )}
-            {/*Create Folder Modal */}
-            <CreateFolder
-                showCreateFolderModal={showCreateFolderModal}
-                setShowCreateFolderModal={setShowCreateFolderModal}
-                newFolderName={newFolderName}
-                setNewFolderName={setNewFolderName}
-                currentPath={currentPath}
-                fetchFiles={(folderId) => fetchFiles(folderId, apiParams)}
-                ShowToast={ShowToast}
-                setToast={setToast}
-            />
-            {/* upload file popup */}
-            <UploadFile_popup
-                showUploadFileModal={showUploadFileModal}
-                setShowUploadFileModal={setShowUploadFileModal}
-                currentPath={currentPath}
-                fetchFiles={(folderId) => fetchFiles(folderId, apiParams)}
-                ShowToast={ShowToast}
-                setToast={setToast}
-                selectedFolder={selectedFolder}
-                data={data}
-            />
-            {/* Rename Folder Modal */}
-            <RenameFolder
-                showRenameFolderModal={showRenameFolderModal}
-                selectedFolder={selectedFolder}
-                newFolderName={newFolderName}
-                setNewFolderName={setNewFolderName}
-                setShowRenameFolderModal={setShowRenameFolderModal}
-                setSelectedFolder={setSelectedFolder}
-                handleRenameFolder={handleRenameAction}
-            />
-            {/* Move File Modal */}
-            <MoveFile
-                showMoveFileModal={showMoveFileModal}
-                setShowMoveFileModal={setShowMoveFileModal}
-                selectedFile={selectedFile}
-                setSelectedFile={setSelectedFile}
-                allFolders={allFolders}
-                handleMoveFile={handleMoveAction}
-                setMoveToFolderId={setMoveToFolderId}
-                setMoveToRoot={setMoveToRoot}
-                moveToFolderId={moveToFolderId}
-                moveToRoot={moveToRoot}
-            />
         </div>
     );
 }
