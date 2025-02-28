@@ -184,10 +184,7 @@ export default function FileManager() {
     return (
         <div className="bg-white rounded-xl shadow-md overflow-hidden w-full">
             <Sub_Nav>
-                <NavItem label="Home" href="/" />
-                <NavItem label="Products" href="/products" />
-
-                <NavItem label="Services">
+                <NavItem label="File Manager" href="/Main/Files">
                     <DropdownItem
                         label="Consulting"
                         href="/services/consulting"
